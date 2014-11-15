@@ -4,11 +4,15 @@ using Microsoft.Xna.Framework.Input;
 
 using System.Collections.Generic;
 using System.Diagnostics;
-
+/*
 namespace Pixeek
 {
-    public class Prototype : GameManager.Scene
+    public class Prototype : Microsoft.Xna.Framework.Game
     {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        SpriteFont font;
+
         Dictionary<string, Texture2D> sprites = new Dictionary<string, Texture2D>();
         List<string> names = new List<string>();
         Dictionary<string, string> nameData = new Dictionary<string, string>();
@@ -26,16 +30,29 @@ namespace Pixeek
 
         public Prototype()
         {
-            
+            graphics = new GraphicsDeviceManager(this);
+
+            Content.RootDirectory = "Content";
+
+            IsMouseVisible = true;
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
+            graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
-        public void Initialize()
+        protected override void Initialize()
         {
+            base.Initialize();
         }
 
-        public void LoadContent()
+        protected override void LoadContent()
         {
-            System.IO.Stream imgStream = TitleContainer.OpenStream(GameManager.Instance.Content.RootDirectory + "/images.txt");
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            font = Content.Load<SpriteFont>("spriteFont1");
+
+            System.IO.Stream imgStream = TitleContainer.OpenStream("Content/images.txt");
             System.IO.StreamReader reader = new System.IO.StreamReader(imgStream);
             while (true)
             {
@@ -57,7 +74,7 @@ namespace Pixeek
             {
                 string image = names[random.Next(names.Count)];
 
-                int perRow = GameManager.Instance.GraphicsDevice.Viewport.Width / dWidth;
+                int perRow = GraphicsDevice.Viewport.Width / dWidth;
                 Point p = new Point(i % perRow, i / perRow);
                 p.X *= dWidth;
                 p.Y *= dHeight;
@@ -69,16 +86,16 @@ namespace Pixeek
         protected void LoadImage(string fname, string name)
         {
             names.Add(fname);
-            sprites[fname] = GameManager.Instance.Content.Load<Texture2D>(fname);
+            sprites[fname] = Content.Load<Texture2D>(fname);
             nameData[fname] = name;
         }
 
-        public void Update(GameTime gameTime)
+        protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                  Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                GameManager.Instance.Exit();
+                Exit();
             }
 
             if (nextToFind == null)
@@ -108,27 +125,32 @@ namespace Pixeek
             }
 
             lastButtonState = Mouse.GetState().LeftButton;
+
+            base.Update(gameTime);
         }
 
-        public void Draw(GameTime gameTime)
+        protected override void Draw(GameTime gameTime)
         {
-            GameManager.Instance.graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            GameManager.Instance.spriteBatch.Begin();
+            spriteBatch.Begin();
             //spriteBatch.Draw(sprites["apple1"], new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
             foreach (KeyValuePair<Point, string> kvp in fields)
             {
-                GameManager.Instance.spriteBatch.Draw(sprites[kvp.Value], new Rectangle(kvp.Key.X, kvp.Key.Y, dWidth, dHeight), Color.White);
+                spriteBatch.Draw(sprites[kvp.Value], new Rectangle(kvp.Key.X, kvp.Key.Y, dWidth, dHeight), Color.White);
             }
 
             if (nextToFind != null)
             {
-                GameManager.Instance.spriteBatch.DrawString(GameManager.Instance.font, nameData[nextToFind], new Vector2(16, 16),
-                    Color.White, 0, new Vector2(10, 100 - GameManager.Instance.GraphicsDevice.Viewport.Height), 1, SpriteEffects.None, 0);
+                spriteBatch.DrawString(font, nameData[nextToFind], new Vector2(16, 16),
+                    Color.White, 0, new Vector2(10, 100 - GraphicsDevice.Viewport.Height), 1, SpriteEffects.None, 0);
             }
 
-            GameManager.Instance.spriteBatch.End();
+            spriteBatch.End();
+
+            base.Draw(gameTime);
         }
     }
 }
+*/

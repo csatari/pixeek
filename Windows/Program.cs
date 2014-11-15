@@ -18,7 +18,7 @@ namespace Windows
         [STAThread]
         static void Main()
         {
-            using (var game = new Pixeek.Prototype())
+            using (Microsoft.Xna.Framework.Game game = new Pixeek.GameManager())
                 game.Run();
         }
     }
