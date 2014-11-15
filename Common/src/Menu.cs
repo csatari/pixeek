@@ -43,13 +43,13 @@ namespace Pixeek
                 }
             }
 
-            virtual public bool OnClick(Point pos)
+            virtual public bool OnPress(Point pos, bool down)
             {
                 if (children != null)
                 {
                     foreach (MenuElement child in children)
                     {
-                        if (child.OnClick(pos))
+                        if (child.OnPress(pos, down))
                         {
                             return true;
                         }
@@ -82,10 +82,11 @@ namespace Pixeek
 
         public class MenuButtonElement : MenuSpriteElement
         {
-            public MenuButtonElement(string textureName, Rectangle area, string text = null) :
+            public MenuButtonElement(string textureName, Rectangle area, ClickHandler clickHandler, string text = null) :
                 base(textureName, area)
             {
                 this.text = text;
+                this.clickHandler = clickHandler;
             }
 
             public delegate void ClickHandler();
@@ -106,12 +107,30 @@ namespace Pixeek
                 }
             }
 
-            override public bool OnClick(Point area)
+            override public bool OnPress(Point pos, bool down)
             {
-                base.OnClick(area);
+                if (base.OnPress(pos, down))
+                {
+                    down = false;
+                    return true;
+                }
+
+                if (area.Contains(pos))
+                {
+                    if (buttonDown && !down)
+                    {
+                        clickHandler();
+                        return true;
+                    }
+                    else if (down)
+                    {
+                        buttonDown = true;
+                    }
+                }
                 return false;
             }
 
+            bool buttonDown = false;
             private ClickHandler clickHandler;
             private string text = null;
         }
@@ -128,15 +147,31 @@ namespace Pixeek
             MenuSpriteElement bg = new MenuSpriteElement("GUI/menu_bg.jpg", new Rectangle(0, 0, GameManager.Width, GameManager.Height));
             root.AddChild(bg);
 
-            MenuButtonElement exitButton = new MenuButtonElement("GUI/button_bg", new Rectangle(1, 1, 151, 71), "EXIT");
+            MenuButtonElement exitButton = new MenuButtonElement("GUI/button_bg", new Rectangle(1, 1, 151, 71),
+                delegate()
+                {
+                    GameManager.Instance.Exit();
+                },
+                "EXIT");
             bg.AddChild(exitButton);
 
-            MenuButtonElement playButton = new MenuButtonElement("GUI/newgame_button.png", new Rectangle(800, 350, 340, 75));
+            MenuButtonElement playButton = new MenuButtonElement("GUI/newgame_button.png", new Rectangle(800, 350, 340, 75),
+                delegate() {
+                    GameManager.Instance.SwitchScene(new Prototype());
+                }
+                );
             bg.AddChild(playButton);
         }
 
+        ButtonState lastButtonState = ButtonState.Released;
+
         public void Update(GameTime gameTime)
         {
+            if (lastButtonState != Mouse.GetState().LeftButton)
+            {
+                root.OnPress(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Pressed);
+                lastButtonState = Mouse.GetState().LeftButton;
+            }
             root.Update(gameTime);
         }
 

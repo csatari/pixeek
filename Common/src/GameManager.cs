@@ -59,7 +59,7 @@ namespace Pixeek
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
-        void SwitchScene(Scene scene)
+        public void SwitchScene(Scene scene)
         {
             currentScene = scene;
             currentScene.Initialize();
