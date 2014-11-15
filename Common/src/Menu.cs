@@ -130,6 +130,9 @@ namespace Pixeek
 
             MenuButtonElement exitButton = new MenuButtonElement("GUI/button_bg", new Rectangle(1, 1, 151, 71), "EXIT");
             bg.AddChild(exitButton);
+
+            MenuButtonElement playButton = new MenuButtonElement("GUI/newgame_button.png", new Rectangle(800, 350, 340, 75));
+            bg.AddChild(playButton);
         }
 
         public void Update(GameTime gameTime)
