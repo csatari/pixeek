@@ -112,9 +112,6 @@ namespace Pixeek
 
         public void Draw(GameTime gameTime)
         {
-            GameManager.Instance.graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            GameManager.Instance.spriteBatch.Begin();
             //spriteBatch.Draw(sprites["apple1"], new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
             foreach (KeyValuePair<Point, string> kvp in fields)
@@ -127,8 +124,6 @@ namespace Pixeek
                 GameManager.Instance.spriteBatch.DrawString(GameManager.Instance.font, nameData[nextToFind], new Vector2(16, 16),
                     Color.White, 0, new Vector2(10, 100 - GameManager.Instance.GraphicsDevice.Viewport.Height), 1, SpriteEffects.None, 0);
             }
-
-            GameManager.Instance.spriteBatch.End();
         }
     }
 }

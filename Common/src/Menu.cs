@@ -4,153 +4,123 @@ using Microsoft.Xna.Framework.Input;
 
 using System.Collections.Generic;
 using System.Diagnostics;
-/*
+
 namespace Pixeek
 {
-    public class Prototype : Microsoft.Xna.Framework.Game
+    public class Menu : GameManager.Scene
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        SpriteFont font;
-
-        Dictionary<string, Texture2D> sprites = new Dictionary<string, Texture2D>();
-        List<string> names = new List<string>();
-        Dictionary<string, string> nameData = new Dictionary<string, string>();
-
-        Dictionary<Point, string> fields = new Dictionary<Point, string>();
-        System.Random random = new System.Random();
-
-        const int dWidth = 128;
-        const int dHeight = 128;
-        const int fruitCount = 16;
-
-        string nextToFind = null;
-
-        ButtonState lastButtonState = ButtonState.Released;
-
-        public Prototype()
+        public class MenuElement
         {
-            graphics = new GraphicsDeviceManager(this);
-
-            Content.RootDirectory = "Content";
-
-            IsMouseVisible = true;
-            graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
-            graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            font = Content.Load<SpriteFont>("spriteFont1");
-
-            System.IO.Stream imgStream = TitleContainer.OpenStream("Content/images.txt");
-            System.IO.StreamReader reader = new System.IO.StreamReader(imgStream);
-            while (true)
+            public void AddChild(MenuElement child)
             {
-                string line = reader.ReadLine();
-                if (line == null)
+                if (children == null)
                 {
-                    break;
+                    children = new List<MenuElement>();
                 }
 
-                string[] data = line.Split(new char[]{' '});
-
-                int lastPos = data[0].LastIndexOf('.');
-                string name = data[0].Substring(0, lastPos);
-
-                LoadImage(name, data[1]);
-            }
-            
-            for (int i = 0; i < System.Math.Min(names.Count, fruitCount); ++i)
-            {
-                string image = names[random.Next(names.Count)];
-
-                int perRow = GraphicsDevice.Viewport.Width / dWidth;
-                Point p = new Point(i % perRow, i / perRow);
-                p.X *= dWidth;
-                p.Y *= dHeight;
-
-                fields.Add(p, image);
-            }
-        }
-
-        protected void LoadImage(string fname, string name)
-        {
-            names.Add(fname);
-            sprites[fname] = Content.Load<Texture2D>(fname);
-            nameData[fname] = name;
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                 Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
+                children.Add(child);
             }
 
-            if (nextToFind == null)
+            virtual public void Draw(GameTime gameTime)
             {
-                int find = random.Next(fields.Count);
-                nextToFind = new List<string>(fields.Values)[find];
-            }
-
-            if (lastButtonState == ButtonState.Pressed &&
-                Mouse.GetState().LeftButton == ButtonState.Released)
-            {
-                Point pos = Mouse.GetState().Position;
-                pos.X /= dWidth;
-                pos.Y /= dHeight;
-                pos.X *= dWidth;
-                pos.Y *= dHeight;
-
-                if (fields.ContainsKey(pos))
+                if (children != null)
                 {
-                    string name = fields[pos];
-                    if (nameData[name] == nameData[nextToFind])
+                    foreach (MenuElement child in children)
                     {
-                        nextToFind = null;
-                        fields[pos] = names[random.Next(names.Count)];
+                        child.Draw(gameTime);
                     }
                 }
             }
 
-            lastButtonState = Mouse.GetState().LeftButton;
+            virtual public void Update(GameTime gameTime)
+            {
+                if (children != null)
+                {
+                    foreach (MenuElement child in children)
+                    {
+                        child.Update(gameTime);
+                    }
+                }
+            }
 
-            base.Update(gameTime);
+            virtual public bool OnClick(Point pos)
+            {
+                if (children != null)
+                {
+                    foreach (MenuElement child in children)
+                    {
+                        if (child.OnClick(pos))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+            protected List<MenuElement> children = null;
         }
 
-        protected override void Draw(GameTime gameTime)
+        public class MenuSpriteElement : MenuElement
         {
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
-            //spriteBatch.Draw(sprites["apple1"], new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-
-            foreach (KeyValuePair<Point, string> kvp in fields)
+            public MenuSpriteElement(string textureName, Rectangle area)
             {
-                spriteBatch.Draw(sprites[kvp.Value], new Rectangle(kvp.Key.X, kvp.Key.Y, dWidth, dHeight), Color.White);
+                this.area = area;
+                this.texture = GameManager.Instance.Content.Load<Texture2D>(textureName);
             }
 
-            if (nextToFind != null)
+            override public void Draw(GameTime gameTime)
             {
-                spriteBatch.DrawString(font, nameData[nextToFind], new Vector2(16, 16),
-                    Color.White, 0, new Vector2(10, 100 - GraphicsDevice.Viewport.Height), 1, SpriteEffects.None, 0);
+                GameManager.Instance.spriteBatch.Draw(texture, area, Color.White);
             }
 
-            spriteBatch.End();
+            private Rectangle area;
+            private Texture2D texture;
+        }
 
-            base.Draw(gameTime);
+        public class MenuButtonElement : MenuSpriteElement
+        {
+            public MenuButtonElement(string textureName, Rectangle area) : base(textureName, area)
+            {
+            }
+
+            public delegate void ClickHandler();
+
+            override public void Update(GameTime gameTime)
+            {
+            }
+
+            override public bool OnClick(Point area)
+            {
+                return false;
+            }
+
+            private Rectangle hitArea;
+            private ClickHandler clickHandler;
+        }
+
+        MenuElement root;
+
+        public void Initialize()
+        {
+            root = new MenuElement();
+        }
+
+        public void LoadContent()
+        {
+            MenuSpriteElement bg = new MenuSpriteElement("GUI/menu_bg.jpg", new Rectangle(0, 0, GameManager.Width, GameManager.Height));
+            root.AddChild(bg);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            root.Update(gameTime);
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            root.Draw(gameTime);
         }
     }
 }
-*/

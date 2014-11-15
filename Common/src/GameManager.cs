@@ -33,10 +33,30 @@ namespace Pixeek
 
         Scene currentScene = null;
 
+        public static int Width
+        {
+            get
+            {
+                return Instance.GraphicsDevice.Viewport.Width;
+            }
+        }
+
+        public static int Height
+        {
+            get
+            {
+                return Instance.GraphicsDevice.Viewport.Height;
+            }
+        }
+
         public GameManager()
         {
             _instance = this;
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
         void SwitchScene(Scene scene)
@@ -49,17 +69,13 @@ namespace Pixeek
         protected override void Initialize()
         {
             IsMouseVisible = true;
-            graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
-            graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
-
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Content.RootDirectory = "Content";
             font = Content.Load<SpriteFont>("spriteFont1");
            
-            SwitchScene(new Prototype());
+            //SwitchScene(new Prototype());
+            SwitchScene(new Menu());
        }
 
         protected override void Update(GameTime gameTime)
@@ -69,7 +85,12 @@ namespace Pixeek
 
         protected override void Draw(GameTime gameTime)
         {
+            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+
             currentScene.Draw(gameTime);
+
+            spriteBatch.End();
         }
     }
 }
