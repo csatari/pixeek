@@ -21,13 +21,13 @@ namespace Pixeek
                 children.Add(child);
             }
 
-            virtual public void Draw(GameTime gameTime)
+            virtual public void Draw(GameTime gameTime, Color baseColor)
             {
                 if (children != null)
                 {
                     foreach (MenuElement child in children)
                     {
-                        child.Draw(gameTime);
+                        child.Draw(gameTime, baseColor);
                     }
                 }
             }
@@ -70,10 +70,22 @@ namespace Pixeek
                 this.texture = GameManager.Instance.Content.Load<Texture2D>(textureName);
             }
 
-            override public void Draw(GameTime gameTime)
+            override public void Draw(GameTime gameTime, Color baseColor)
             {
-                GameManager.Instance.spriteBatch.Draw(texture, area, Color.White);
-                base.Draw(gameTime);
+                GameManager.Instance.spriteBatch.Draw(texture, area, GetColor());
+
+                if (children != null)
+                {
+                    foreach (MenuElement child in children)
+                    {
+                        child.Draw(gameTime, Color.Lerp(baseColor, GetColor(), 0.5f));
+                    }
+                }
+            }
+
+            virtual protected Color GetColor()
+            {
+                return Color.White;
             }
 
             protected Rectangle area;
@@ -96,14 +108,15 @@ namespace Pixeek
                 base.Update(gameTime);
             }
 
-            override public void Draw(GameTime gameTime)
+            override public void Draw(GameTime gameTime, Color baseColor)
             {
-                base.Draw(gameTime);
+                base.Draw(gameTime, baseColor);
                 if (text != null)
                 {
                     Vector2 size = GameManager.Instance.font.MeasureString(text);
                     Vector2 pos = new Vector2(area.Center.X - size.X / 2, area.Center.Y - size.Y / 2);
-                    GameManager.Instance.spriteBatch.DrawString(GameManager.Instance.font, text, pos, Color.White);
+                    GameManager.Instance.spriteBatch.DrawString(
+                        GameManager.Instance.font, text, pos, Color.Lerp(GetColor(), baseColor, 0.5f));
                 }
             }
 
@@ -111,7 +124,7 @@ namespace Pixeek
             {
                 if (base.OnPress(pos, down))
                 {
-                    down = false;
+                    buttonDown = false;
                     return true;
                 }
 
@@ -120,6 +133,7 @@ namespace Pixeek
                     if (buttonDown && !down)
                     {
                         clickHandler();
+                        buttonDown = false;
                         return true;
                     }
                     else if (down)
@@ -127,7 +141,17 @@ namespace Pixeek
                         buttonDown = true;
                     }
                 }
+                else
+                {
+                    buttonDown = false;
+                }
+
                 return false;
+            }
+
+            protected override Color GetColor()
+            {
+                return buttonDown ? Color.Black : Color.White;
             }
 
             bool buttonDown = false;
@@ -156,7 +180,8 @@ namespace Pixeek
             bg.AddChild(exitButton);
 
             MenuButtonElement playButton = new MenuButtonElement("GUI/newgame_button.png", new Rectangle(800, 350, 340, 75),
-                delegate() {
+                delegate()
+                {
                     GameManager.Instance.SwitchScene(new Prototype());
                 }
                 );
@@ -177,7 +202,7 @@ namespace Pixeek
 
         public void Draw(GameTime gameTime)
         {
-            root.Draw(gameTime);
+            root.Draw(gameTime, Color.White);
         }
     }
 }
