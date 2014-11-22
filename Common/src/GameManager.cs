@@ -75,7 +75,9 @@ namespace Pixeek
             font = Content.Load<SpriteFont>("spriteFont1");
            
             //SwitchScene(new Prototype());
-            SwitchScene(new Menu());
+            //SwitchScene(new Menu());
+            Menu.CreateMainMenu();
+            //Menu.CreateGameOverMenu();
        }
 
         protected override void Update(GameTime gameTime)

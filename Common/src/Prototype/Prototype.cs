@@ -20,6 +20,9 @@ namespace Pixeek
         const int dHeight = 128;
         const int fruitCount = 16;
 
+        int score = 0;
+        const int maxScore = 5;
+
         string nextToFind = null;
 
         ButtonState lastButtonState = ButtonState.Released;
@@ -103,11 +106,17 @@ namespace Pixeek
                     {
                         nextToFind = null;
                         fields[pos] = names[random.Next(names.Count)];
+                        ++score;
                     }
                 }
             }
 
             lastButtonState = Mouse.GetState().LeftButton;
+
+            if (score > maxScore)
+            {
+                Menu.CreateGameOverMenu();
+            }
         }
 
         public void Draw(GameTime gameTime)

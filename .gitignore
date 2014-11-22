@@ -4,6 +4,7 @@ ehthumbs.db
 
 # Folder config file
 Desktop.ini
+desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
@@ -41,3 +42,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+*.suo
+Common/Content/desktop.ini
