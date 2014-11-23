@@ -1,0 +1,12 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.MonoForAndroid_API_10" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Android\Activity1.cs">
+    <Files>
+      <File FileName="Android\Activity1.cs" Line="34" Column="34" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
