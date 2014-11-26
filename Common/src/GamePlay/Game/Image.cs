@@ -1,8 +1,17 @@
+using Microsoft.Xna.Framework.Graphics;
 namespace Pixeek.Game
 {
     public class Image
     {
-        private byte[] image;
-        private string name;
+        public Texture2D ImageTexture
+        {
+            get;
+            set;
+        }
+        public string Name
+        {
+            get;
+            set;
+        }
     }
 }

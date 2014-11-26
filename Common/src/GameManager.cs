@@ -55,7 +55,7 @@ namespace Pixeek
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = true;
             graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferHeight = 700;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
@@ -78,7 +78,7 @@ namespace Pixeek
             //SwitchScene(new Menu());
             Menu.CreateMainMenu();
             //Menu.CreateGameOverMenu();
-       }
+        }
 
         protected override void Update(GameTime gameTime)
         {

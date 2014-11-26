@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Pixeek.ImageLoader;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -50,6 +50,21 @@ namespace Pixeek
                     foreach (MenuElement child in children)
                     {
                         if (child.OnPress(pos, down))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+            virtual public bool OnHover(Point pos, bool hover)
+            {
+                if (children != null)
+                {
+                    foreach (MenuElement child in children)
+                    {
+                        if (child.OnHover(pos, hover))
                         {
                             return true;
                         }
@@ -147,12 +162,50 @@ namespace Pixeek
                 return false;
             }
 
+            override public bool OnHover(Point pos, bool hover)
+            {
+                if (base.OnHover(pos, hover))
+                {
+                    buttonHovered = true;
+                    return true;
+                }
+
+                if (area.Contains(pos))
+                {
+                    if (buttonHovered && !hover)
+                    {
+                        clickHandler();
+                        buttonHovered = false;
+                        return true;
+                    }
+                    else if (hover)
+                    {
+                        buttonHovered = true;
+                    }
+                }
+                else
+                {
+                    buttonHovered = false;
+                }
+
+                return false;
+            }
+
             protected override Color GetColor()
             {
-                return buttonDown ? Color.Black : Color.White;
+                if (buttonDown)
+                {
+                    return Color.Black;
+                }
+                if (buttonHovered)
+                {
+                    return Color.LightGray;
+                }
+                else return Color.White;
             }
 
             bool buttonDown = false;
+            bool buttonHovered = false;
             private ClickHandler clickHandler;
             private Rectangle area;
         }
@@ -170,6 +223,7 @@ namespace Pixeek
             {
                 root = new MenuElement();
             }
+            preloadImages();
         }
 
         public static void CreateMainMenu()
@@ -192,7 +246,8 @@ namespace Pixeek
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
-                        GameManager.Instance.SwitchScene(new Prototype());
+                        //GameManager.Instance.SwitchScene(new Prototype());
+                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase));
                     }
                     );
                 bg.AddChild(playButton);
@@ -235,6 +290,10 @@ namespace Pixeek
                 root.OnPress(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Pressed);
                 lastButtonState = Mouse.GetState().LeftButton;
             }
+            else
+            {
+                root.OnHover(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Released);
+            }
             root.Update(gameTime);
         }
 
@@ -242,5 +301,19 @@ namespace Pixeek
         {
             root.Draw(gameTime, Color.White);
         }
+
+        #region Image cache
+
+        public static ImageDatabase imageDatabase;
+
+        /// <summary>
+        /// Elõtölti a képeket, hogy ne a new game megnyomására akadjon be, hanem amikor belépünk a játékba
+        /// </summary>
+        public static void preloadImages()
+        {
+            imageDatabase = new ImageDatabase();
+            imageDatabase.LoadContent();
+        }
+        #endregion
     }
 }

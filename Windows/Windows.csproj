@@ -63,6 +63,12 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\RectangleOverlay.cs">
+      <Link>src\GamePlay\GameDrawables\RectangleOverlay.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\TimerDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\TimerDrawable.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\Game\Board.cs">
       <Link>src\GamePlay\Game\Board.cs</Link>
     </Compile>
@@ -72,11 +78,11 @@
     <Compile Include="..\Common\src\GamePlay\Game\Field.cs">
       <Link>src\GamePlay\Game\Field.cs</Link>
     </Compile>
-    <Compile Include="..\Common\src\GamePlay\Game\Game.cs">
-      <Link>src\GamePlay\Game\Game.cs</Link>
-    </Compile>
     <Compile Include="..\Common\src\GamePlay\Game\GameMode.cs">
       <Link>src\GamePlay\Game\GameMode.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\GameModel.cs">
+      <Link>src\GamePlay\Game\GameModel.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Game\Image.cs">
       <Link>src\GamePlay\Game\Image.cs</Link>
