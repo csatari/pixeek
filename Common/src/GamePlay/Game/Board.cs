@@ -1,9 +1,29 @@
+using System;
 using System.Collections.Generic;
 namespace Pixeek.Game
 {
     public class Board
     {
+        private Random random;
+        private List<Image> imageList;
         private List<Field> allFields;
+
+        public int X
+        {
+            get;
+            set;
+        }
+        public int Y
+        {
+            get;
+            set;
+        }
+
+        public Board(List<Image> imageList)
+        {
+            this.imageList = imageList;
+            random = new Random();
+        }
 
         /// <summary>
         /// Kikeresi az oszlopindex és a sorindex alapján a mezõt a tábláról
@@ -13,11 +33,47 @@ namespace Pixeek.Game
         /// <returns></returns>
         public Field getField(int columnIndex, int rowIndex)
         {
+            foreach (Field field in allFields)
+            {
+                if (field.RowIndex == rowIndex && field.ColumnIndex == columnIndex)
+                {
+                    return field;
+                }
+            }
             return null;
         }
-        public List<Field> createBoard(Difficulty difficulty)
+
+        /// <summary>
+        /// Feltölti a Field-ek listáját a megadott nehézségen koordinátákkal együtt.
+        /// </summary>
+        /// <param name="difficulty"></param>
+        public void createBoard(Difficulty difficulty)
         {
-            return null;
+            allFields = new List<Field>();
+
+            X = 0;
+            Y = 0;
+            if (difficulty == Difficulty.EASY)
+            {
+                X = 5;
+                Y = 5;
+                for (int i = 0; i < X; i++)
+                {
+                    for (int j = 0; j < Y; j++)
+                    {
+                        int randomImage = random.Next(imageList.Count);
+                        Field field = new Field()
+                        {
+                            ImageProperty = imageList[randomImage],
+                            ColumnIndex = i,
+                            RowIndex = j
+                        };
+                        allFields.Add(field);
+                    }
+                }
+            }
         }
+
+
     }
 }

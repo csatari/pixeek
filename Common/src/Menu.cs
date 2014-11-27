@@ -146,6 +146,7 @@ namespace Pixeek
                     if (buttonDown && !down)
                     {
                         clickHandler();
+                        Debug.WriteLine("megnyomva");
                         buttonDown = false;
                         return true;
                     }
@@ -174,7 +175,6 @@ namespace Pixeek
                 {
                     if (buttonHovered && !hover)
                     {
-                        clickHandler();
                         buttonHovered = false;
                         return true;
                     }

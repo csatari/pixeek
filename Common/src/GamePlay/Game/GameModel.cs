@@ -19,28 +19,39 @@ namespace Pixeek.Game
         private Save savingManager;
         private LevelManager levelManager;
         private Scoring scoring;
-        private Board board;
+        public Board board;
 
         public GameModel(ImageDatabase imageDatabase)
         {
             this.imageDatabase = imageDatabase;
         }
 
-        public static GameModel getInstance()
+        public static GameModel Instance
         {
-            if (jatekModell == null)
+            get 
             {
-                ImageDatabase imageDatabase = new ImageDatabase();
-                imageDatabase.LoadContent();
-                jatekModell = new GameModel(imageDatabase);
+                if (jatekModell == null)
+                {
+                    ImageDatabase imageDatabase = new ImageDatabase();
+                    imageDatabase.LoadContent();
+                    jatekModell = new GameModel(imageDatabase);
+                }
+                return jatekModell;
             }
-            return jatekModell;
+            set 
+            {
+                jatekModell = value;
+            }
         }
 
         public void Initialize()
         {
             CreateUpperMenu();
-            List<Image> lista = imageDatabase.getAllPictures();
+            //új játék indítása
+            levelManager = new LevelManager();
+
+            board = levelManager.newGame(GameMode.NORMAL, Difficulty.EASY,imageDatabase.getAllPictures());
+            BoardDrawable _boardDrawable = new BoardDrawable(board);
         }
 
         public void LoadContent() 
@@ -70,6 +81,8 @@ namespace Pixeek.Game
                 component.Draw(gameTime);
             }
             UpperMenu.Instance.root.Draw(gameTime, Color.White);
+
+            BoardDrawable.Instance.Draw();
         }
 
         private void CreateUpperMenu()
@@ -77,7 +90,9 @@ namespace Pixeek.Game
             UpperMenu.Instance.Draw();
         }
 
-
+        /// <summary>
+        /// Ez az osztály felelõs a felsõ menü kirajzolásáért
+        /// </summary>
         private class UpperMenu
         {
             private static UpperMenu _instance = null;
@@ -123,6 +138,8 @@ namespace Pixeek.Game
                 Pixeek.Menu.MenuButtonElement exitButton = new Pixeek.Menu.MenuButtonElement(exitRect, delegate()
                 {
                     Menu.CreateMainMenu();
+                    //System.Random random = new System.Random();
+                    //BoardDrawable.Instance.board.getField(0, 0).ImageProperty = GameModel.Instance.imageDatabase.getAllPictures()[random.Next(GameModel.Instance.imageDatabase.getAllPictures().Count)];
                 });
                 exitButton.AddChild(new Pixeek.Menu.MenuSpriteElement("GUI/button_bg", exitRect, "MENU"));
                 root.AddChild(exitButton);
@@ -132,6 +149,63 @@ namespace Pixeek.Game
             public void setTimerText(string txt)
             {
                 timerBackground.TimerText = txt;
+            }
+        }
+        /// <summary>
+        /// Ez az osztály felelõs a Board kirajzolásáért
+        /// </summary>
+        private class BoardDrawable
+        {
+            private static BoardDrawable _instance = null;
+            public Board board;
+
+            public BoardDrawable(Board board)
+            {
+                this.board = board;
+                _instance = this;
+            }
+
+            public static BoardDrawable Instance
+            {
+                get { return _instance; }
+                set { _instance = value; }
+            }
+
+            public void Update(GameTime gameTime)
+            {
+            }
+
+            public void Draw()
+            {
+                Point pos = new Point();
+                pos.X = 0;
+                pos.Y = GameManager.Height / 8;
+
+                int fieldWidth = GameManager.Width / board.X;
+                int fieldHeight = (6 * GameManager.Height / 8) / board.Y;
+
+                //ne legyenek széthúzott mezõk, ezért a kisebb méretet alkalmazom a másik méretnél
+                if(fieldWidth > fieldHeight) {
+                    fieldWidth = fieldHeight;
+                }
+                else {
+                    fieldHeight = fieldWidth;
+                }
+                //kirajzolás
+                for (int i = 0; i < board.Y; i++)
+                {
+                    for (int j = 0; j < board.X; j++)
+                    {
+                        GameManager.Instance.spriteBatch.Draw(
+                            board.getField(i, j).ImageProperty.ImageTexture,
+                            new Rectangle(pos.X, pos.Y, fieldWidth, fieldHeight),
+                            Color.White);
+
+                        pos.X += GameManager.Width/board.X;
+                    }
+                    pos.X = 0;
+                    pos.Y += (6*GameManager.Height/8) / board.Y;
+                }
             }
         }
     }

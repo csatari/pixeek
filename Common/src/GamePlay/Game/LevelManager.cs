@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace Pixeek.Game
 {
     public class LevelManager
@@ -6,9 +7,12 @@ namespace Pixeek.Game
         {
 
         }
-        public Board newGame(GameMode gameMode, Difficulty difficulty)
+        public Board newGame(GameMode gameMode, Difficulty difficulty, List<Image> imageList)
         {
-            return null;
+            Board board = new Board(imageList);
+            board.createBoard(difficulty);
+
+            return board;
         }
     }
 }

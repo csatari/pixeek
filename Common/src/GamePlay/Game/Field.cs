@@ -3,10 +3,26 @@ namespace Pixeek.Game
 {
     public class Field
     {
-        private Image image;
-        private int columnIndex;
-        private int rowIndex;
-        private Transformator transformator;
+        public Image ImageProperty
+        {
+            get;
+            set;
+        }
+        public int ColumnIndex
+        {
+            get;
+            set;
+        }
+        public int RowIndex
+        {
+            get;
+            set;
+        }
+        public Transformator TransformatorProperty
+        {
+            get;
+            set;
+        }
 
     }
 }
