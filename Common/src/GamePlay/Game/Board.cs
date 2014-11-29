@@ -57,21 +57,33 @@ namespace Pixeek.Game
             {
                 X = 5;
                 Y = 5;
-                for (int i = 0; i < X; i++)
+            }
+            else if (difficulty == Difficulty.NORMAL)
+            {
+                X = 9;
+                Y = 9;
+            }
+            else if (difficulty == Difficulty.HARD)
+            {
+                X = 16;
+                Y = 16;
+            }
+
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
                 {
-                    for (int j = 0; j < Y; j++)
+                    int randomImage = random.Next(imageList.Count);
+                    Field field = new Field()
                     {
-                        int randomImage = random.Next(imageList.Count);
-                        Field field = new Field()
-                        {
-                            ImageProperty = imageList[randomImage],
-                            ColumnIndex = i,
-                            RowIndex = j
-                        };
-                        allFields.Add(field);
-                    }
+                        ImageProperty = imageList[randomImage],
+                        ColumnIndex = j,
+                        RowIndex = i
+                    };
+                    allFields.Add(field);
                 }
             }
+
         }
 
 

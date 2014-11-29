@@ -53,9 +53,11 @@ namespace Pixeek
         {
             _instance = this;
             graphics = new GraphicsDeviceManager(this);
+            
             graphics.IsFullScreen = true;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 700;
+
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 

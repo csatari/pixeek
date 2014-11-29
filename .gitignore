@@ -2,6 +2,9 @@
 Thumbs.db
 ehthumbs.db
 
+#Windows keystore
+.pfx
+
 # Folder config file
 Desktop.ini
 desktop.ini
