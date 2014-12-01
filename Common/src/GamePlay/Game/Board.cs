@@ -7,7 +7,11 @@ namespace Pixeek.Game
     {
         private Random random;
         private List<Image> imageList;
-        private List<Field> allFields;
+        public List<Field> AllFields
+        {
+            get;
+            set;
+        }
 
         public int X
         {
@@ -22,15 +26,14 @@ namespace Pixeek.Game
 
         public void AddToAllFields(Field field)
         {
-
-            allFields.Add(field);
+            AllFields.Add(field);
         }
 
         public Board(List<Image> imageList)
         {
             this.imageList = imageList;
             random = new Random();
-            allFields = new List<Field>();
+            AllFields = new List<Field>();
         }
 
         /// <summary>
@@ -41,8 +44,9 @@ namespace Pixeek.Game
         /// <returns></returns>
         public Field getField(int columnIndex, int rowIndex)
         {
-            foreach (Field field in allFields)
+            foreach (Field field in AllFields)
             {
+                if (field == null) continue;
                 if (field.RowIndex == rowIndex && field.ColumnIndex == columnIndex)
                 {
                     return field;
@@ -57,8 +61,6 @@ namespace Pixeek.Game
         /// <param name="difficulty"></param>
         public void createBoard(Difficulty difficulty)
         {
-           
-
             X = 0;
             Y = 0;
             if (difficulty == Difficulty.EASY)
@@ -87,12 +89,23 @@ namespace Pixeek.Game
                         ImageProperty = imageList[randomImage],
                         ImageNumber = randomImage,
                         ColumnIndex = j,
-                        RowIndex = i
+                        RowIndex = i,
+                        Available = true
                     };
-                    allFields.Add(field);
+                    AllFields.Add(field);
                 }
             }
+        }
 
+        /// <summary>
+        /// Kicseréli a megadott mezõt egy random másikra
+        /// </summary>
+        /// <param name="field"></param>
+        public void changeField(Field field)
+        {
+            int randomImage = random.Next(imageList.Count);
+            field.ImageProperty = imageList[randomImage];
+            field.ImageNumber = randomImage;
         }
 
 

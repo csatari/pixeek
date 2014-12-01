@@ -32,5 +32,11 @@ namespace Pixeek.Game
             set;
         }
 
+        public bool Available
+        {
+            get;
+            set;
+        }
+
     }
 }

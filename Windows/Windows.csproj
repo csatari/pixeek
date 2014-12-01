@@ -63,11 +63,23 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\BoardDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\BoardDrawable.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\GameDrawables\RectangleOverlay.cs">
       <Link>src\GamePlay\GameDrawables\RectangleOverlay.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\ScoreDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\ScoreDrawable.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\GameDrawables\TimerDrawable.cs">
       <Link>src\GamePlay\GameDrawables\TimerDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\ToFindDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\ToFindDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\UpperMenu.cs">
+      <Link>src\GamePlay\GameDrawables\UpperMenu.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Game\Board.cs">
       <Link>src\GamePlay\Game\Board.cs</Link>
@@ -86,6 +98,9 @@
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Game\Image.cs">
       <Link>src\GamePlay\Game\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\ImagesToFind.cs">
+      <Link>src\GamePlay\Game\ImagesToFind.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Game\LevelManager.cs">
       <Link>src\GamePlay\Game\LevelManager.cs</Link>
