@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace Pixeek.Game
 {
+    
     public class Board
     {
         private Random random;
@@ -19,10 +20,17 @@ namespace Pixeek.Game
             set;
         }
 
+        public void AddToAllFields(Field field)
+        {
+
+            allFields.Add(field);
+        }
+
         public Board(List<Image> imageList)
         {
             this.imageList = imageList;
             random = new Random();
+            allFields = new List<Field>();
         }
 
         /// <summary>
@@ -49,7 +57,7 @@ namespace Pixeek.Game
         /// <param name="difficulty"></param>
         public void createBoard(Difficulty difficulty)
         {
-            allFields = new List<Field>();
+           
 
             X = 0;
             Y = 0;
@@ -77,6 +85,7 @@ namespace Pixeek.Game
                     Field field = new Field()
                     {
                         ImageProperty = imageList[randomImage],
+                        ImageNumber = randomImage,
                         ColumnIndex = j,
                         RowIndex = i
                     };

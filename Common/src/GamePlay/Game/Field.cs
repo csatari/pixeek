@@ -1,6 +1,8 @@
 using Pixeek.Transformation;
+using System;
 namespace Pixeek.Game
 {
+    
     public class Field
     {
         public Image ImageProperty
@@ -19,6 +21,12 @@ namespace Pixeek.Game
             set;
         }
         public Transformator TransformatorProperty
+        {
+            get;
+            set;
+        }
+
+        public int ImageNumber
         {
             get;
             set;

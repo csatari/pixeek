@@ -66,11 +66,26 @@ namespace Pixeek.Game
             };
 
             board = levelManager.newGame(GameMode.NORMAL, Difficulty.NORMAL,imageDatabase.getAllPictures());
+
+
+            #region save and load test
+            /*
+            List<Image> temp = new List<Image>();
+            temp = imageDatabase.getAllPictures();
+
+            savingManager = new Save();
+            savingManager.save(board);
+            board = savingManager.load(temp);
+            */
+            #endregion
+
+
             BoardDrawable _boardDrawable = new BoardDrawable(board,
                 delegate(Field field) {
                     //TODO lekezelni a mezõre kattintást
                 });
 
+            
 
         }
 
