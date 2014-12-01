@@ -5,11 +5,12 @@ namespace Pixeek.Game
     
     public class Field
     {
-        public Field(Image image, int imageNumber, int column, int row, Transformator trf)
+        public Field(Image image, int imageNumber, int column, int row, bool available, Transformator trf)
         {
             ImageNumber = imageNumber;
             ColumnIndex = column;
             RowIndex = row;
+            Available = available;
             ImageProperty = new Image
             {
                 Name = image.Name,

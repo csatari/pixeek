@@ -38,7 +38,7 @@ namespace Pixeek.Saving
                     temp = Convert.ToInt16(line);
 
                     //elkészítjük a következõ fieldet
-                    Field field = new Field(imageList[temp], temp, colind, rowind, trf);
+                    Field field = new Field(imageList[temp], temp, colind, rowind, true, trf);
 
                     //beállítjuk megfelelõen az oszlop és sorindexeket
                     colind++;

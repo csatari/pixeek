@@ -95,7 +95,7 @@ namespace Pixeek.Game
                         case (3): trf = new ColorTransformation(difficulty, random.Next()); break;
                         default: trf = new Transformator(difficulty, random.Next()); break;
                     }
-                    Field field = new Field(imageList[randomImage], randomImage, j, i, trf);
+                    Field field = new Field(imageList[randomImage], randomImage, j, i,true, trf);
                     AllFields.Add(field);
                 }
             }
