@@ -9,6 +9,7 @@ namespace Pixeek.Game
         private GameMode gameMode;
         private Timer time;
         private TimeSpan elapsedTime;
+        private Board board;
         public delegate void TimeElapsed(TimeSpan elapsedTime);
         public delegate void TimeStopped();
 
@@ -24,6 +25,11 @@ namespace Pixeek.Game
         /// Akkor hívódik meg, amikor letelik az idõ
         /// </summary>
         public TimeStopped TimeStoppedHandler
+        {
+            get;
+            set;
+        }
+        public ImagesToFind ImagesToFind
         {
             get;
             set;
@@ -47,8 +53,9 @@ namespace Pixeek.Game
         {
             this.gameMode = gameMode;
 
-            Board board = new Board(imageList);
+            board = new Board(imageList);
             board.createBoard(difficulty);
+            ImagesToFind = Game.ImagesToFind.createNewImagesToFind(gameMode, difficulty, board);
             
             if (gameMode == GameMode.TIME)
             {
@@ -63,6 +70,33 @@ namespace Pixeek.Game
 
             return board;
         }
+
+        /// <summary>
+        /// Csak akkor kattint rá egy mezõre, ha az elérhetõ
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public bool tryClickedField(Field field)
+        {
+            if (field.Available)
+            {
+                if (ImagesToFind.tryToFindField(field))
+                {
+                    if (gameMode != GameMode.ENDLESS)
+                    {
+                        field.Available = false;
+                    }
+                    else
+                    {
+                        board.changeField(field);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else return false;
+        }
+
         /// <summary>
         /// Befejezi a játékot, azaz a számlálót nullázza
         /// </summary>

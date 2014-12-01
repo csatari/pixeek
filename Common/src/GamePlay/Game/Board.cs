@@ -4,11 +4,16 @@ using Pixeek.Transformation;
 
 namespace Pixeek.Game
 {
+    
     public class Board
     {
         private Random random;
         private List<Image> imageList;
-        private List<Field> allFields;
+        public List<Field> AllFields
+        {
+            get;
+            set;
+        }
 
         public int X
         {
@@ -21,10 +26,16 @@ namespace Pixeek.Game
             set;
         }
 
+        public void AddToAllFields(Field field)
+        {
+            AllFields.Add(field);
+        }
+
         public Board(List<Image> imageList)
         {
             this.imageList = imageList;
             random = new Random();
+            AllFields = new List<Field>();
         }
 
         /// <summary>
@@ -35,8 +46,9 @@ namespace Pixeek.Game
         /// <returns></returns>
         public Field getField(int columnIndex, int rowIndex)
         {
-            foreach (Field field in allFields)
+            foreach (Field field in AllFields)
             {
+                if (field == null) continue;
                 if (field.RowIndex == rowIndex && field.ColumnIndex == columnIndex)
                 {
                     return field;
@@ -51,8 +63,6 @@ namespace Pixeek.Game
         /// <param name="difficulty"></param>
         public void createBoard(Difficulty difficulty)
         {
-            allFields = new List<Field>();
-
             X = 0;
             Y = 0;
             if (difficulty == Difficulty.EASY)
@@ -79,17 +89,27 @@ namespace Pixeek.Game
                     Transformator trf;
                     switch (random.Next(5))
                     {
-                        case(0): trf = new Rotate(difficulty, random.Next()); break;
-                        case(1): trf = new Mirror(difficulty, random.Next()); break;
-                        case(2): trf = new Blur(difficulty, random.Next()); break;
-                        case(3): trf = new ColorTransformation(difficulty, random.Next()); break;
+                        case (0): trf = new Rotate(difficulty, random.Next()); break;
+                        case (1): trf = new Mirror(difficulty, random.Next()); break;
+                        case (2): trf = new Blur(difficulty, random.Next()); break;
+                        case (3): trf = new ColorTransformation(difficulty, random.Next()); break;
                         default: trf = new Transformator(difficulty, random.Next()); break;
                     }
-                    Field field = new Field(imageList[randomImage], j, i, trf);
-                    allFields.Add(field);
+                    Field field = new Field(imageList[randomImage], randomImage, j, i, trf);
+                    AllFields.Add(field);
                 }
             }
+        }
 
+        /// <summary>
+        /// Kicseréli a megadott mezõt egy random másikra
+        /// </summary>
+        /// <param name="field"></param>
+        public void changeField(Field field)
+        {
+            int randomImage = random.Next(imageList.Count);
+            field.ImageProperty = imageList[randomImage];
+            field.ImageNumber = randomImage;
         }
 
 
