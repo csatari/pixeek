@@ -5,14 +5,8 @@ using System.Collections.Generic;
 
 namespace Pixeek.ImageLoader
 {
-    //TODO nem így kéne csinálni, csak átmásoltam a prototype-ból - albert
     public class ImageDatabase
     {
-
-        List<string> names = new List<string>();
-        const int dWidth = 128;
-        const int dHeight = 128;
-
         List<Image> images = new List<Image>();
 
         public List<Image> getAllPictures()
@@ -23,23 +17,18 @@ namespace Pixeek.ImageLoader
         {
             System.IO.Stream imgStream = TitleContainer.OpenStream(GameManager.Instance.Content.RootDirectory + "/images.txt");
             System.IO.StreamReader reader = new System.IO.StreamReader(imgStream);
-            while (true)
+            string line = reader.ReadLine();
+            while (line != null)
             {
-                string line = reader.ReadLine();
-                if (line == null)
-                {
-                    break;
-                }
-
                 string[] data = line.Split(new char[] { ' ' });
-
                 int lastPos = data[0].LastIndexOf('.');
                 string name = data[0].Substring(0, lastPos);
-
                 LoadImage(name, data[1]);
+                line = reader.ReadLine();
             }
         }
-        protected void LoadImage(string fname, string name)
+
+        private void LoadImage(string fname, string name)
         {
             Image image = new Image()
             {

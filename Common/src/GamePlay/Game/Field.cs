@@ -3,6 +3,17 @@ namespace Pixeek.Game
 {
     public class Field
     {
+        public Field(Image image, int column, int row, Transformator trf)
+        {
+            ColumnIndex = column;
+            RowIndex = row;
+            ImageProperty = new Image
+            {
+                Name = image.Name,
+                ImageTexture = trf.transform(image.ImageTexture)
+            };
+        }
+
         public Image ImageProperty
         {
             get;
@@ -14,11 +25,6 @@ namespace Pixeek.Game
             set;
         }
         public int RowIndex
-        {
-            get;
-            set;
-        }
-        public Transformator TransformatorProperty
         {
             get;
             set;

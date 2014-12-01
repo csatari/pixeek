@@ -1,8 +1,31 @@
 using Pixeek.Game;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace Pixeek.Transformation
 {
-    public interface Transformator
+    public class Transformator
     {
-        void transformation(Difficulty difficulty);
+        protected Difficulty difficulty
+        {
+            get;
+            set;
+        }
+
+        protected int random
+        {
+            get;
+            set;
+        }
+
+        public Transformator(Difficulty difficulty, int random)
+        {
+            this.difficulty = difficulty;
+            this.random = random;
+        }
+
+        public virtual Texture2D transform(Texture2D texture)
+        {
+            return texture;
+        }
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Pixeek.Transformation;
+
 namespace Pixeek.Game
 {
     public class Board
@@ -74,12 +76,16 @@ namespace Pixeek.Game
                 for (int j = 0; j < Y; j++)
                 {
                     int randomImage = random.Next(imageList.Count);
-                    Field field = new Field()
+                    Transformator trf;
+                    switch (random.Next(5))
                     {
-                        ImageProperty = imageList[randomImage],
-                        ColumnIndex = j,
-                        RowIndex = i
-                    };
+                        case(0): trf = new Rotate(difficulty, random.Next()); break;
+                        case(1): trf = new Mirror(difficulty, random.Next()); break;
+                        case(2): trf = new Blur(difficulty, random.Next()); break;
+                        case(3): trf = new ColorTransformation(difficulty, random.Next()); break;
+                        default: trf = new Transformator(difficulty, random.Next()); break;
+                    }
+                    Field field = new Field(imageList[randomImage], j, i, trf);
                     allFields.Add(field);
                 }
             }
