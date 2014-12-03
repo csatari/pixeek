@@ -50,6 +50,7 @@ namespace Pixeek.Game
         /// <param name="gameMode">játékmód</param>
         /// <param name="difficulty">nehézség</param>
         /// <param name="imageList">képek listája</param>
+        /// <param name="boardAnimal">a tábla alakzata, ha null, akkor szimpla négyzet lesz</param>
         /// <returns>A táblával tér vissza</returns>
         public Board newGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
         {
