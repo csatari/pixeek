@@ -115,7 +115,7 @@ namespace Pixeek
 
             if (score > maxScore)
             {
-                Menu.CreateGameOverMenu();
+                Menu.CreateGameOverMenu(true,score,null);
             }
         }
 

@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
+using Pixeek.BoardShapes;
 using System;
 using System.Collections.Generic;
 using System.Timers;
+
 namespace Pixeek.Game
 {
     public class LevelManager
@@ -49,17 +51,17 @@ namespace Pixeek.Game
         /// <param name="difficulty">nehézség</param>
         /// <param name="imageList">képek listája</param>
         /// <returns>A táblával tér vissza</returns>
-        public Board newGame(GameMode gameMode, Difficulty difficulty, List<Image> imageList)
+        public Board newGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
         {
             this.gameMode = gameMode;
 
             board = new Board(imageList);
-            board.createBoard(difficulty);
+            board.createBoard(difficulty,boardAnimal);
             ImagesToFind = Game.ImagesToFind.createNewImagesToFind(gameMode, difficulty, board);
             
             if (gameMode == GameMode.TIME)
             {
-                elapsedTime = new TimeSpan(0, 5, 0);
+                elapsedTime = new TimeSpan(0, 0, 5);
             }
             else
             {

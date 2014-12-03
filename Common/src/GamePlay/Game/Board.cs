@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Pixeek.Transformation;
+using Pixeek.BoardShapes;
 
 namespace Pixeek.Game
 {
@@ -61,44 +62,73 @@ namespace Pixeek.Game
         /// Feltölti a Field-ek listáját a megadott nehézségen koordinátákkal együtt.
         /// </summary>
         /// <param name="difficulty"></param>
-        public void createBoard(Difficulty difficulty)
+        public void createBoard(Difficulty difficulty, IBoardShapes boardAnimal)
         {
-            X = 0;
-            Y = 0;
-            if (difficulty == Difficulty.EASY)
+            if (boardAnimal != null)
             {
-                X = 5;
-                Y = 5;
-            }
-            else if (difficulty == Difficulty.NORMAL)
-            {
-                X = 9;
-                Y = 9;
-            }
-            else if (difficulty == Difficulty.HARD)
-            {
-                X = 16;
-                Y = 16;
-            }
-
-            for (int i = 0; i < X; i++)
-            {
-                for (int j = 0; j < Y; j++)
+                int[][] boardMap = boardAnimal.getField(difficulty);
+                Y = boardMap.GetLength(0);
+                X = boardMap[0].GetLength(0);
+                for (int y = 0; y < boardMap.GetLength(0); y++)
                 {
-                    int randomImage = random.Next(imageList.Count);
-                    Transformator trf;
-                    switch (random.Next(5))
+                    for (int x = 0; x < boardMap[y].GetLength(0); x++)
                     {
-                        case (0): trf = new Rotate(difficulty, random.Next()); break;
-                        case (1): trf = new Mirror(difficulty, random.Next()); break;
-                        case (2): trf = new Blur(difficulty, random.Next()); break;
-                        case (3): trf = new ColorTransformation(difficulty, random.Next()); break;
-                        default: trf = new Transformator(difficulty, random.Next()); break;
+                        if (boardMap[y][x] == 1)
+                        {
+                            addRandomFieldToAllFields(difficulty, y, x);
+                        }
                     }
-                    Field field = new Field(imageList[randomImage], randomImage, j, i,true, trf);
-                    AllFields.Add(field);
                 }
             }
+            else
+            {
+                X = 0;
+                Y = 0;
+                if (difficulty == Difficulty.EASY)
+                {
+                    X = 5;
+                    Y = 5;
+                }
+                else if (difficulty == Difficulty.NORMAL)
+                {
+                    X = 9;
+                    Y = 9;
+                }
+                else if (difficulty == Difficulty.HARD)
+                {
+                    X = 16;
+                    Y = 16;
+                }
+
+                for (int i = 0; i < X; i++)
+                {
+                    for (int j = 0; j < Y; j++)
+                    {
+                        addRandomFieldToAllFields(difficulty, i, j);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Hozzáad az összes mezõhöz egy random transzformált képpel rendelkezõ mezõt. A mezõ sor és oszlopadata a paraméterben meghatározott
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="row"></param>
+        private void addRandomFieldToAllFields(Difficulty difficulty, int column, int row)
+        {
+            int randomImage = random.Next(imageList.Count);
+            Transformator trf;
+            switch (random.Next(5))
+            {
+                case (0): trf = new Rotate(difficulty, random.Next()); break;
+                case (1): trf = new Mirror(difficulty, random.Next()); break;
+                case (2): trf = new Blur(difficulty, random.Next()); break;
+                case (3): trf = new ColorTransformation(difficulty, random.Next()); break;
+                default: trf = new Transformator(difficulty, random.Next()); break;
+            }
+            Field field = new Field(imageList[randomImage], randomImage, column, row, true, trf);
+            AllFields.Add(field);
         }
 
         /// <summary>

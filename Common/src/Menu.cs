@@ -257,13 +257,31 @@ namespace Pixeek
             GameManager.Instance.SwitchScene(new Menu(root));
         }
 
-        public static void CreateGameOverMenu()
+        public static void CreateGameOverMenu(bool win, int point, string time)
         {
             MenuElement root = new MenuElement();
             MenuSpriteElement bg = new MenuSpriteElement("GUI/menu_bg.jpg", new Rectangle(0, 0, GameManager.Width, GameManager.Height));
             //root.AddChild(bg);
 
-            root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 50), "YOU WON!"));
+            if (win)
+            {
+                if (time != null)
+                {
+                    root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "YOU WON!\nYou gained "+point
+                        +" points in "+time+"."));
+                }
+                else
+                {
+                    root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "YOU WON!\nYou gained " + point
+                        + " points."));
+                }
+            }
+            else
+            {
+                root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "GAME OVER!\nYou gained " + point
+                        + " points."));
+            }
+            
 
             Rectangle exitRect = new Rectangle(400, 300, 400, 50);
             MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()

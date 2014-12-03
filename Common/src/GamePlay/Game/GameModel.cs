@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pixeek.BoardShapes;
 using Pixeek.GameDrawables;
 using Pixeek.ImageLoader;
 using Pixeek.Saving;
@@ -63,9 +64,8 @@ namespace Pixeek.Game
             };
             levelManager.TimeStoppedHandler = delegate()
             {
-                //TODO letelt a játék, kéne valami gameover
+                Menu.CreateGameOverMenu(false,scoring.Score,null);
                 levelManager.endGame();
-                Menu.CreateMainMenu();
             };
             UpperMenu.Instance.ExitHandler = delegate()
             {
@@ -74,27 +74,29 @@ namespace Pixeek.Game
             };
 
             gameMode = GameMode.NORMAL;
-            board = levelManager.newGame(gameMode, Difficulty.NORMAL, imageDatabase.getAllPictures());
+            //Létrehozunk egy alakzatot, és átadjuk a pályakészítõnek
+            IBoardShapes boardAnimal = new BoardFish();
+            board = levelManager.newGame(gameMode, Difficulty.NORMAL, boardAnimal, imageDatabase.getAllPictures());
 
             toFindDrawable.ImagesToFind = levelManager.ImagesToFind;
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
-                //TODO letelt a játék, kéne valami gameover
+                Menu.CreateGameOverMenu(true, scoring.Score, UpperMenu.Instance.getTimerText());
                 levelManager.endGame();
-                Menu.CreateMainMenu();
             };
 
 
             #region save and load test
-            /*
-            List<Image> temp = new List<Image>();
+            
+            //TODO kezelni kell azt az esetet, hogyha egy image null. (Ilyenkor nincs mezõ az adott x,y koordinátán)
+            /*List<Image> temp = new List<Image>();
             temp = imageDatabase.getAllPictures();
 
             savingManager = new Save();
             savingManager.save(board);
-            board = savingManager.load(temp);
-            */
+            board = savingManager.load(temp);*/
+            
             #endregion
 
 

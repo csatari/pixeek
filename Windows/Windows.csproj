@@ -63,6 +63,15 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardDiamond.cs">
+      <Link>src\GamePlay\BoardShapes\BoardDiamond.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardFish.cs">
+      <Link>src\GamePlay\BoardShapes\BoardFish.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\IBoardShapes.cs">
+      <Link>src\GamePlay\BoardShapes\IBoardShapes.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\GameDrawables\BoardDrawable.cs">
       <Link>src\GamePlay\GameDrawables\BoardDrawable.cs</Link>
     </Compile>

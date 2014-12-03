@@ -82,5 +82,9 @@ namespace Pixeek.GameDrawables
         {
             timerBackground.TimerText = txt;
         }
+        public string getTimerText()
+        {
+            return timerBackground.TimerText;
+        }
     }
 }
