@@ -51,10 +51,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1C9A96BA43B0535069F03DE2EC5A22A678A6E4CE</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2FAD70C79D61B5BE64ABD5F3875FCEAF3D540425</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Windows_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Windows_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -162,6 +162,7 @@
       <Link>src\Prototype\Prototype</Link>
     </Compile>
     <Compile Include="src\GamePlay\SoundVibration\SoundAndVibrationWindows.cs" />
+    <Compile Include="src\Testing\Testing.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -200,6 +201,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Windows_1_TemporaryKey.pfx" />
     <None Include="Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -80,6 +80,9 @@ namespace Pixeek
             //SwitchScene(new Menu());
             Menu.CreateMainMenu();
             //Menu.CreateGameOverMenu();
+
+
+            Testing.RunAllTests();
         }
 
         protected override void Update(GameTime gameTime)
