@@ -76,10 +76,17 @@ namespace Pixeek
 
             virtual protected Color GetColor()
             {
-                return Color.White;
+                return baseColor;
+            }
+
+            public void SetBaseColor(Color color)
+            {
+                baseColor = color;
             }
 
             protected List<MenuElement> children = null;
+
+            protected Color baseColor = Color.White;
         }
 
         public class MenuSpriteElement : MenuElement
@@ -99,7 +106,7 @@ namespace Pixeek
                 if (texture != null)
                 {
                     GameManager.Instance.spriteBatch.Draw(texture, area, Color.Lerp(GetColor(), baseColor, 0.5f));
-                }                
+                }
 
                 if (text != null)
                 {
@@ -145,7 +152,10 @@ namespace Pixeek
                 {
                     if (buttonDown && !down)
                     {
-                        clickHandler();
+                        if (clickHandler != null)
+                        {
+                            clickHandler();
+                        }
                         Debug.WriteLine("megnyomva");
                         buttonDown = false;
                         return true;
@@ -193,15 +203,30 @@ namespace Pixeek
 
             protected override Color GetColor()
             {
+                Color bc = base.GetColor();
                 if (buttonDown)
                 {
-                    return Color.Black;
+                    if (bc == Color.White)
+                    {
+                        return Color.Black;
+                    }
+                    else
+                    {
+                        return Color.Lerp(Color.Black, bc, 0.5f);
+                    }
                 }
                 if (buttonHovered)
                 {
-                    return Color.LightGray;
+                    if (bc == Color.White)
+                    {
+                        return Color.LightGray;
+                    }
+                    else
+                    {
+                        return Color.Lerp(Color.LightGray, bc, 0.5f);
+                    }
                 }
-                else return Color.White;
+                else return bc;
             }
 
             bool buttonDown = false;
@@ -247,7 +272,8 @@ namespace Pixeek
                     delegate()
                     {
                         //GameManager.Instance.SwitchScene(new Prototype());
-                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase));
+                        //GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase));
+                        Menu.CreateNewGameMenu();
                     }
                     );
                 bg.AddChild(playButton);
@@ -267,8 +293,8 @@ namespace Pixeek
             {
                 if (time != null)
                 {
-                    root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "YOU WON!\nYou gained "+point
-                        +" points in "+time+"."));
+                    root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "YOU WON!\nYou gained " + point
+                        + " points in " + time + "."));
                 }
                 else
                 {
@@ -281,7 +307,7 @@ namespace Pixeek
                 root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "GAME OVER!\nYou gained " + point
                         + " points."));
             }
-            
+
 
             Rectangle exitRect = new Rectangle(400, 300, 400, 50);
             MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()
@@ -290,6 +316,174 @@ namespace Pixeek
             });
             exitButton.AddChild(new MenuSpriteElement("GUI/button_bg", exitRect, "BACK TO MAIN MENU"));
             root.AddChild(exitButton);
+
+            GameManager.Instance.SwitchScene(new Menu(root));
+        }
+
+        static Game.GameMode selectedGameMode = Game.GameMode.NORMAL;
+        static Game.Difficulty selectedDifficulty = Game.Difficulty.NORMAL;
+
+        class DifficultySelector : MenuElement
+        {
+            override public void Update(GameTime gameTime)
+            {
+                base.Update(gameTime);
+
+                foreach (KeyValuePair<Game.Difficulty, MenuElement> kvp in elements)
+                {
+                    if (selectedDifficulty == kvp.Key)
+                    {
+                        kvp.Value.SetBaseColor(Color.Red);
+                    }
+                    else
+                    {
+                        kvp.Value.SetBaseColor(Color.White);
+                    }
+                }
+            }
+
+            Dictionary<Game.Difficulty, MenuElement> elements = new Dictionary<Game.Difficulty, MenuElement>();
+
+            public void AddElementForDifficulty(Game.Difficulty diff, MenuElement elem)
+            {
+                elements[diff] = elem;
+                AddChild(elem);
+            }
+        }
+
+        // TODO unify with difficultyselector as a generic class
+        class GameModeSelector : MenuElement
+        {
+            override public void Update(GameTime gameTime)
+            {
+                base.Update(gameTime);
+
+                foreach (KeyValuePair<Game.GameMode, MenuElement> kvp in elements)
+                {
+                    if (selectedGameMode == kvp.Key)
+                    {
+                        kvp.Value.SetBaseColor(Color.Red);
+                    }
+                    else
+                    {
+                        kvp.Value.SetBaseColor(Color.White);
+                    }
+                }
+            }
+
+            Dictionary<Game.GameMode, MenuElement> elements = new Dictionary<Game.GameMode, MenuElement>();
+
+            public void AddElementForDifficulty(Game.GameMode diff, MenuElement elem)
+            {
+                elements[diff] = elem;
+                AddChild(elem);
+            }
+        }
+
+        public static void CreateNewGameMenu()
+        {
+            MenuElement root = new MenuElement();
+            MenuSpriteElement bg = new MenuSpriteElement("GUI/newgame_menu.jpg", new Rectangle(0, 0, GameManager.Width, GameManager.Height));
+            root.AddChild(bg);
+
+            {
+                Rectangle exitRect = new Rectangle(GameManager.Width - 152, 1, 151, 71);
+                MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()
+                {
+                    CreateMainMenu();
+                });
+                exitButton.AddChild(new MenuSpriteElement("GUI/button_bg", exitRect, "BACK"));
+                bg.AddChild(exitButton);
+            }
+
+            {
+                DifficultySelector selector = new DifficultySelector();
+                bg.AddChild(selector);
+
+                const int baseX = 370;
+                const int baseY = 280;
+                const int YDiff = 40;
+                {
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 0, 100, 20);
+                    MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
+                    {
+                        selectedDifficulty = Game.Difficulty.EASY;
+                    });
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "EASY"));
+                    selector.AddElementForDifficulty(Game.Difficulty.EASY, easyButton);
+                }
+
+                {
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 1, 100, 20);
+                    MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
+                    {
+                        selectedDifficulty = Game.Difficulty.NORMAL;
+                    });
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL"));
+                    selector.AddElementForDifficulty(Game.Difficulty.NORMAL, easyButton);
+                }
+
+                {
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 2, 100, 20);
+                    MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
+                    {
+                        selectedDifficulty = Game.Difficulty.HARD;
+                    });
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "HARD"));
+                    selector.AddElementForDifficulty(Game.Difficulty.HARD, easyButton);
+                }
+            }
+
+            {
+                GameModeSelector selector = new GameModeSelector();
+                bg.AddChild(selector);
+
+                const int baseX = 130;
+                const int baseY = 280;
+                const int YDiff = 40;
+                {
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 0, 100, 20);
+                    MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
+                    {
+                        selectedGameMode = Game.GameMode.NORMAL;
+                    });
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL"));
+                    selector.AddElementForDifficulty(Game.GameMode.NORMAL, easyButton);
+                }
+
+                {
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 1, 100, 20);
+                    MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
+                    {
+                        selectedGameMode = Game.GameMode.ENDLESS;
+                    });
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "ENDLESS"));
+                    selector.AddElementForDifficulty(Game.GameMode.ENDLESS, easyButton);
+                }
+
+                {
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 2, 100, 20);
+                    MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
+                    {
+                        selectedGameMode = Game.GameMode.TIME;
+                    });
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "TIME"));
+                    selector.AddElementForDifficulty(Game.GameMode.TIME, easyButton);
+                }
+            }
+
+            {
+                Rectangle playRect = new Rectangle(1000, 320, 146, 42);
+                MenuButtonElement playButton = new MenuButtonElement(playRect,
+                    delegate()
+                    {
+                        //GameManager.Instance.SwitchScene(new Prototype());
+                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase, selectedGameMode, selectedDifficulty));
+                    }
+                    );
+                bg.AddChild(playButton);
+                playButton.AddChild(new MenuSpriteElement("GUI/button_play.png", playRect));
+            }
 
             GameManager.Instance.SwitchScene(new Menu(root));
         }

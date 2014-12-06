@@ -24,12 +24,15 @@ namespace Pixeek.Game
         private Scoring scoring;
         private ToFindDrawable toFindDrawable;
         private GameMode gameMode;
+        private Difficulty difficulty;
         public Board board;
 
 
-        public GameModel(ImageDatabase imageDatabase)
+        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff)
         {
             this.imageDatabase = imageDatabase;
+            gameMode = mode;
+            difficulty = diff;
         }
 
         public static GameModel Instance
@@ -40,7 +43,7 @@ namespace Pixeek.Game
                 {
                     ImageDatabase imageDatabase = new ImageDatabase();
                     imageDatabase.LoadContent();
-                    jatekModell = new GameModel(imageDatabase);
+                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY);
                 }
                 return jatekModell;
             }
@@ -73,10 +76,9 @@ namespace Pixeek.Game
                 Menu.CreateMainMenu();
             };
 
-            gameMode = GameMode.NORMAL;
             //Létrehozunk egy alakzatot, és átadjuk a pályakészítõnek
             IBoardShapes boardAnimal = new BoardFish();
-            board = levelManager.newGame(gameMode, Difficulty.NORMAL, boardAnimal, imageDatabase.getAllPictures());
+            board = levelManager.newGame(gameMode, difficulty, boardAnimal, imageDatabase.getAllPictures());
 
             toFindDrawable.ImagesToFind = levelManager.ImagesToFind;
 
