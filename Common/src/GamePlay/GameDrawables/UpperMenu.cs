@@ -67,6 +67,7 @@ namespace Pixeek.GameDrawables
             Rectangle exitRect = new Rectangle(6 * GameManager.Width / 7, 0, GameManager.Width / 7, GameManager.Height / 8);
             Pixeek.Menu.MenuButtonElement exitButton = new Pixeek.Menu.MenuButtonElement(exitRect, delegate()
             {
+               
                 ExitHandler();
                 //Menu.CreateMainMenu();
                 //System.Random random = new System.Random();

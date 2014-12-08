@@ -380,6 +380,9 @@ namespace Pixeek
             }
         }
 
+
+        static bool sfx = false; 
+
         public static void CreateNewGameMenu()
         {
             MenuElement root = new MenuElement();
@@ -395,6 +398,24 @@ namespace Pixeek
                 exitButton.AddChild(new MenuSpriteElement("GUI/button_bg", exitRect, "BACK"));
                 bg.AddChild(exitButton);
             }
+
+            Rectangle sfxOnRect = new Rectangle(GameManager.Width - 461, 1, 151, 71);
+            MenuButtonElement sfxOnButton = new MenuButtonElement(sfxOnRect, delegate()
+            {
+                sfx = true;
+            });
+            sfxOnButton.AddChild(new MenuSpriteElement("GUI/button_bg", sfxOnRect, "SFX ON"));
+            bg.AddChild(sfxOnButton);
+            
+            Rectangle sfxOffRect = new Rectangle(GameManager.Width - 306, 1, 151, 71);
+            MenuButtonElement sfxOffButton = new MenuButtonElement(sfxOffRect, delegate()
+            {
+                sfx = false;
+            });
+            sfxOffButton.AddChild(new MenuSpriteElement("GUI/button_bg", sfxOffRect, "SFX OFF"));
+            bg.AddChild(sfxOffButton);
+
+           
 
             {
                 DifficultySelector selector = new DifficultySelector();
@@ -478,7 +499,7 @@ namespace Pixeek
                     delegate()
                     {
                         //GameManager.Instance.SwitchScene(new Prototype());
-                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase, selectedGameMode, selectedDifficulty));
+                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase, selectedGameMode, selectedDifficulty, sfx));
                     }
                     );
                 bg.AddChild(playButton);

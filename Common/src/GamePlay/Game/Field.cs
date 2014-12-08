@@ -15,6 +15,7 @@ namespace Pixeek.Game
             {
                 Name = image.Name,
                 ImageTexture = trf.transform(image.ImageTexture)
+                
             };
         }
 

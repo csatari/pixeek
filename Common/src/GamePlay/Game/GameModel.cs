@@ -26,13 +26,22 @@ namespace Pixeek.Game
         private GameMode gameMode;
         private Difficulty difficulty;
         public Board board;
+        public bool sfx;
+        Double timeToSave;
+       
 
 
-        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff)
+
+        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedSfx)
         {
             this.imageDatabase = imageDatabase;
             gameMode = mode;
             difficulty = diff;
+            sfx = selectedSfx;
+           
+
+            soundAndVibration = new SoundAndVibrationWindows();   //target platform to be detected -- Gábor
+            
         }
 
         public static GameModel Instance
@@ -43,7 +52,7 @@ namespace Pixeek.Game
                 {
                     ImageDatabase imageDatabase = new ImageDatabase();
                     imageDatabase.LoadContent();
-                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY);
+                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY, false); //false - default sfx
                 }
                 return jatekModell;
             }
@@ -59,11 +68,14 @@ namespace Pixeek.Game
             CreateUpperMenu();
             toFindDrawable = new ToFindDrawable(GameManager.Instance);
             GameManager.Instance.Components.Add(toFindDrawable);
+            
+
             //új játék indítása
             levelManager = new LevelManager();
             levelManager.TimeElapsedHandler = delegate(TimeSpan elapsedTime)
             {
                 UpperMenu.Instance.setTimerText(elapsedTime.ToString("mm\\:ss"));
+                timeToSave = elapsedTime.TotalSeconds;
             };
             levelManager.TimeStoppedHandler = delegate()
             {
@@ -73,6 +85,7 @@ namespace Pixeek.Game
             UpperMenu.Instance.ExitHandler = delegate()
             {
                 levelManager.endGame();
+                saveGame(timeToSave, levelManager.ImagesToFind.ToFind, scoring.Score, scoring.Combo);
                 Menu.CreateMainMenu();
             };
 
@@ -81,35 +94,47 @@ namespace Pixeek.Game
             board = levelManager.newGame(gameMode, difficulty, boardAnimal, imageDatabase.getAllPictures());
 
             toFindDrawable.ImagesToFind = levelManager.ImagesToFind;
+           
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
+             
                 Menu.CreateGameOverMenu(true, scoring.Score, UpperMenu.Instance.getTimerText());
                 levelManager.endGame();
             };
 
-
-            #region save and load test
-            
-            //TODO kezelni kell azt az esetet, hogyha egy image null. (Ilyenkor nincs mezõ az adott x,y koordinátán)
-            /*List<Image> temp = new List<Image>();
-            temp = imageDatabase.getAllPictures();
-
-            savingManager = new Save();
-            savingManager.save(board);
-            board = savingManager.load(temp);*/
-            
-            #endregion
-
+          
 
             BoardDrawable _boardDrawable = new BoardDrawable(board,
                 delegate(Field field) {
                     bool success = levelManager.tryClickedField(field);
                     if (success)
                     {
+                        if (sfx)
+                        {
+                            soundAndVibration.playSound();
+                            soundAndVibration.vibrate();
+                        }
                         scoring.addPoint(1);
+                        
+                    }
+                    else
+                    {
+                        if(sfx)
+                          soundAndVibration.playSoundBad();
                     }
                 });
+          
+        }
+
+        public void saveGame(Double timeToSave, List<Image> imagesToFindSave, int score, int combo)
+        {
+            List<Image> temp = new List<Image>();
+            temp = imageDatabase.getAllPictures();
+
+            
+            savingManager = new Save();
+            savingManager.save(BoardDrawable.Instance.board, timeToSave, imagesToFindSave, score, combo);
         }
 
         public void LoadContent() 
