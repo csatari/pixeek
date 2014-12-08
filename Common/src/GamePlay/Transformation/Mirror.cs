@@ -16,7 +16,17 @@ namespace Pixeek.Transformation
                 return texture;
 
             // Load texture data
-            GraphicsDevice gd = GameManager.Instance.GraphicsDevice;
+            GraphicsDevice gd;
+            if (GameManager.Instance != null)
+            {
+                gd = GameManager.Instance.GraphicsDevice;
+            }
+            else
+            {
+                gd = new GraphicsDevice(GraphicsAdapter.DefaultAdapter,
+                                        GraphicsProfile.Reach,
+                                        new PresentationParameters());
+            }
             int width = texture.Width;
             int height = texture.Height;
             Color[] textureData = new Color[width * height];
