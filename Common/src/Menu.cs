@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pixeek.ImageLoader;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -91,14 +92,14 @@ namespace Pixeek
 
         public class MenuSpriteElement : MenuElement
         {
-            public MenuSpriteElement(string textureName, Rectangle area, string text = null)
+            public MenuSpriteElement(string textureName, Rectangle area, String text = null)
             {
                 this.area = area;
                 if (!string.IsNullOrEmpty(textureName))
                 {
                     this.texture = GameManager.Instance.Content.Load<Texture2D>(textureName);
                 }
-                this.text = text;
+                this.Text = text;
             }
 
             override public void Draw(GameTime gameTime, Color baseColor)
@@ -108,12 +109,12 @@ namespace Pixeek
                     GameManager.Instance.spriteBatch.Draw(texture, area, Color.Lerp(GetColor(), baseColor, 0.5f));
                 }
 
-                if (text != null)
+                if (Text != null)
                 {
-                    Vector2 size = GameManager.Instance.font.MeasureString(text);
+                    Vector2 size = GameManager.Instance.font.MeasureString(Text);
                     Vector2 pos = new Vector2(area.Center.X - size.X / 2, area.Center.Y - size.Y / 2);
                     GameManager.Instance.spriteBatch.DrawString(
-                        GameManager.Instance.font, text, pos, Color.Lerp(GetColor(), baseColor, 0.5f));
+                        GameManager.Instance.font, Text, pos, Color.Lerp(GetColor(), baseColor, 0.5f));
                 }
 
                 base.Draw(gameTime, baseColor);
@@ -121,7 +122,11 @@ namespace Pixeek
 
             protected Rectangle area;
             private Texture2D texture = null;
-            private string text = null;
+            public String Text
+            {
+                get;
+                set;
+            }
         }
 
         public class MenuButtonElement : MenuElement
@@ -383,8 +388,11 @@ namespace Pixeek
 
         static bool music = false;
         static bool vibration = false;
-        static string musicText = "MUSIC: OFF";
+        static String musicText = "MUSIC: OFF";
         static string vibText = "VIBRATION: OFF";
+        static MenuSpriteElement musicSpriteElement;
+        static MenuSpriteElement vibrationSpriteElement;
+
 
         public static void CreateNewGameMenu()
         {
@@ -414,9 +422,11 @@ namespace Pixeek
                 {
                     music = false;
                     musicText = "MUSIC: OFF";
-                }
+                } 
+                musicSpriteElement.Text = musicText;
             });
-            musicButton.AddChild(new MenuSpriteElement("GUI/button_bg", musicRect, musicText));
+            musicSpriteElement = new MenuSpriteElement("GUI/button_bg", musicRect, musicText);
+            musicButton.AddChild(musicSpriteElement);
             bg.AddChild(musicButton);
             
             Rectangle vibRect = new Rectangle(GameManager.Width - 345, 1, 190, 71);
@@ -432,8 +442,10 @@ namespace Pixeek
                     vibration = false;
                     vibText = "VIBRATION: OFF";
                 }
+                vibrationSpriteElement.Text = vibText;
             });
-            vibButton.AddChild(new MenuSpriteElement("GUI/button_bg", vibRect, vibText));
+            vibrationSpriteElement = new MenuSpriteElement("GUI/button_bg", vibRect, vibText);
+            vibButton.AddChild(vibrationSpriteElement);
             bg.AddChild(vibButton);
 
            
