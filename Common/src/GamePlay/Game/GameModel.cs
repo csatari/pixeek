@@ -93,6 +93,15 @@ namespace Pixeek.Game
 
             //Létrehozunk egy alakzatot, és átadjuk a pályakészítõnek
             IBoardShapes boardAnimal = new BoardFish();
+            Random random = new Random();
+            int r = random.Next(3);
+            switch (r)
+            {
+                case 0: { boardAnimal = new BoardDiamond(); break; }
+                case 1: { boardAnimal = new BoardFish(); break; }
+                default: { boardAnimal = null; break; }
+            }
+
             board = levelManager.newGame(gameMode, difficulty, boardAnimal, imageDatabase.getAllPictures());
 
             toFindDrawable.ImagesToFind = levelManager.ImagesToFind;
@@ -100,12 +109,9 @@ namespace Pixeek.Game
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
-             
                 Menu.CreateGameOverMenu(true, scoring.Score, UpperMenu.Instance.getTimerText());
                 levelManager.endGame();
             };
-
-          
 
             BoardDrawable _boardDrawable = new BoardDrawable(board,
                 delegate(Field field) {

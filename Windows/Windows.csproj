@@ -204,7 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Windows_1_TemporaryKey.pfx" />
-    <None Include="Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
