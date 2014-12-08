@@ -381,7 +381,10 @@ namespace Pixeek
         }
 
 
-        static bool sfx = false; 
+        static bool music = false;
+        static bool vibration = false;
+        static string musicText = "MUSIC: OFF";
+        static string vibText = "VIBRATION: OFF";
 
         public static void CreateNewGameMenu()
         {
@@ -399,21 +402,39 @@ namespace Pixeek
                 bg.AddChild(exitButton);
             }
 
-            Rectangle sfxOnRect = new Rectangle(GameManager.Width - 461, 1, 151, 71);
-            MenuButtonElement sfxOnButton = new MenuButtonElement(sfxOnRect, delegate()
+            Rectangle musicRect = new Rectangle(GameManager.Width - 500, 1, 151, 71);
+            MenuButtonElement musicButton = new MenuButtonElement(musicRect, delegate()
             {
-                sfx = true;
+                if (!music)
+                {
+                    music = true;
+                    musicText = "MUSIC: ON";
+                }
+                else
+                {
+                    music = false;
+                    musicText = "MUSIC: OFF";
+                }
             });
-            sfxOnButton.AddChild(new MenuSpriteElement("GUI/button_bg", sfxOnRect, "SFX ON"));
-            bg.AddChild(sfxOnButton);
+            musicButton.AddChild(new MenuSpriteElement("GUI/button_bg", musicRect, musicText));
+            bg.AddChild(musicButton);
             
-            Rectangle sfxOffRect = new Rectangle(GameManager.Width - 306, 1, 151, 71);
-            MenuButtonElement sfxOffButton = new MenuButtonElement(sfxOffRect, delegate()
+            Rectangle vibRect = new Rectangle(GameManager.Width - 345, 1, 190, 71);
+            MenuButtonElement vibButton = new MenuButtonElement(vibRect, delegate()
             {
-                sfx = false;
+                if (!vibration)
+                {
+                    vibration = true;
+                    vibText = "VIBRATION: ON";
+                }
+                else
+                {
+                    vibration = false;
+                    vibText = "VIBRATION: OFF";
+                }
             });
-            sfxOffButton.AddChild(new MenuSpriteElement("GUI/button_bg", sfxOffRect, "SFX OFF"));
-            bg.AddChild(sfxOffButton);
+            vibButton.AddChild(new MenuSpriteElement("GUI/button_bg", vibRect, vibText));
+            bg.AddChild(vibButton);
 
            
 
@@ -499,7 +520,7 @@ namespace Pixeek
                     delegate()
                     {
                         //GameManager.Instance.SwitchScene(new Prototype());
-                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase, selectedGameMode, selectedDifficulty, sfx));
+                        GameManager.Instance.SwitchScene(new Game.GameModel(imageDatabase, selectedGameMode, selectedDifficulty, music, vibration));
                     }
                     );
                 bg.AddChild(playButton);

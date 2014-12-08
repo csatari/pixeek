@@ -26,18 +26,20 @@ namespace Pixeek.Game
         private GameMode gameMode;
         private Difficulty difficulty;
         public Board board;
-        public bool sfx;
+        public bool music;
+        public bool vib;
         Double timeToSave;
        
 
 
 
-        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedSfx)
+        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedMusic, bool selectedVib)
         {
             this.imageDatabase = imageDatabase;
             gameMode = mode;
             difficulty = diff;
-            sfx = selectedSfx;
+            music = selectedMusic;
+            vib = selectedVib;
            
 
             soundAndVibration = new SoundAndVibrationWindows();   //target platform to be detected -- Gábor
@@ -52,7 +54,7 @@ namespace Pixeek.Game
                 {
                     ImageDatabase imageDatabase = new ImageDatabase();
                     imageDatabase.LoadContent();
-                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY, false); //false - default sfx
+                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY, false, false); 
                 }
                 return jatekModell;
             }
@@ -110,7 +112,7 @@ namespace Pixeek.Game
                     bool success = levelManager.tryClickedField(field);
                     if (success)
                     {
-                        if (sfx)
+                        if (music)
                         {
                             soundAndVibration.playSound();
                             soundAndVibration.vibrate();
@@ -120,7 +122,7 @@ namespace Pixeek.Game
                     }
                     else
                     {
-                        if(sfx)
+                        if(music)
                           soundAndVibration.playSoundBad();
                     }
                 });
