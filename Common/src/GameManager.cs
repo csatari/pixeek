@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Pixeek
 {
@@ -81,8 +82,9 @@ namespace Pixeek
             Menu.CreateMainMenu();
             //Menu.CreateGameOverMenu();
 
-
             Testing.RunAllTests();
+            //TODO i commented it, because it is slow (checking the scoring system has some sleeps). should not be commented, if debugging is on
+            GameTesting.RunAllTests();
         }
 
         protected override void Update(GameTime gameTime)

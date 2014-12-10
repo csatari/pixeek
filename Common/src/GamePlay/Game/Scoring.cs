@@ -7,11 +7,11 @@ namespace Pixeek.Game
         public int Score { get; set; }
         private Timer timer;
 
-        public Scoring()
+        public Scoring(double interval = 2500)
         {
             Combo = 1;
             Score = 0;
-            timer = new Timer(2500);
+            timer = new Timer(interval);
             timer.Elapsed += timer_Elapsed;
         }
         /// <summary>
@@ -20,6 +20,7 @@ namespace Pixeek.Game
         /// <param name="score"></param>
         public void addPoint(int score)
         {
+            if (score <= 0) return;
             Score += Combo * score;
             setCombo();
         }
@@ -27,7 +28,7 @@ namespace Pixeek.Game
         /// <summary>
         /// Hozzáad a kombóhoz egyet, ha még nem telt le az elõzõ kombó ideje.
         /// </summary>
-        public void setCombo()
+        private void setCombo()
         {
             if (Combo < 32)
             {
@@ -57,7 +58,7 @@ namespace Pixeek.Game
         }
 
         /// <summary>
-        /// Törli az aktuálisan futó timert.
+        /// Megállítja az aktuálisan futó timert.
         /// </summary>
         private void stopTimer()
         {

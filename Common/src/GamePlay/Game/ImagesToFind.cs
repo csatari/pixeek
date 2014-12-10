@@ -76,6 +76,7 @@ namespace Pixeek.Game
         {
             Dictionary<string, int> imageWithMultiplication = new Dictionary<string, int>();
 
+            if (ToFind == null) return "";
             foreach (Image image in ToFind)
             {
                 if (!imageWithMultiplication.ContainsKey(image.Name))

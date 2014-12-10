@@ -68,7 +68,7 @@ namespace Pixeek.Game
             {
                 elapsedTime = TimeSpan.Zero;
             }
-            TimeElapsedHandler(elapsedTime);
+            if(TimeElapsedHandler!=null) TimeElapsedHandler(elapsedTime);
             time.Start();
 
             return board;
@@ -131,7 +131,7 @@ namespace Pixeek.Game
                 time.Stop();
                 time.Dispose();
             }
-            TimeElapsedHandler(elapsedTime);
+            if(TimeElapsedHandler!=null) TimeElapsedHandler(elapsedTime);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Pixeek.Game
         /// <param name="e"></param>
         private void time_Disposed(object sender, EventArgs e)
         {
-            TimeStoppedHandler();
+            if(TimeStoppedHandler!=null) TimeStoppedHandler();
         }
 
     }

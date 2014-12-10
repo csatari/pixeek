@@ -150,6 +150,9 @@
     <Compile Include="..\Common\src\GamePlay\Transformation\Transformator.cs">
       <Link>src\GamePlay\Transformation\Transformator.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\Testing\GameTesting.cs">
+      <Link>src\Testing\GameTesting.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Common\src\GameManager.cs">
