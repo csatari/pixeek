@@ -62,7 +62,7 @@ namespace Pixeek.Game
             
             if (gameMode == GameMode.TIME)
             {
-                elapsedTime = new TimeSpan(0, 0, 30);
+                elapsedTime = new TimeSpan(0, 0, 5);
             }
             else
             {

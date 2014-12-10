@@ -417,7 +417,6 @@ namespace Pixeek
                 {
                     music = true;
                     musicText = "MUSIC: ON";
-                    
                 }
                 else
                 {
