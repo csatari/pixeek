@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek.BoardShapes;
 using Pixeek.GameDrawables;
 using Pixeek.ImageLoader;
@@ -30,9 +31,6 @@ namespace Pixeek.Game
         public bool vib;
         Double timeToSave;
        
-
-
-
         public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedMusic, bool selectedVib)
         {
             this.imageDatabase = imageDatabase;
@@ -41,9 +39,12 @@ namespace Pixeek.Game
             music = selectedMusic;
             vib = selectedVib;
            
-
-            soundAndVibration = new SoundAndVibrationWindows();   //target platform to be detected -- Gábor
-            
+#if WINDOWS
+            soundAndVibration = new SoundAndVibrationWindows();
+#endif 
+#if ANDROID
+            soundAndVibration = new SoundAndVibrationAndroid();
+#endif
         }
 
         public static GameModel Instance
@@ -66,6 +67,9 @@ namespace Pixeek.Game
 
         public void Initialize()
         {
+            //csak a sima és a duplaérintést engedélyezzük
+            TouchPanel.EnabledGestures = GestureType.Tap | GestureType.DoubleTap;
+
             scoring = new Scoring();
             CreateUpperMenu();
             toFindDrawable = new ToFindDrawable(GameManager.Instance);
@@ -87,7 +91,9 @@ namespace Pixeek.Game
             UpperMenu.Instance.ExitHandler = delegate()
             {
                 levelManager.endGame();
+#if WINDOWS
                 saveGame(timeToSave, levelManager.ImagesToFind.ToFind, scoring.Score, scoring.Combo);
+#endif
                 Menu.CreateMainMenu();
             };
 
@@ -121,18 +127,25 @@ namespace Pixeek.Game
                         if (music)
                         {
                             soundAndVibration.playSound();
+                        }
+                        if (vib)
+                        {
                             soundAndVibration.vibrate();
                         }
                         scoring.addPoint(1);
-                        
                     }
                     else
                     {
-                        if(music)
-                          soundAndVibration.playSoundBad();
+                        if (music)
+                        {
+                            soundAndVibration.playSoundBad();
+                        }
+                        if (vib)
+                        {
+                            soundAndVibration.vibrateBad();
+                        }
                     }
                 });
-          
         }
 
         public void saveGame(Double timeToSave, List<Image> imagesToFindSave, int score, int combo)
@@ -150,20 +163,42 @@ namespace Pixeek.Game
         }
 
         ButtonState lastButtonState = ButtonState.Released;
+        TouchCollection currentTouchState;
 
         public void Update(GameTime gameTime)
         {
+            Point pos = new Point();
+            //érintés lekezelése
+            currentTouchState = TouchPanel.GetState();
+
+            while (TouchPanel.IsGestureAvailable)
+            {
+                var gesture = TouchPanel.ReadGesture();
+                switch (gesture.GestureType)
+                {
+                    case GestureType.DoubleTap:
+                        break;
+                    case GestureType.Tap:
+                        UpperMenu.Instance.root.OnPress(new Point((int)gesture.Position.X, (int)gesture.Position.Y), false);
+                        pos = new Point((int)gesture.Position.X, (int)gesture.Position.Y);
+                        break;
+                }
+            }
+
+            //egér lekezelése
             if (lastButtonState != Mouse.GetState().LeftButton)
             {
                 UpperMenu.Instance.root.OnPress(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Pressed);
+                pos = Mouse.GetState().Position;
                 lastButtonState = Mouse.GetState().LeftButton;
             }
             else
             {
                 UpperMenu.Instance.root.OnHover(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Released);
             }
+            BoardDrawable.Instance.PositionClicked(pos);
 
-            BoardDrawable.Instance.Update(gameTime);
+            //BoardDrawable.Instance.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime)

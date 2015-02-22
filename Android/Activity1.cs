@@ -17,8 +17,8 @@ namespace Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            Pixeek.Prototype.Activity = this;
-            var g = new Pixeek.Prototype();
+            Pixeek.GameManager.Activity = this;
+            var g = new Pixeek.GameManager();
             SetContentView(g.Window);
             g.Run();
         }

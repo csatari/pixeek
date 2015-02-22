@@ -25,6 +25,8 @@ namespace Pixeek.SoundVibration
             // do nothing under windows
         }
 
-   
+        public void vibrateBad()
+        {
+        }
     }
 }

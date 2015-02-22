@@ -8,6 +8,8 @@ namespace Pixeek.SoundVibration
 
    
         void vibrate();
+
+        void vibrateBad();
    
     }
 }

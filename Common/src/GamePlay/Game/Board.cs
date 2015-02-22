@@ -123,7 +123,9 @@ namespace Pixeek.Game
             {
                 case (0): trf = new Rotate(difficulty, random.Next()); break;
                 case (1): trf = new Mirror(difficulty, random.Next()); break;
+#if WINDOWS
                 case (2): trf = new Blur(difficulty, random.Next()); break;
+#endif
                 case (3): trf = new ColorTransformation(difficulty, random.Next()); break;
                 default: trf = new Transformator(difficulty, random.Next()); break;
             }

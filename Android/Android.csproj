@@ -9,13 +9,13 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Android</RootNamespace>
-    <AssemblyName>Android</AssemblyName>
+    <RootNamespace>szoftverfejl</RootNamespace>
+    <AssemblyName>pixeek</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidSupportedAbis>armeabi-v7a%3bx86</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi%3barmeabi-v7a%3bx86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <TargetFrameworkVersion>v2.3</TargetFrameworkVersion>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkSkip />
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <BundleAssemblies>False</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,137 +57,116 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common\src\GameManager.cs">
+      <Link>src\GameManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardDiamond.cs">
+      <Link>src\GamePlay\BoardShapes\BoardDiamond.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardFish.cs">
+      <Link>src\GamePlay\BoardShapes\BoardFish.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\IBoardShapes.cs">
+      <Link>src\GamePlay\BoardShapes\IBoardShapes.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\BoardDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\BoardDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\RectangleOverlay.cs">
+      <Link>src\GamePlay\GameDrawables\RectangleOverlay.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\ScoreDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\ScoreDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\TimerDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\TimerDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\ToFindDrawable.cs">
+      <Link>src\GamePlay\GameDrawables\ToFindDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\GameDrawables\UpperMenu.cs">
+      <Link>src\GamePlay\GameDrawables\UpperMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\Board.cs">
+      <Link>src\GamePlay\Game\Board.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\Difficulty.cs">
+      <Link>src\GamePlay\Game\Difficulty.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\Field.cs">
+      <Link>src\GamePlay\Game\Field.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\GameMode.cs">
+      <Link>src\GamePlay\Game\GameMode.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\GameModel.cs">
+      <Link>src\GamePlay\Game\GameModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\Image.cs">
+      <Link>src\GamePlay\Game\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\ImagesToFind.cs">
+      <Link>src\GamePlay\Game\ImagesToFind.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\LevelManager.cs">
+      <Link>src\GamePlay\Game\LevelManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Game\Scoring.cs">
+      <Link>src\GamePlay\Game\Scoring.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ImageLoader\ImageDatabase.cs">
+      <Link>src\GamePlay\ImageLoader\ImageDatabase.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ImageLoader\ImageDownloader.cs">
+      <Link>src\GamePlay\ImageLoader\ImageDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Saving\Save.cs">
+      <Link>src\GamePlay\Saving\Save.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Settings\Settings.cs">
+      <Link>src\GamePlay\Settings\Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Settings\SettingsMenu.cs">
+      <Link>src\GamePlay\Settings\SettingsMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\SoundVibration\SoundAndVibration.cs">
+      <Link>src\GamePlay\SoundVibration\SoundAndVibration.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Transformation\Blur.cs">
+      <Link>src\GamePlay\Transformation\Blur.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Transformation\ColorTransformation.cs">
+      <Link>src\GamePlay\Transformation\ColorTransformation.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Transformation\Mirror.cs">
+      <Link>src\GamePlay\Transformation\Mirror.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Transformation\Rotate.cs">
+      <Link>src\GamePlay\Transformation\Rotate.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Transformation\Transformator.cs">
+      <Link>src\GamePlay\Transformation\Transformator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\Menu.cs">
+      <Link>src\Menu.cs</Link>
+    </Compile>
     <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\Common\Content\apple1.jpg">
-      <Link>Assets\apple1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\apple2.jpg">
-      <Link>Assets\apple2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\apple3.jpg">
-      <Link>Assets\apple3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\asparagus.jpg">
-      <Link>Assets\asparagus.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\asparagus2.jpg">
-      <Link>Assets\asparagus2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\asparagus3.jpg">
-      <Link>Assets\asparagus3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\cabbage1.jpg">
-      <Link>Assets\cabbage1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\cabbage2.jpg">
-      <Link>Assets\cabbage2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\cabbage3.jpg">
-      <Link>Assets\cabbage3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\coconut1.jpg">
-      <Link>Assets\coconut1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\coconut2.jpg">
-      <Link>Assets\coconut2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\coconut3.jpg">
-      <Link>Assets\coconut3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\desktop.ini">
-      <Link>Assets\desktop.ini</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\images.txt">
-      <Link>Assets\images.txt</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\kiwi1.jpg">
-      <Link>Assets\kiwi1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\kiwi2.jpg">
-      <Link>Assets\kiwi2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\kiwi3.jpg">
-      <Link>Assets\kiwi3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\lemon1.jpg">
-      <Link>Assets\lemon1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\lemon2.jpg">
-      <Link>Assets\lemon2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\lemon3.jpg">
-      <Link>Assets\lemon3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\onion1.jpg">
-      <Link>Assets\onion1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\onion2.jpg">
-      <Link>Assets\onion2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\onion3.jpg">
-      <Link>Assets\onion3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\peach1.jpg">
-      <Link>Assets\peach1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\peach2.jpg">
-      <Link>Assets\peach2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\peach3.jpg">
-      <Link>Assets\peach3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\peanut1.jpg">
-      <Link>Assets\peanut1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\peanut2.jpg">
-      <Link>Assets\peanut2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\peanut3.jpg">
-      <Link>Assets\peanut3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\pineapple1.jpg">
-      <Link>Assets\pineapple1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\pineapple2.jpg">
-      <Link>Assets\pineapple2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\pineapple3.jpg">
-      <Link>Assets\pineapple3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\raspberry.jpg">
-      <Link>Assets\raspberry.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\raspberry2.jpg">
-      <Link>Assets\raspberry2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\rkeve.png">
-      <Link>Assets\rkeve.png</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\spriteFont1.xnb">
-      <Link>Assets\spriteFont1.xnb</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\tomato1.jpg">
-      <Link>Assets\tomato1.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\tomato2.jpg">
-      <Link>Assets\tomato2.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\tomato3.jpg">
-      <Link>Assets\tomato3.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\truck01.jpg">
-      <Link>Assets\truck01.jpg</Link>
-    </Compile>
-    <Compile Include="..\Common\Content\truck02.jpg">
-      <Link>Assets\truck02.jpg</Link>
-    </Compile>
     <Compile Include="..\Common\src\Prototype\Prototype.cs">
       <Link>src\Prototype\Prototype</Link>
     </Compile>
+    <Compile Include="src\GamePlay\SoundVibration\SoundAndVibrationAndroid.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="..\Common\Content\desktop.ini">
+      <Link>Assets\Content\desktop.ini</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\spriteFont1.xnb">
+      <Link>Assets\Content\spriteFont1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -198,16 +180,199 @@
     <Folder Include="Resources\Layout\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="..\Common\**\*" Exclude="..\Common\**\*.cs">
-      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\Drawable\Splash.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\Common\Content\apple1.jpg">
+      <Link>Assets\Content\apple1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\apple2.jpg">
+      <Link>Assets\Content\apple2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\apple3.jpg">
+      <Link>Assets\Content\apple3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\asparagus.jpg">
+      <Link>Assets\Content\asparagus.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\asparagus2.jpg">
+      <Link>Assets\Content\asparagus2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\asparagus3.jpg">
+      <Link>Assets\Content\asparagus3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\buttonsound.wav">
+      <Link>Assets\Content\buttonsound.wav</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\buttonsoundbad.wav">
+      <Link>Assets\Content\buttonsoundbad.wav</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\cabbage1.jpg">
+      <Link>Assets\Content\cabbage1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\cabbage2.jpg">
+      <Link>Assets\Content\cabbage2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\cabbage3.jpg">
+      <Link>Assets\Content\cabbage3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\coconut1.jpg">
+      <Link>Assets\Content\coconut1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\coconut2.jpg">
+      <Link>Assets\Content\coconut2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\coconut3.jpg">
+      <Link>Assets\Content\coconut3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\button_bg.png">
+      <Link>Assets\Content\GUI\button_bg.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\button_play.png">
+      <Link>Assets\Content\GUI\button_play.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\menu_bg.jpg">
+      <Link>Assets\Content\GUI\menu_bg.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\newgame_button.png">
+      <Link>Assets\Content\GUI\newgame_button.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\newgame_menu.jpg">
+      <Link>Assets\Content\GUI\newgame_menu.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\images.txt">
+      <Link>Assets\Content\images.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\kiwi1.jpg">
+      <Link>Assets\Content\kiwi1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\kiwi2.jpg">
+      <Link>Assets\Content\kiwi2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\kiwi3.jpg">
+      <Link>Assets\Content\kiwi3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\lemon1.jpg">
+      <Link>Assets\Content\lemon1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\lemon2.jpg">
+      <Link>Assets\Content\lemon2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\lemon3.jpg">
+      <Link>Assets\Content\lemon3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\onion1.jpg">
+      <Link>Assets\Content\onion1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\onion2.jpg">
+      <Link>Assets\Content\onion2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\onion3.jpg">
+      <Link>Assets\Content\onion3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\peach1.jpg">
+      <Link>Assets\Content\peach1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\peach2.jpg">
+      <Link>Assets\Content\peach2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\peach3.jpg">
+      <Link>Assets\Content\peach3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\peanut1.jpg">
+      <Link>Assets\Content\peanut1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\peanut2.jpg">
+      <Link>Assets\Content\peanut2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\peanut3.jpg">
+      <Link>Assets\Content\peanut3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\pineapple1.jpg">
+      <Link>Assets\Content\pineapple1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\pineapple2.jpg">
+      <Link>Assets\Content\pineapple2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\pineapple3.jpg">
+      <Link>Assets\Content\pineapple3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\raspberry.jpg">
+      <Link>Assets\Content\raspberry.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\raspberry2.jpg">
+      <Link>Assets\Content\raspberry2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\rkeve.png">
+      <Link>Assets\Content\rkeve.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\tomato1.jpg">
+      <Link>Assets\Content\tomato1.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\tomato2.jpg">
+      <Link>Assets\Content\tomato2.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\tomato3.jpg">
+      <Link>Assets\Content\tomato3.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\truck01.jpg">
+      <Link>Assets\Content\truck01.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\truck02.jpg">
+      <Link>Assets\Content\truck02.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

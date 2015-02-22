@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek.Game;
 using System.Collections.Generic;
 using System.Timers;
@@ -53,13 +54,11 @@ namespace Pixeek.GameDrawables
             set { _instance = value; }
         }
 
-        public void Update(GameTime gameTime)
+        public void PositionClicked(Point pos)
         {
-            if (lastButtonState == ButtonState.Pressed &&
-            Mouse.GetState().LeftButton == ButtonState.Released)
+            if (pos != Point.Zero)
             {
                 //sorindex és oszlopindex kiszámolása az egérkattintásból
-                Point pos = Mouse.GetState().Position;
                 Field clickedField = null;
                 foreach (KeyValuePair<Field, Rectangle> entry in fieldPositionDictionary)
                 {
@@ -72,12 +71,8 @@ namespace Pixeek.GameDrawables
                 if (clickedField != null)
                 {
                     clickHandler(clickedField);
-                    //Debug.WriteLine("X: " + clickedField.RowIndex + " Y: "+clickedField.ColumnIndex);
                 }
-
             }
-
-            lastButtonState = Mouse.GetState().LeftButton;
         }
 
         public void Draw()

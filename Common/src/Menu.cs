@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek.ImageLoader;
 using System;
 using System.Collections.Generic;
@@ -92,7 +93,7 @@ namespace Pixeek
 
         public class MenuSpriteElement : MenuElement
         {
-            public MenuSpriteElement(string textureName, Rectangle area, String text = null)
+            public MenuSpriteElement(string textureName, Rectangle area, String text = null, float scale=1.0f)
             {
                 this.area = area;
                 if (!string.IsNullOrEmpty(textureName))
@@ -100,6 +101,7 @@ namespace Pixeek
                     this.texture = GameManager.Instance.Content.Load<Texture2D>(textureName);
                 }
                 this.Text = text;
+                this.scale = scale;
             }
 
             override public void Draw(GameTime gameTime, Color baseColor)
@@ -113,8 +115,10 @@ namespace Pixeek
                 {
                     Vector2 size = GameManager.Instance.font.MeasureString(Text);
                     Vector2 pos = new Vector2(area.Center.X - size.X / 2, area.Center.Y - size.Y / 2);
-                    GameManager.Instance.spriteBatch.DrawString(
-                        GameManager.Instance.font, Text, pos, Color.Lerp(GetColor(), baseColor, 0.5f));
+                    /*GameManager.Instance.spriteBatch.DrawString(
+                        GameManager.Instance.font, Text, pos, Color.Lerp(GetColor(), baseColor, 0.5f));*/
+                    GameManager.Instance.spriteBatch.DrawString(GameManager.Instance.font, Text, pos, Color.Lerp(GetColor(), baseColor, 0.5f), 0,
+                        new Vector2(0, 0), scale, SpriteEffects.None, 0);
                 }
 
                 base.Draw(gameTime, baseColor);
@@ -122,6 +126,7 @@ namespace Pixeek
 
             protected Rectangle area;
             private Texture2D texture = null;
+            private float scale;
             public String Text
             {
                 get;
@@ -147,6 +152,7 @@ namespace Pixeek
 
             override public bool OnPress(Point pos, bool down)
             {
+#if WINDOWS
                 if (base.OnPress(pos, down))
                 {
                     buttonDown = true;
@@ -176,6 +182,19 @@ namespace Pixeek
                 }
 
                 return false;
+#endif
+#if ANDROID
+                if (area.Contains(pos))
+                {
+                    if (clickHandler != null)
+                    {
+                        clickHandler();
+                    }
+                    Debug.WriteLine("megnyomva");
+                    return true;
+                }
+                return false;
+#endif
             }
 
             override public bool OnHover(Point pos, bool hover)
@@ -249,6 +268,7 @@ namespace Pixeek
 
         public void Initialize()
         {
+            TouchPanel.EnabledGestures = GestureType.Tap | GestureType.DoubleTap;
             if (root == null)
             {
                 root = new MenuElement();
@@ -272,7 +292,8 @@ namespace Pixeek
                 bg.AddChild(exitButton);
             }
             {
-                Rectangle playRect = new Rectangle(800, 350, 340, 75);
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.65 * GameManager.Width), Convert.ToInt32(0.35*GameManager.Height),
+                                                    Convert.ToInt32(0.265 * GameManager.Width), Convert.ToInt32(0.104 * GameManager.Height));
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
@@ -298,23 +319,35 @@ namespace Pixeek
             {
                 if (time != null)
                 {
-                    root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "YOU WON!\nYou gained " + point
-                        + " points in " + time + "."));
+                    root.AddChild(new MenuSpriteElement(null, new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                                                            Convert.ToInt32(0.28 * GameManager.Height),
+                                                                            Convert.ToInt32(0.3125 * GameManager.Width), 
+                                                                            Convert.ToInt32(0.097 * GameManager.Height)), "YOU WON!\nYou gained " + point
+                        + " points. Remaining time: " + time));
                 }
                 else
                 {
-                    root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "YOU WON!\nYou gained " + point
+                    root.AddChild(new MenuSpriteElement(null, new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                                                            Convert.ToInt32(0.28 * GameManager.Height),
+                                                                            Convert.ToInt32(0.3125 * GameManager.Width),
+                                                                            Convert.ToInt32(0.097 * GameManager.Height)), "YOU WON!\nYou gained " + point
                         + " points."));
                 }
             }
             else
             {
-                root.AddChild(new MenuSpriteElement(null, new Rectangle(400, 200, 400, 70), "GAME OVER!\nYou gained " + point
+                root.AddChild(new MenuSpriteElement(null, new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                                                        Convert.ToInt32(0.28 * GameManager.Height),
+                                                                        Convert.ToInt32(0.3125 * GameManager.Width),
+                                                                        Convert.ToInt32(0.097 * GameManager.Height)), "GAME OVER!\nYou gained " + point
                         + " points."));
             }
 
 
-            Rectangle exitRect = new Rectangle(400, 300, 400, 50);
+            Rectangle exitRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                               Convert.ToInt32(0.4167 * GameManager.Height), 
+                                               Convert.ToInt32(0.3125 * GameManager.Width),
+                                               Convert.ToInt32(0.07 * GameManager.Height));
             MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()
             {
                 Menu.CreateMainMenu();
@@ -454,36 +487,39 @@ namespace Pixeek
                 DifficultySelector selector = new DifficultySelector();
                 bg.AddChild(selector);
 
-                const int baseX = 370;
-                const int baseY = 280;
-                const int YDiff = 40;
+                int baseX = Convert.ToInt32(0.279 * GameManager.Width);
+                int baseY = Convert.ToInt32(0.359 * GameManager.Height);
+                int YDiff = Convert.ToInt32(0.085 * GameManager.Height);
                 {
-                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 0, 100, 20);
+                    Rectangle easyRect = new Rectangle(baseX, 
+                                                       baseY + YDiff * 0,
+                                                       Convert.ToInt32(0.078 * GameManager.Width),
+                                                       Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedDifficulty = Game.Difficulty.EASY;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "EASY"));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "EASY",1.5f));
                     selector.AddElementForDifficulty(Game.Difficulty.EASY, easyButton);
                 }
 
                 {
-                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 1, 100, 20);
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 1, Convert.ToInt32(0.078 * GameManager.Width), Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedDifficulty = Game.Difficulty.NORMAL;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL"));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL",1.5f));
                     selector.AddElementForDifficulty(Game.Difficulty.NORMAL, easyButton);
                 }
 
                 {
-                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 2, 100, 20);
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 2, Convert.ToInt32(0.078 * GameManager.Width), Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedDifficulty = Game.Difficulty.HARD;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "HARD"));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "HARD",1.5f));
                     selector.AddElementForDifficulty(Game.Difficulty.HARD, easyButton);
                 }
             }
@@ -492,42 +528,42 @@ namespace Pixeek
                 GameModeSelector selector = new GameModeSelector();
                 bg.AddChild(selector);
 
-                const int baseX = 130;
-                const int baseY = 280;
-                const int YDiff = 40;
+                int baseX = Convert.ToInt32(0.1 * GameManager.Width);
+                int baseY = Convert.ToInt32(0.388 * GameManager.Height);
+                int YDiff = Convert.ToInt32(0.085 * GameManager.Height);
                 {
-                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 0, 100, 20);
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 0, Convert.ToInt32(0.078 * GameManager.Width), Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedGameMode = Game.GameMode.NORMAL;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL"));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL",1.5f));
                     selector.AddElementForDifficulty(Game.GameMode.NORMAL, easyButton);
                 }
 
                 {
-                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 1, 100, 20);
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 1, Convert.ToInt32(0.078 * GameManager.Width), Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedGameMode = Game.GameMode.ENDLESS;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "ENDLESS"));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "ENDLESS", 1.5f));
                     selector.AddElementForDifficulty(Game.GameMode.ENDLESS, easyButton);
                 }
 
                 {
-                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 2, 100, 20);
+                    Rectangle easyRect = new Rectangle(baseX, baseY + YDiff * 2, Convert.ToInt32(0.078 * GameManager.Width), Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedGameMode = Game.GameMode.TIME;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "TIME"));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "TIME", 1.5f));
                     selector.AddElementForDifficulty(Game.GameMode.TIME, easyButton);
                 }
             }
 
             {
-                Rectangle playRect = new Rectangle(1000, 320, 146, 42);
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.78125 * GameManager.Width), Convert.ToInt32(0.444 * GameManager.Height), Convert.ToInt32(0.114 * GameManager.Width), Convert.ToInt32(0.0583 * GameManager.Height));
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
@@ -548,9 +584,27 @@ namespace Pixeek
         }
 
         ButtonState lastButtonState = ButtonState.Released;
+        TouchCollection currentTouchState;
 
         public void Update(GameTime gameTime)
         {
+            //Érintés lekezelése
+            currentTouchState = TouchPanel.GetState();
+
+            while (TouchPanel.IsGestureAvailable)
+            {
+                var gesture = TouchPanel.ReadGesture();
+                switch (gesture.GestureType)
+                {
+                    case GestureType.DoubleTap:
+                        break;
+                    case GestureType.Tap:
+                        root.OnPress(new Point((int)gesture.Position.X, (int)gesture.Position.Y), false);
+                        break;
+                }
+            }
+            
+            //egér lekezelése
             if (lastButtonState != Mouse.GetState().LeftButton)
             {
                 root.OnPress(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Pressed);

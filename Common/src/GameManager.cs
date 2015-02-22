@@ -54,10 +54,14 @@ namespace Pixeek
         {
             _instance = this;
             graphics = new GraphicsDeviceManager(this);
-            
             graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+#if WINDOWS
             graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 700;
+            graphics.PreferredBackBufferHeight = 720;
+#endif
 
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
@@ -82,9 +86,9 @@ namespace Pixeek
             Menu.CreateMainMenu();
             //Menu.CreateGameOverMenu();
 
-            Testing.RunAllTests();
+            //Testing.RunAllTests();
             //TODO i commented it, because it is slow (checking the scoring system has some sleeps). should not be commented, if debugging is on
-            GameTesting.RunAllTests();
+            //GameTesting.RunAllTests();
         }
 
         protected override void Update(GameTime gameTime)
