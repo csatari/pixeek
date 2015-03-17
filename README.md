@@ -42,7 +42,15 @@ A második félévben megvalósítandó funkciók:
   *	Normál – fix számú kép megkeresése, idő alapján xp
   *	Idő extra – ha megvan egy kép, akkor az idődet kitolja x másodperccel (hibásnál levon időt)
   *	Végtelenített – minimális xp, de hatalmas pálya. Ha megtalálsz egyet, ahelyett új kép jelenik meg
-*	Beállítások: hang, vibráció
+*	Beállítások: hang, vibráció  
+A következő félévre vonatkozó szakterületi követelményeink:
+* Többszereplős játékmódok:
+  * Időzítő – két személy játszik egymás ellen, külön kapnak fix időt. A játékosok felváltva játszanak, a felváltás egy kép megtalálása után történik. Az veszít, akinek előbb letelik az ideje
+  * Harc a pontokért – két személy játszik egymás ellen. A játékosok egyszerre játszanak, egy fix feladványt oldanak meg. Az nyer, akinek több pontja lesz a feladvány befejezésekor.
+* A téma kiválasztható az új játék kezdésekor, a témához szükséges erőforrások a szerverről töltődnek le
+* Ranglista
+* Tutorial – első játékkor ajánlja fel, illetve a menüből is elérhető később kérésre. Egy példajátékon vezet végig.
+
 
 ### 1.5 Nem funkcionális követelmények
 
