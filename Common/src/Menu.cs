@@ -19,7 +19,7 @@ namespace Pixeek
                 {
                     children = new List<MenuElement>();
                 }
-
+                
                 children.Add(child);
             }
 

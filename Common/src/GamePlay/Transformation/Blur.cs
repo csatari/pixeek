@@ -2,6 +2,7 @@ using Pixeek.Game;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace Pixeek.Transformation
 {
@@ -12,6 +13,7 @@ namespace Pixeek.Transformation
 
         public override Texture2D transform(Texture2D texture)
         {
+
             // No Gaussian-blur when difficulty is easy
             if (difficulty == Difficulty.EASY)
                 return texture;
@@ -50,9 +52,12 @@ namespace Pixeek.Transformation
                 textureData[i].B = new_blue[i];
             }
 
+
             // Return transformed texture
             Texture2D newTexture = new Texture2D(gd, width, height);
             newTexture.SetData<Color>(textureData);
+
+
             return newTexture;
         }
 
