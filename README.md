@@ -270,6 +270,15 @@ A program nem tartalmaz komplex adatbázist. A pontszámokat és képeket tárol
 #### 2.4.1 Menü  
 ![Menü szekvenciadiagram](/readme_resources/menusequencemodell1.jpg?raw=true "Menü szekvenciadiagram")
 
+#### 2.4.2 Scoreboard
+![Scoreboard szekvenciadiagram](/readme_resources/sequence.jpg?raw=true "Scoreboard szekvenciadiagram")
+
+#### 2.4.3 Multiplayer játék indítása
+![Multiplayer szekvenciadiagram](/readme_resources/multisequence.jpg?raw=true "Multiplayer szekvenciadiagram")
+
+#### 2.4.4 Sakk alapú időkorlátos játékmód
+![Időkorlátos játékmód szekvenciadiagram](/readme_resources/chessMethodSequence.jpg?raw=true "Időkorlátos játékmód szekvenciadiagram")
+
 ### 2.5 Felhasználói felület modell  
 A játék alapvetően mobil platformokra van tervezve, érintéssel működik. Minden ablak teljes képernyős, mindig a legutoljára felnyitott ablak aktív. A menükben vissza lehet menni bármelyik előző ablakra. Játék közben a pause menüt lehet megnyitni, a főmenübe visszajutni csak az aktuális játék megszakításával lehet.
 
