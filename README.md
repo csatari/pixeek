@@ -26,6 +26,10 @@ A második félévben megvalósítandó funkciók:
 
 ![Használati eset modell](/readme_resources/usecase1.jpg?raw=true "Használati eset modell")
 
+A következő félévre vonatkozó kiegészített használatieset-modellünk:
+
+![Használati eset modell 2](/readme_resources/usecase2.jpg?raw=true "Használati eset modell 2")
+
 ### 1.4 Szakterületi követelmények
 
 *	pályák alakját template határozza meg
