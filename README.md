@@ -196,6 +196,115 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 *	Windows alatt fejlesztéshez és teszteléshez elég az ingyenes Visual Studio hozzá
 *	felépítése jól illeszkedik a játékok működéséhez (hiszen ahhoz tervezték) és ez jelentősen megkönnyíti a program fejlesztését
 
+### 1.7 User-story-k
+
+| Használati eset                    | Menü           |
+| ---------------------------------- | -------------- |
+| Cél                                | A játékos kiválasztja, hogy melyik főpontot választja. Ezek lehetnek az Egyszemélyes játék, a Többszemélyes játék, a Toplista megtekintése, illetve a Tutorial elindítása |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék elindítása |
+| Utófeltétel sikeres végrehajtáskor | A kiválasztott menüponthoz kapcsolódó felhasználói eset következik: Egyjátékos/Többjátékos mód beállítása, Toplista, Tutorial  |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe |
+
+| Használati eset                    | Toplista       |
+| ---------------------------------- | -------------- |
+| Cél                                | A játékban elért pontszámok megtekintése, sorbarendezve játékmódok szerint. Az első helyen a legtöbb pontot elért játékos és a neve található. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A Scoreboard gomb megnyomása |
+| Előfeltételek                      | A szerver elérhető |
+| Utófeltétel sikeres végrehajtáskor | Megjelenik a Toplista |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+
+| Használati eset                    | Tutorial       |
+| ---------------------------------- | -------------- |
+| Cél                                |  |
+| Aktor                              |  |
+| Kiváltó esemény                    |  |
+| Előfeltételek                      |  |
+| Utófeltétel sikeres végrehajtáskor |  |
+| Utófeltétel hiba esetén            |  |
+
+| Használati eset                    | Egyjátékos/Többjátékos mód beállítása       |
+| ---------------------------------- | -------------- |
+| Cél                                | A játék tulajdonságainak beállítása. A tulajdonságok közé a következők tartoznak: Név, Játékmód, Nehézség, Téma |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A Single Player vagy a Multiplayer gomb megnyomása |
+| Előfeltételek                      | A menüből ki lett választva a megfelelő gomb |
+| Utófeltétel sikeres végrehajtáskor | Elindul a várakozás a képek leöltésére |
+| Utófeltétel hiba esetén            | Nem indul el a játék, maradunk a beállításoknál. |
+
+| Használati eset                    | Normál játék   |
+| ---------------------------------- | -------------- |
+| Cél                                | A játék indítása után fix számú képet kell megkeresni. A pontozás idő alapján történik. A gyorsabb találat szorzót eredményez. A helyes találat pontot ér. A helytelen találat pontlevonással jár. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék gomb megnyomása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Normál játék opció kiválasztása. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a ’Normál’ típusú játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+
+| Használati eset                    | Idő extra játék |
+| ---------------------------------- | --------------- |
+| Cél                                | A játék indítása után adott számú képet kell megtalálni. Minden helyes találat növeli az egyébként folyamatosan csökkenő rendelkezésre álló időt. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék gomb megnyomása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. Az Idő extra játék opció kiválasztása. |
+| Utófeltétel sikeres végrehajtáskor | Elindul az ’Idő extra’ típusú játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+
+| Használati eset                    | Végtelenített játék  |
+| ---------------------------------- | -------------------- |
+| Cél                                | A játék indítása után potenciálisan végtelen ideig lehet játszani: minden megtalált kép egy új feladatot eredményez, valamint a hozzá tartozó új képet a régi helyén. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék gomb megnyomása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Végtelenített játék opció kiválasztása. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a ’Végtelenített’ típusú játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+
+| Használati eset                    | Várakozás szerverre       |
+| ---------------------------------- | ------------------------- |
+| Cél                                | A játék lezajlása után a felhasználó vár, hogy a szerver elvégezze a toplistán a szükséges módosításokat. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | Egyszemélyes játék véget érése. |
+| Előfeltételek                      | Egyszemélyes játék sikeresen lezajlott. Név megadása megtörtént.  |
+| Utófeltétel sikeres végrehajtáskor | A szerver beállítja az új toplistát. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe.  |
+
+| Használati eset                    | Várakozás ellenfélre és a képek letöltésére       |
+| ---------------------------------- | ------------------------------------------------- |
+| Cél                                | A felhasználó várakozik, hogy a szerver megfelelő ellenfelet biztosítson, valamint letöltse a transzformált képeket és kezdődhessen a többjátékos mód.  |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | Többjátékos módban a játék indítása. |
+| Előfeltételek                      | Többjátékos mód választása. Név megadása. Nehézség kiválasztása. Játékmód választása. |
+| Utófeltétel sikeres végrehajtáskor | A szerver párosít két játékost. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+
+| Használati eset                    | Várakozás a képek letöltésére       |
+| ---------------------------------- | ----------------------------------- |
+| Cél                                |  |
+| Aktor                              |  |
+| Kiváltó esemény                    |  |
+| Előfeltételek                      |  |
+| Utófeltétel sikeres végrehajtáskor |  |
+| Utófeltétel hiba esetén            |  |
+
+| Használati eset                    | Időzítő       |
+| ---------------------------------- | ------------- |
+| Cél                                |  |
+| Aktor                              |  |
+| Kiváltó esemény                    |  |
+| Előfeltételek                      |  |
+| Utófeltétel sikeres végrehajtáskor |  |
+| Utófeltétel hiba esetén            |  |
+
+| Használati eset                    | Harc a pontokért       |
+| ---------------------------------- | ---------------------- |
+| Cél                                |  |
+| Aktor                              |  |
+| Kiváltó esemény                    |  |
+| Előfeltételek                      |  |
+| Utófeltétel sikeres végrehajtáskor |  |
+| Utófeltétel hiba esetén            |  |
+
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
 A program legfontosabb elemei:
