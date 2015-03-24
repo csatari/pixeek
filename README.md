@@ -217,12 +217,12 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 
 | Használati eset                    | Tutorial       |
 | ---------------------------------- | -------------- |
-| Cél                                |  |
-| Aktor                              |  |
-| Kiváltó esemény                    |  |
-| Előfeltételek                      |  |
-| Utófeltétel sikeres végrehajtáskor |  |
-| Utófeltétel hiba esetén            |  |
+| Cél                                | A felhasználó végigvezetése lépésről-lépésre egy egyszemélyes játékmódon, hogy megtanulhassa a szoftver kezelését. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A menüben a Tutorial elindítása került kiválasztásra. |
+| Előfeltételek                      | Az egyjátékos mód elindítható (szerver elérhető). |
+| Utófeltétel sikeres végrehajtáskor | Elindul egy játék, amiben a felhasználót minden cselekvése előtt szövegdobozok vagy animációk segítik a szoftver kezelésében és a játék végigjátszásában. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 
 | Használati eset                    | Egyjátékos/Többjátékos mód beállítása       |
 | ---------------------------------- | -------------- |
@@ -280,30 +280,30 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 
 | Használati eset                    | Várakozás a képek letöltésére       |
 | ---------------------------------- | ----------------------------------- |
-| Cél                                |  |
-| Aktor                              |  |
-| Kiváltó esemény                    |  |
-| Előfeltételek                      |  |
-| Utófeltétel sikeres végrehajtáskor |  |
-| Utófeltétel hiba esetén            |  |
+| Cél                                | A felhasználó várja, hogy a klienshez megérkezzen a REST API-n kérvényezett játék, miközben a szerver legenerál egy pályát a választott játékmód, szint és téma szerint (ehhez képeket választ és transzformál véletlenszerűen), és küldi a kliensnek. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó kezdeményezte egy játék elindítását. |
+| Előfeltételek                      | A felhasználó megadta a pálya beállításait, a szerver elérhető. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kért játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 
 | Használati eset                    | Időzítő       |
 | ---------------------------------- | ------------- |
-| Cél                                |  |
-| Aktor                              |  |
-| Kiváltó esemény                    |  |
-| Előfeltételek                      |  |
-| Utófeltétel sikeres végrehajtáskor |  |
-| Utófeltétel hiba esetén            |  |
+| Cél                                | Két személy játszik egymás ellen, külön kapnak fix időt. A játékosok felváltva játszanak, a váltás egy kép megtalálása után történik. Az veszít, akinek előbb letelik az ideje. |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | A szerver sikeresen párosított két játékost. |
+| Előfeltételek                      | Elérhető két játékos ’Időzítő’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Időzítő’ módban. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 
 | Használati eset                    | Harc a pontokért       |
 | ---------------------------------- | ---------------------- |
-| Cél                                |  |
-| Aktor                              |  |
-| Kiváltó esemény                    |  |
-| Előfeltételek                      |  |
-| Utófeltétel sikeres végrehajtáskor |  |
-| Utófeltétel hiba esetén            |  |
+| Cél                                | Két személy játszik egymás ellen. A játékosok egyszerre játszanak, egy fix feladványt oldanak meg. Az nyer, akinek több pontja lesz a feladvány befejezésekor. |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | A szerver sikeresen párosított két játékost. |
+| Előfeltételek                      | Elérhető két játékos ’Harc a pontokért’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Harc a pontokért’ módban. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
