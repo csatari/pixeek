@@ -198,6 +198,8 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 
 ### 1.7 User-story-k
 
+Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az adott esetnek melyik félévben kell elkészülnie. A 2014 az 1. félévet jelenti, a 2015 a 2. félévet.
+
 | Használati eset                    | Menü           |
 | ---------------------------------- | -------------- |
 | Cél                                | A játékos kiválasztja, hogy melyik főpontot választja. Ezek lehetnek az Egyszemélyes játék, a Többszemélyes játék, a Toplista megtekintése, illetve a Tutorial elindítása |
@@ -205,6 +207,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Kiváltó esemény                    | A játék elindítása |
 | Utófeltétel sikeres végrehajtáskor | A kiválasztott menüponthoz kapcsolódó felhasználói eset következik: Egyjátékos/Többjátékos mód beállítása, Toplista, Tutorial  |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe |
+| Határidő                           | 2014 |
 
 | Használati eset                    | Toplista       |
 | ---------------------------------- | -------------- |
@@ -214,6 +217,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | A szerver elérhető |
 | Utófeltétel sikeres végrehajtáskor | Megjelenik a Toplista |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Tutorial       |
 | ---------------------------------- | -------------- |
@@ -223,6 +227,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Az egyjátékos mód elindítható (szerver elérhető). |
 | Utófeltétel sikeres végrehajtáskor | Elindul egy játék, amiben a felhasználót minden cselekvése előtt szövegdobozok vagy animációk segítik a szoftver kezelésében és a játék végigjátszásában. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Egyjátékos/Többjátékos mód beállítása       |
 | ---------------------------------- | -------------- |
@@ -232,6 +237,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | A menüből ki lett választva a megfelelő gomb |
 | Utófeltétel sikeres végrehajtáskor | Elindul a várakozás a képek leöltésére |
 | Utófeltétel hiba esetén            | Nem indul el a játék, maradunk a beállításoknál. |
+| Határidő                           | Egyjátékos mód: 2014, Többjátékos mód: 2015 |
 
 | Használati eset                    | Normál játék   |
 | ---------------------------------- | -------------- |
@@ -241,6 +247,16 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Normál játék opció kiválasztása. |
 | Utófeltétel sikeres végrehajtáskor | Elindul a ’Normál’ típusú játék. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Normál’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Normál’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap (pl. 16-os kombó esetén 16 pontot). A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Határidő                           | 2014 |
 
 | Használati eset                    | Idő extra játék |
 | ---------------------------------- | --------------- |
@@ -250,6 +266,16 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. Az Idő extra játék opció kiválasztása. |
 | Utófeltétel sikeres végrehajtáskor | Elindul az ’Idő extra’ típusú játék. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Idő extra’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Idő extra’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Határidő                           | 2014 |
 
 | Használati eset                    | Végtelenített játék  |
 | ---------------------------------- | -------------------- |
@@ -259,30 +285,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Végtelenített játék opció kiválasztása. |
 | Utófeltétel sikeres végrehajtáskor | Elindul a ’Végtelenített’ típusú játék. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
-
-| Használati eset                    | Kilépés játékból |
-| ---------------------------------- | -------------------- |
-| Cél                                | A felhasználó egy játék játszása közben a ’Menü’ gombra kattintva kilép a főmenübe. |
-| Aktor                              | Felhasználó |
-| Kiváltó esemény                    | A ’Menü’ gomb megnyomása. |
-| Előfeltételek                      | Egy játék folyamatban van. |
-| Utófeltétel sikeres végrehajtáskor | A játék véget ér. Egyjátékos módban a kapott pontok nem kerülnek fel a scoreboardra; többjátékos mód esetén az ellenfél nyer. Visszatérés a főmenübe. |
-
-| Használati eset                    | Egy feladvány megtalálása ’Normál’ módban |
-| ---------------------------------- | -------------------- |
-| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
-| Aktor                              | Felhasználó |
-| Kiváltó esemény                    | A felhasználó egy képre kattint. |
-| Előfeltételek                      | ’Normál’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
-| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap (pl. 16-os kombó esetén 16 pontot). A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
-
-| Használati eset                    | Egy feladvány megtalálása ’Idő extra’ módban |
-| ---------------------------------- | -------------------- |
-| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
-| Aktor                              | Felhasználó |
-| Kiváltó esemény                    | A felhasználó egy képre kattint. |
-| Előfeltételek                      | ’Idő extra’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
-| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Határidő                           | 2014 |
 
 | Használati eset                    | Egy feladvány megtalálása ’Végtelenített’ módban |
 | ---------------------------------- | -------------------- |
@@ -292,6 +295,16 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | ’Végtelenített’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol. |
 | Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kliens a kép helyére új, transzformált képet kér a szerverről, valamint generál egy új feladványt. |
 | Utófeltétel hiba esetén            | Ha a szerver nem elérhető, hibaüzenet megjelenítése után visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Kilépés játékból |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó egy játék játszása közben a ’Menü’ gombra kattintva kilép a főmenübe. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A ’Menü’ gomb megnyomása. |
+| Előfeltételek                      | Egy játék folyamatban van. |
+| Utófeltétel sikeres végrehajtáskor | A játék véget ér. Egyjátékos módban a kapott pontok nem kerülnek fel a scoreboardra; többjátékos mód esetén az ellenfél nyer. Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
 
 | Használati eset                    | Eltelik egy másodperc |
 | ---------------------------------- | -------------------- |
@@ -300,6 +313,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Kiváltó esemény                    | Minden eltelt másodperc a játék indítása óta, amikor a játékos következik. |
 | Előfeltételek                      | Egy játék folyamatban van, a felhasználó következik. |
 | Utófeltétel sikeres végrehajtáskor | Az idő számláló minden másodpercben léptetésre kerül, ’Idő extra’ és ’Időzítő’ módokban visszafelé. Ha eléri a 0 hátralévő másodpercet: a játék véget ér, és megjelenik az eredmény. |
+| Határidő                           | Idő extra mód: 2014, Időzítő: 2015 |
 
 | Használati eset                    | A felhasználó játék közben inaktív |
 | ---------------------------------- | -------------------- |
@@ -308,6 +322,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Kiváltó esemény                    | Minden eltelt 2500 ms az előző feladvány megtalálása óta. |
 | Előfeltételek                      | Egyjátékos vagy ’Harc a pontokért’ játék folyamatban van, a felhasználó inaktív. |
 | Utófeltétel sikeres végrehajtáskor | A kombó feleződik, ha nagyobb, mint egy, és az előző feladvány megoldása, vagy az előző felezés óta eltelt 2500 ms. |
+| Határidő                           | 2014 |
 
 | Használati eset                    | Egyjátékos módú eredmény megjelenítése |
 | ---------------------------------- | -------------------- |
@@ -317,6 +332,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | - |
 | Utófeltétel sikeres végrehajtáskor | Megjelenik a felhasználó által összegyűjtött pontok száma, valamint az eltelt, vagy megmaradt idő. A kliens REST API-n frissíti a scoreboardot. |
 | Utófeltétel hiba esetén            | Ha a szerver nem elérhető, a scoreboard nem frissül. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Várakozás ellenfélre és a képek letöltésére       |
 | ---------------------------------- | ------------------------------------------------- |
@@ -326,6 +342,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Többjátékos mód választása. Név megadása. Nehézség kiválasztása. Játékmód választása. |
 | Utófeltétel sikeres végrehajtáskor | A szerver párosít két játékost. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Várakozás a képek letöltésére       |
 | ---------------------------------- | ----------------------------------- |
@@ -335,6 +352,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | A felhasználó megadta a pálya beállításait, a szerver elérhető. |
 | Utófeltétel sikeres végrehajtáskor | Elindul a kért játék. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Időzítő       |
 | ---------------------------------- | ------------- |
@@ -344,15 +362,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Elérhető két játékos ’Időzítő’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
 | Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Időzítő’ módban. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
-
-| Használati eset                    | Harc a pontokért       |
-| ---------------------------------- | ---------------------- |
-| Cél                                | Két személy játszik egymás ellen. A játékosok egyszerre játszanak, egy fix feladványt oldanak meg. Az nyer, akinek több pontja lesz a feladvány befejezésekor. |
-| Aktor                              | Felhasználó. Internetes felhasználó. |
-| Kiváltó esemény                    | A szerver sikeresen párosított két játékost. |
-| Előfeltételek                      | Elérhető két játékos ’Harc a pontokért’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
-| Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Harc a pontokért’ módban. |
-| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Egy feladvány megtalálása ’Időzítő’ módban |
 | ---------------------------------- | -------------------- |
@@ -362,15 +372,7 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | ’Időzítő’ játék folyamatban van, a felhasználó következik, a kép egy megtalálandó feladványt ábrázol. |
 | Utófeltétel sikeres végrehajtáskor | A kliens leállítja az órát, és TCP/IP socketen jelzi a szervernek a feladvány megoldását. A szerver a kép helyére új, transzformált képet, valamint új feladványt generál, és szinkronizálja az új játékállapotot a kliensekkel. |
 | Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
-
-| Használati eset                    | Egy feladvány megtalálása ’Harc a pontokért’ módban |
-| ---------------------------------- | -------------------- |
-| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy több pontot szerezzen, mint ellenfele. |
-| Aktor                              | Felhasználó |
-| Kiváltó esemény                    | A felhasználó egy képre kattint. |
-| Előfeltételek                      | ’Harc a pontokért’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
-| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Játékállapot szinkronizálása a szerverrel. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
-| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Várakozás ellenfélre ’Időzítő’ módban |
 | ---------------------------------- | ------------------------- |
@@ -380,6 +382,27 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | ’Időzítő’ játék folyamatban van, az ellenfél következik.  |
 | Utófeltétel sikeres végrehajtáskor | Az ellenfél lépése, majd a játékállapot szinkronizálása után a felhasználó következik. Az óra újraindul. |
 | Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe.  |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Harc a pontokért       |
+| ---------------------------------- | ---------------------- |
+| Cél                                | Két személy játszik egymás ellen. A játékosok egyszerre játszanak, egy fix feladványt oldanak meg. Az nyer, akinek több pontja lesz a feladvány befejezésekor. |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | A szerver sikeresen párosított két játékost. |
+| Előfeltételek                      | Elérhető két játékos ’Harc a pontokért’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Harc a pontokért’ módban. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Harc a pontokért’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy több pontot szerezzen, mint ellenfele. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Harc a pontokért’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Játékállapot szinkronizálása a szerverrel. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Többjátékos módú eredmény megjelenítése |
 | ---------------------------------- | -------------------- |
@@ -389,6 +412,25 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | A végső játékállapot szinkronizációja sikeres. |
 | Utófeltétel sikeres végrehajtáskor | Megjelenik a felhasználó által összegyűjtött pontok száma, vagy a megmaradt idő, valamint a nyertes játékos neve. |
 | Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+### 1.8 Tervezett felosztás
+
+A 2015-ös félévre a tervezett feladatok a következőképpen kerültek felosztásra:
+
+Rabi Péter:
+* Szerver adatbázis
+* Szerverrel való kommunikáció REST API-n keresztül
+* A szervertől való kérések megfelelő kiszolgálása
+
+Birkás Gábor:
+* Időzítő játékmód implementálása
+* Harc a pontokért játékmód implementálása
+
+Csatári Albert:
+* Tutorial, Scoreboard
+* Kommunikáció a szerverrel
+* Platformfüggetlen megjelenítés
 
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
