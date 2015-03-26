@@ -260,14 +260,63 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Utófeltétel sikeres végrehajtáskor | Elindul a ’Végtelenített’ típusú játék. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 
-| Használati eset                    | Várakozás szerverre       |
-| ---------------------------------- | ------------------------- |
-| Cél                                | A játék lezajlása után a felhasználó vár, hogy a szerver elvégezze a toplistán a szükséges módosításokat. |
+| Használati eset                    | Kilépés játékból |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó egy játék játszása közben a ’Menü’ gombra kattintva kilép a főmenübe. |
 | Aktor                              | Felhasználó |
-| Kiváltó esemény                    | Egyszemélyes játék véget érése. |
-| Előfeltételek                      | Egyszemélyes játék sikeresen lezajlott. Név megadása megtörtént.  |
-| Utófeltétel sikeres végrehajtáskor | A szerver beállítja az új toplistát. |
-| Utófeltétel hiba esetén            | Visszatérés a főmenübe.  |
+| Kiváltó esemény                    | A ’Menü’ gomb megnyomása. |
+| Előfeltételek                      | Egy játék folyamatban van. |
+| Utófeltétel sikeres végrehajtáskor | A játék véget ér. Egyjátékos módban a kapott pontok nem kerülnek fel a scoreboardra; többjátékos mód esetén az ellenfél nyer. Visszatérés a főmenübe. |
+
+| Használati eset                    | Egy feladvány megtalálása ’Normál’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Normál’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap (pl. 16-os kombó esetén 16 pontot). A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+
+| Használati eset                    | Egy feladvány megtalálása ’Idő extra’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Idő extra’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+
+| Használati eset                    | Egy feladvány megtalálása ’Végtelenített’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Végtelenített’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kliens a kép helyére új, transzformált képet kér a szerverről, valamint generál egy új feladványt. |
+| Utófeltétel hiba esetén            | Ha a szerver nem elérhető, hibaüzenet megjelenítése után visszatérés a főmenübe. |
+
+| Használati eset                    | Eltelik egy másodperc |
+| ---------------------------------- | -------------------- |
+| Cél                                | Egyjátékos módban, vagy többjátékos módban, amikor a felhasználó következik, eltelik egy újabb másodperc. A kliens lépteti az idő számlálót. |
+| Aktor                              | Kliens szoftver |
+| Kiváltó esemény                    | Minden eltelt másodperc a játék indítása óta, amikor a játékos következik. |
+| Előfeltételek                      | Egy játék folyamatban van, a felhasználó következik. |
+| Utófeltétel sikeres végrehajtáskor | Az idő számláló minden másodpercben léptetésre kerül, ’Idő extra’ és ’Időzítő’ módokban visszafelé. Ha eléri a 0 hátralévő másodpercet: a játék véget ér, és megjelenik az eredmény. |
+
+| Használati eset                    | A felhasználó játék közben inaktív |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó egyjátékos vagy ’Harc a pontokért’ módban inaktív. A kliens felezi a kombót. |
+| Aktor                              | Kliens szoftver |
+| Kiváltó esemény                    | Minden eltelt 2500 ms az előző feladvány megtalálása óta. |
+| Előfeltételek                      | Egyjátékos vagy ’Harc a pontokért’ játék folyamatban van, a felhasználó inaktív. |
+| Utófeltétel sikeres végrehajtáskor | A kombó feleződik, ha nagyobb, mint egy, és az előző feladvány megoldása, vagy az előző felezés óta eltelt 2500 ms. |
+
+| Használati eset                    | Egyjátékos módú eredmény megjelenítése |
+| ---------------------------------- | -------------------- |
+| Cél                                | Egy egyjátékos módú játék végeztével megjelenik a felhasználó által összegyűjtött pontok száma, valamint az eltelt, vagy megmaradt idő. Frissül a scoreboard. |
+| Aktor                              | Felhasználó vagy kliens szoftver. |
+| Kiváltó esemény                    | A felhasználó megtalálta az utolsó feladványt, vagy ’Idő extra’ módban lejárt az ideje. |
+| Előfeltételek                      | - |
+| Utófeltétel sikeres végrehajtáskor | Megjelenik a felhasználó által összegyűjtött pontok száma, valamint az eltelt, vagy megmaradt idő. A kliens REST API-n frissíti a scoreboardot. |
+| Utófeltétel hiba esetén            | Ha a szerver nem elérhető, a scoreboard nem frissül. |
 
 | Használati eset                    | Várakozás ellenfélre és a képek letöltésére       |
 | ---------------------------------- | ------------------------------------------------- |
@@ -304,6 +353,42 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 | Előfeltételek                      | Elérhető két játékos ’Harc a pontokért’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
 | Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Harc a pontokért’ módban. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+
+| Használati eset                    | Egy feladvány megtalálása ’Időzítő’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy több ideje maradjon, mint ellenfelének. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Időzítő’ játék folyamatban van, a felhasználó következik, a kép egy megtalálandó feladványt ábrázol. |
+| Utófeltétel sikeres végrehajtáskor | A kliens leállítja az órát, és TCP/IP socketen jelzi a szervernek a feladvány megoldását. A szerver a kép helyére új, transzformált képet, valamint új feladványt generál, és szinkronizálja az új játékállapotot a kliensekkel. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+
+| Használati eset                    | Egy feladvány megtalálása ’Harc a pontokért’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy több pontot szerezzen, mint ellenfele. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Harc a pontokért’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Játékállapot szinkronizálása a szerverrel. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+
+| Használati eset                    | Várakozás ellenfélre ’Időzítő’ módban |
+| ---------------------------------- | ------------------------- |
+| Cél                                | A felhasználó ellenfele lépésére várakozik. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | ’Időzítő’ módban az ellenfél lépése következik. |
+| Előfeltételek                      | ’Időzítő’ játék folyamatban van, az ellenfél következik.  |
+| Utófeltétel sikeres végrehajtáskor | Az ellenfél lépése, majd a játékállapot szinkronizálása után a felhasználó következik. Az óra újraindul. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe.  |
+
+| Használati eset                    | Többjátékos módú eredmény megjelenítése |
+| ---------------------------------- | -------------------- |
+| Cél                                | Egy többjátékos módú játék végeztével megjelenik a felhasználó által összegyűjtött pontok száma, vagy a megmaradt idő, valamint a nyertes játékos neve. |
+| Aktor                              | Felhasználó, kliens szoftver vagy szerver. |
+| Kiváltó esemény                    | A felhasználó megtalálta az utolsó feladványt, vagy ’Időzítő’ módban lejárt valamelyik játékos ideje. |
+| Előfeltételek                      | A végső játékállapot szinkronizációja sikeres. |
+| Utófeltétel sikeres végrehajtáskor | Megjelenik a felhasználó által összegyűjtött pontok száma, vagy a megmaradt idő, valamint a nyertes játékos neve. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
 
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
