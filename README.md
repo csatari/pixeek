@@ -196,6 +196,242 @@ Végül a MonoGame keretrendszerre esett a választás. Ennek főbb okai:
 *	Windows alatt fejlesztéshez és teszteléshez elég az ingyenes Visual Studio hozzá
 *	felépítése jól illeszkedik a játékok működéséhez (hiszen ahhoz tervezték) és ez jelentősen megkönnyíti a program fejlesztését
 
+### 1.7 User-story-k
+
+Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az adott esetnek melyik félévben kell elkészülnie. A 2014 az 1. félévet jelenti, a 2015 a 2. félévet.
+
+| Használati eset                    | Menü           |
+| ---------------------------------- | -------------- |
+| Cél                                | A játékos kiválasztja, hogy melyik főpontot választja. Ezek lehetnek az Egyszemélyes játék, a Többszemélyes játék, a Toplista megtekintése, illetve a Tutorial elindítása |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék elindítása |
+| Utófeltétel sikeres végrehajtáskor | A kiválasztott menüponthoz kapcsolódó felhasználói eset következik: Egyjátékos/Többjátékos mód beállítása, Toplista, Tutorial  |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Toplista       |
+| ---------------------------------- | -------------- |
+| Cél                                | A játékban elért pontszámok megtekintése, sorbarendezve játékmódok szerint. Az első helyen a legtöbb pontot elért játékos és a neve található. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A Scoreboard gomb megnyomása |
+| Előfeltételek                      | A szerver elérhető |
+| Utófeltétel sikeres végrehajtáskor | Megjelenik a Toplista |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Tutorial       |
+| ---------------------------------- | -------------- |
+| Cél                                | A felhasználó végigvezetése lépésről-lépésre egy egyszemélyes játékmódon, hogy megtanulhassa a szoftver kezelését. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A menüben a Tutorial elindítása került kiválasztásra. |
+| Előfeltételek                      | Az egyjátékos mód elindítható (szerver elérhető). |
+| Utófeltétel sikeres végrehajtáskor | Elindul egy játék, amiben a felhasználót minden cselekvése előtt szövegdobozok vagy animációk segítik a szoftver kezelésében és a játék végigjátszásában. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Egyjátékos/Többjátékos mód beállítása       |
+| ---------------------------------- | -------------- |
+| Cél                                | A játék tulajdonságainak beállítása. A tulajdonságok közé a következők tartoznak: Név, Játékmód, Nehézség, Téma |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A Single Player vagy a Multiplayer gomb megnyomása |
+| Előfeltételek                      | A menüből ki lett választva a megfelelő gomb |
+| Utófeltétel sikeres végrehajtáskor | Elindul a várakozás a képek leöltésére |
+| Utófeltétel hiba esetén            | Nem indul el a játék, maradunk a beállításoknál. |
+| Határidő                           | Egyjátékos mód: 2014, Többjátékos mód: 2015 |
+
+| Használati eset                    | Normál játék   |
+| ---------------------------------- | -------------- |
+| Cél                                | A játék indítása után fix számú képet kell megkeresni. A pontozás idő alapján történik. A gyorsabb találat szorzót eredményez. A helyes találat pontot ér. A helytelen találat pontlevonással jár. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék gomb megnyomása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Normál játék opció kiválasztása. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a ’Normál’ típusú játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Normál’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Normál’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap (pl. 16-os kombó esetén 16 pontot). A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Idő extra játék |
+| ---------------------------------- | --------------- |
+| Cél                                | A játék indítása után adott számú képet kell megtalálni. Minden helyes találat növeli az egyébként folyamatosan csökkenő rendelkezésre álló időt. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék gomb megnyomása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. Az Idő extra játék opció kiválasztása. |
+| Utófeltétel sikeres végrehajtáskor | Elindul az ’Idő extra’ típusú játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Idő extra’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Idő extra’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Végtelenített játék  |
+| ---------------------------------- | -------------------- |
+| Cél                                | A játék indítása után potenciálisan végtelen ideig lehet játszani: minden megtalált kép egy új feladatot eredményez, valamint a hozzá tartozó új képet a régi helyén. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A játék gomb megnyomása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Végtelenített játék opció kiválasztása. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a ’Végtelenített’ típusú játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Végtelenített’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy pontokat szerezhessen. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Végtelenített’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kliens a kép helyére új, transzformált képet kér a szerverről, valamint generál egy új feladványt. |
+| Utófeltétel hiba esetén            | Ha a szerver nem elérhető, hibaüzenet megjelenítése után visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Kilépés játékból |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó egy játék játszása közben a ’Menü’ gombra kattintva kilép a főmenübe. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A ’Menü’ gomb megnyomása. |
+| Előfeltételek                      | Egy játék folyamatban van. |
+| Utófeltétel sikeres végrehajtáskor | A játék véget ér. Egyjátékos módban a kapott pontok nem kerülnek fel a scoreboardra; többjátékos mód esetén az ellenfél nyer. Visszatérés a főmenübe. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Eltelik egy másodperc |
+| ---------------------------------- | -------------------- |
+| Cél                                | Egyjátékos módban, vagy többjátékos módban, amikor a felhasználó következik, eltelik egy újabb másodperc. A kliens lépteti az idő számlálót. |
+| Aktor                              | Kliens szoftver |
+| Kiváltó esemény                    | Minden eltelt másodperc a játék indítása óta, amikor a játékos következik. |
+| Előfeltételek                      | Egy játék folyamatban van, a felhasználó következik. |
+| Utófeltétel sikeres végrehajtáskor | Az idő számláló minden másodpercben léptetésre kerül, ’Idő extra’ és ’Időzítő’ módokban visszafelé. Ha eléri a 0 hátralévő másodpercet: a játék véget ér, és megjelenik az eredmény. |
+| Határidő                           | Idő extra mód: 2014, Időzítő: 2015 |
+
+| Használati eset                    | A felhasználó játék közben inaktív |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó egyjátékos vagy ’Harc a pontokért’ módban inaktív. A kliens felezi a kombót. |
+| Aktor                              | Kliens szoftver |
+| Kiváltó esemény                    | Minden eltelt 2500 ms az előző feladvány megtalálása óta. |
+| Előfeltételek                      | Egyjátékos vagy ’Harc a pontokért’ játék folyamatban van, a felhasználó inaktív. |
+| Utófeltétel sikeres végrehajtáskor | A kombó feleződik, ha nagyobb, mint egy, és az előző feladvány megoldása, vagy az előző felezés óta eltelt 2500 ms. |
+| Határidő                           | 2014 |
+
+| Használati eset                    | Egyjátékos módú eredmény megjelenítése |
+| ---------------------------------- | -------------------- |
+| Cél                                | Egy egyjátékos módú játék végeztével megjelenik a felhasználó által összegyűjtött pontok száma, valamint az eltelt, vagy megmaradt idő. Frissül a scoreboard. |
+| Aktor                              | Felhasználó vagy kliens szoftver. |
+| Kiváltó esemény                    | A felhasználó megtalálta az utolsó feladványt, vagy ’Idő extra’ módban lejárt az ideje. |
+| Előfeltételek                      | - |
+| Utófeltétel sikeres végrehajtáskor | Megjelenik a felhasználó által összegyűjtött pontok száma, valamint az eltelt, vagy megmaradt idő. A kliens REST API-n frissíti a scoreboardot. |
+| Utófeltétel hiba esetén            | Ha a szerver nem elérhető, a scoreboard nem frissül. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Várakozás ellenfélre és a képek letöltésére       |
+| ---------------------------------- | ------------------------------------------------- |
+| Cél                                | A felhasználó várakozik, hogy a szerver megfelelő ellenfelet biztosítson, valamint letöltse a transzformált képeket és kezdődhessen a többjátékos mód.  |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | Többjátékos módban a játék indítása. |
+| Előfeltételek                      | Többjátékos mód választása. Név megadása. Nehézség kiválasztása. Játékmód választása. |
+| Utófeltétel sikeres végrehajtáskor | A szerver párosít két játékost. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Várakozás a képek letöltésére       |
+| ---------------------------------- | ----------------------------------- |
+| Cél                                | A felhasználó várja, hogy a klienshez megérkezzen a REST API-n kérvényezett játék, miközben a szerver legenerál egy pályát a választott játékmód, szint és téma szerint (ehhez képeket választ és transzformál véletlenszerűen), és küldi a kliensnek. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó kezdeményezte egy játék elindítását. |
+| Előfeltételek                      | A felhasználó megadta a pálya beállításait, a szerver elérhető. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kért játék. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Időzítő       |
+| ---------------------------------- | ------------- |
+| Cél                                | Két személy játszik egymás ellen, külön kapnak fix időt. A játékosok felváltva játszanak, a váltás egy kép megtalálása után történik. Az veszít, akinek előbb letelik az ideje. |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | A szerver sikeresen párosított két játékost. |
+| Előfeltételek                      | Elérhető két játékos ’Időzítő’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Időzítő’ módban. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Időzítő’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy több ideje maradjon, mint ellenfelének. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Időzítő’ játék folyamatban van, a felhasználó következik, a kép egy megtalálandó feladványt ábrázol. |
+| Utófeltétel sikeres végrehajtáskor | A kliens leállítja az órát, és TCP/IP socketen jelzi a szervernek a feladvány megoldását. A szerver a kép helyére új, transzformált képet, valamint új feladványt generál, és szinkronizálja az új játékállapotot a kliensekkel. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Várakozás ellenfélre ’Időzítő’ módban |
+| ---------------------------------- | ------------------------- |
+| Cél                                | A felhasználó ellenfele lépésére várakozik. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | ’Időzítő’ módban az ellenfél lépése következik. |
+| Előfeltételek                      | ’Időzítő’ játék folyamatban van, az ellenfél következik.  |
+| Utófeltétel sikeres végrehajtáskor | Az ellenfél lépése, majd a játékállapot szinkronizálása után a felhasználó következik. Az óra újraindul. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe.  |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Harc a pontokért       |
+| ---------------------------------- | ---------------------- |
+| Cél                                | Két személy játszik egymás ellen. A játékosok egyszerre játszanak, egy fix feladványt oldanak meg. Az nyer, akinek több pontja lesz a feladvány befejezésekor. |
+| Aktor                              | Felhasználó. Internetes felhasználó. |
+| Kiváltó esemény                    | A szerver sikeresen párosított két játékost. |
+| Előfeltételek                      | Elérhető két játékos ’Harc a pontokért’ módban, azonos nehézségi szinten. Nem lép fel hálózati hiba. |
+| Utófeltétel sikeres végrehajtáskor | Elindul a kétszemélyes játék ’Harc a pontokért’ módban. |
+| Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Egy feladvány megtalálása ’Harc a pontokért’ módban |
+| ---------------------------------- | -------------------- |
+| Cél                                | A felhasználó az alsó sávban található feladványok valamelyikét ábrázoló képre kattint, hogy több pontot szerezzen, mint ellenfele. |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | A felhasználó egy képre kattint. |
+| Előfeltételek                      | ’Harc a pontokért’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol és aktív. |
+| Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kép inaktívvá válik. Játékállapot szinkronizálása a szerverrel. Az utolsó feladvány megtalálása esetén az eredmény megjelenítése. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+| Használati eset                    | Többjátékos módú eredmény megjelenítése |
+| ---------------------------------- | -------------------- |
+| Cél                                | Egy többjátékos módú játék végeztével megjelenik a felhasználó által összegyűjtött pontok száma, vagy a megmaradt idő, valamint a nyertes játékos neve. |
+| Aktor                              | Felhasználó, kliens szoftver vagy szerver. |
+| Kiváltó esemény                    | A felhasználó megtalálta az utolsó feladványt, vagy ’Időzítő’ módban lejárt valamelyik játékos ideje. |
+| Előfeltételek                      | A végső játékállapot szinkronizációja sikeres. |
+| Utófeltétel sikeres végrehajtáskor | Megjelenik a felhasználó által összegyűjtött pontok száma, vagy a megmaradt idő, valamint a nyertes játékos neve. |
+| Utófeltétel hiba esetén            | Hálózati hiba esetén visszatérés a főmenübe. |
+| Határidő                           | 2015 |
+
+### 1.8 Tervezett felosztás
+
+A 2015-ös félévre a tervezett feladatok a következőképpen kerültek felosztásra:
+
+Rabi Péter:
+* Szerver adatbázis
+* Szerverrel való kommunikáció REST API-n keresztül
+* A szervertől való kérések megfelelő kiszolgálása
+
+Birkás Gábor:
+* Időzítő játékmód implementálása
+* Harc a pontokért játékmód implementálása
+
+Csatári Albert:
+* Tutorial, Scoreboard
+* Kommunikáció a szerverrel
+* Platformfüggetlen megjelenítés
+
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
 A program legfontosabb elemei:
@@ -273,6 +509,15 @@ A program nem tartalmaz komplex adatbázist. A pontszámokat és képeket tárol
 ### 2.4 Dinamikus működés  
 #### 2.4.1 Menü  
 ![Menü szekvenciadiagram](/readme_resources/menusequencemodell1.jpg?raw=true "Menü szekvenciadiagram")
+
+#### 2.4.2 Scoreboard
+![Scoreboard szekvenciadiagram](/readme_resources/sequence.jpg?raw=true "Scoreboard szekvenciadiagram")
+
+#### 2.4.3 Multiplayer játék indítása
+![Multiplayer szekvenciadiagram](/readme_resources/multisequence.jpg?raw=true "Multiplayer szekvenciadiagram")
+
+#### 2.4.4 Sakk alapú időkorlátos játékmód
+![Időkorlátos játékmód szekvenciadiagram](/readme_resources/chessMethodSequence.jpg?raw=true "Időkorlátos játékmód szekvenciadiagram")
 
 ### 2.5 Felhasználói felület modell  
 A játék alapvetően mobil platformokra van tervezve, érintéssel működik. Minden ablak teljes képernyős, mindig a legutoljára felnyitott ablak aktív. A menükben vissza lehet menni bármelyik előző ablakra. Játék közben a pause menüt lehet megnyitni, a főmenübe visszajutni csak az aktuális játék megszakításával lehet.
