@@ -104,8 +104,7 @@ platformfüggő elágazások is szerepelhetnek, pl. #if_ANDROID_
 
 
 Hátrányai:
-A megosztott projektnek nincsen output assemblyje, tehát ha a fordított kódot DLL-
-ként szeretnénk megosztani, akkor PCL-t kell használni.
+A megosztott projektnek nincsen output assemblyje, tehát ha a fordított kódot DLL-ként szeretnénk megosztani, akkor PCL-t kell használni.
 
 ###### 2) PCL
 
