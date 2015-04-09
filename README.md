@@ -527,8 +527,8 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 **Feladat:** ez az osztály felel a Menü kirajzolásáért, itt lehet kiválasztani a játékmódot, illetve a témát  
 
 Az osztálymodell kiegészítése a következő követelményekkel:
-*Sakk stílusú időosztásos játékmód
-*Harc a pontokért játékmód
+* Sakk stílusú időosztásos játékmód
+* Harc a pontokért játékmód
 
 ![Osztálymodell 3](/readme_resources/Multiplayer.jpg?raw=true "Osztálymodell kiegészítés multiplayerrel")
 
