@@ -526,6 +526,37 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 **Példány:** menu  
 **Feladat:** ez az osztály felel a Menü kirajzolásáért, itt lehet kiválasztani a játékmódot, illetve a témát  
 
+Az osztálymodell kiegészítése a következő követelményekkel:
+*Sakk stílusú időosztásos játékmód
+*Harc a pontokért játékmód
+
+![Osztálymodell 3](/readme_resources/Multiplayer.jpg?raw=true "Osztálymodell kiegészítés multiplayerrel")
+
+##### Játékmód  
+**Sztereotípia:** enumerátor osztály  
+**Példány:** játékMód  
+**Feladat:** A meglévő Játékmód osztály kiegészítése többjátékos módokkal 
+##### JátékosInfoMenü  
+**Sztereotípia:** egyed  
+**Példány:** játékosInfoMenü  
+**Feladat:** Egy menü létrehozása, melyben a felhasználó megadja az adatait
+##### JátékmódMenü  
+**Sztereotípia:** egyed  
+**Példány:** játékmódMenü  
+**Feladat:** Egy menü létrehozása, melyben a felhasználó kiválasztja a játékmódot
+##### PárosítóMenü  
+**Sztereotípia:** egyed  
+**Példány:** párosítóMenü  
+**Feladat:** Egy menü létrehozása, melyben megjelenik a szerver által szolgáltatott ellenfél
+##### MultiMódPontozó  
+**Sztereotípia:** egyed  
+**Példány:** multiMódPontozó  
+**Feladat:** Tárolja az aktuális játékhoz tartozó állást (pontok, idők), valamint a játék menetének megfelelően a játékmódtól függően kiszámolja és frissíti azt
+##### Tábla  
+**Sztereotípia:** konténer 
+**Példány:** tábla 
+**Feladat:** A Tábla osztály kiegészítése többjátékos módhoz tartozó információkkal (játékosok, pontok, idők)
+
 #### 2.2.1 Menü  
 
 ![Menü osztálymodell](/readme_resources/menuobjectmodell2.jpg?raw=true "Menü osztálymodell")
