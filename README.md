@@ -553,8 +553,8 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 **Példány:** multiMódPontozó  
 **Feladat:** Tárolja az aktuális játékhoz tartozó állást (pontok, idők), valamint a játék menetének megfelelően a játékmódtól függően kiszámolja és frissíti azt
 ##### Tábla  
-**Sztereotípia:** konténer 
-**Példány:** tábla 
+**Sztereotípia:** konténer   
+**Példány:** tábla  
 **Feladat:** A Tábla osztály kiegészítése többjátékos módhoz tartozó információkkal (játékosok, pontok, idők)
 
 #### 2.2.1 Menü  
