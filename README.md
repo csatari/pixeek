@@ -594,9 +594,9 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 
 <table>
 <tr><th>Szolgáltatás</th><th>Játék indítása - egy játékos</th></tr>
-<tr><td>URI</td><td><tt>/start/{mode}/{difficulty}</tt></td></tr>
+<tr><td>URI</td><td><pre>/start/{mode}/{difficulty}</pre></td></tr>
 <tr><td>HTTP verb</td><td>GET</td></tr>
-<tr><td>response</td><td><tt><pre>
+<tr><td>response</td><td><pre>
 {
 "layout" : {
   "width"  : <number> ,
@@ -607,14 +607,15 @@ Az osztálymodell kiegészítése a következő követelményekkel:
   "image" : <string> } ] ,
 "clues" : [ <string> ]
 }
-</pre></tt></td></tr>
-<tr><td>Megjegyzések</td><td><pre>
-mode eleme {"normal", "endless", "time"};
-difficulty eleme {"easy", "normal", "hard"};
-fields: sorfolytonosan ábrázolt mátrix – igaz esetén a mátrixelem helyén játékmező van, hamis esetén semmi;
-board: sorfolytonos, csak a layout-aktív elemek;
-image: base64 kódolt JPEG
 </pre></td></tr>
+<tr><td>Megjegyzések</td><td>
+<pre>mode</pre> eleme <pre>{"normal", "endless", "time"}</pre>;  
+<pre>difficulty</pre> eleme <pre>{"easy", "normal", "hard"}</pre>;  
+<pre>fields<pre>: sorfolytonosan ábrázolt mátrix – igaz esetén
+a mátrixelem helyén játékmező van, hamis esetén semmi;  
+<pre>board</pre>: sorfolytonos, csak a layout-aktív elemek;  
+<pre>image</pre>: base64 kódolt JPEG
+</td></tr>
 </table>
 
 ### 2.5 Dinamikus működés  
