@@ -591,34 +591,31 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 ![Adatbázis terv](/readme_resources/db_model_relational.png?raw=true "Adatbázis terv")
 
 ### 2.4 RESTful web-szolgáltatások
-+---------------------+-------------------------------------------+
-| Szolgáltatás        | Játék indítása - egy játékos              |
-+=====================+===========================================+
-| URI                 | /start/{mode}/{difficulty}                |
-+---------------------+-------------------------------------------+
-| HTTP verb           | GET                                       |
-+---------------------+-------------------------------------------+
-| response            | ::                                        |
-|                     | > {                                       |
-|                     | > "layout" : {                            |
-|                     | >   "width"  : <number> ,                 |
-|                     | >   "height" : <number> ,                 |
-|                     | >   "fields" : [ <boolean> ] } ,          |
-|                     | > "board" : [ {                           | 
-|                     | >   "word"  : <string> ,                  |
-|                     | >   "image" : <string> } ] ,              |
-|                     | >   "clues" : [ <string> ]                |
-|                     | > }                                       |
-+---------------------+-------------------------------------------+
-| megjegyzések        | mode in {"normal", "endless", "time"};    |
-|                     | difficulty in {"easy", "normal", "hard"}; |
-|                     | fields: sorfolytonosan ábrázolt mátrix –  |
-|                     | igaz esetén a mátrixelem helyén játékmező |
-|                     | van, hamis esetén semmi;                  |
-|                     | board: sorfolytonos, csak a layout-aktív  |
-|                     | elemek;                                   |
-|                     | image: base64 kódolt JPEG                 |
-+---------------------+-------------------------------------------+
+
+<table>
+<tr><th>Szolgáltatás</th><th>Játék indítása - egy játékos</th></tr>
+<tr><td>URI</td><td><tt>/start/{mode}/{difficulty}</tt></td></tr>
+<tr><td>HTTP verb</td><td>GET</td></tr>
+<tr><td>response</td><td><tt><pre>
+{
+"layout" : {
+  "width"  : <number> ,
+  "height" : <number> ,
+  "fields" : [ <boolean> ] } ,
+"board" : [ {
+  "word"  : <string> ,
+  "image" : <string> } ] ,
+"clues" : [ <string> ]
+}
+</pre></tt></td></tr>
+<tr><td>Megjegyzések</td><td><pre>
+mode eleme {"normal", "endless", "time"};
+difficulty eleme {"easy", "normal", "hard"};
+fields: sorfolytonosan ábrázolt mátrix – igaz esetén a mátrixelem helyén játékmező van, hamis esetén semmi;
+board: sorfolytonos, csak a layout-aktív elemek;
+image: base64 kódolt JPEG
+</pre></td></tr>
+</table>
 
 ### 2.5 Dinamikus működés  
 #### 2.5.1 Menü  
