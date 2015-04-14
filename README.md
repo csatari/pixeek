@@ -594,10 +594,10 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 
 <table>
 <tr><th>Szolgáltatás</th><th>Játék indítása - egy játékos</th></tr>
-<tr><td>URI</td><td><tt>/start/{mode}/{difficulty}</tt></td></tr>
+<tr><td>URI</td><td><tt>/new-board/{mode}/{difficulty}</tt></td></tr>
 <tr><td>HTTP verb</td><td>GET</td></tr>
-<tr><td>response</td><td><pre>
-{
+<tr><td>response</td><td>
+<pre>{
 "layout" : {
   "width"  : &lt;number> ,
   "height" : &lt;number> ,
@@ -606,8 +606,7 @@ Az osztálymodell kiegészítése a következő követelményekkel:
   "word"  : &lt;string> ,
   "image" : &lt;string> } ] ,
 "clues" : [ &lt;string> ]
-}
-</pre></td></tr>
+}</pre></td></tr>
 <tr><td>Megjegyzések</td><td>
 <tt>mode</tt> eleme <tt>{"normal", "endless", "time"}</tt>;<br/>
 <tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>;<br/>
@@ -622,14 +621,13 @@ a mátrixelem helyén játékmező van, hamis esetén semmi;<br/>
 <tr><th>Szolgáltatás</th><th>Scoreboard lekérdezése</th></tr>
 <tr><td>URI</td><td><tt>/scoreboard/{mode}/{difficulty}</tt></td></tr>
 <tr><td>HTTP verb</td><td>GET</td></tr>
-<tr><td>response</td><td><pre>
-{
+<tr><td>response</td><td>
+<pre>{
 "scoreboard" : [ {
   "player"    : &lt;string> ,
   "score"     : &lt;number> ,
   "timestamp" : &lt;number> } ]
-}
-</pre></td></tr>
+}</pre></td></tr>
 <tr><td>Megjegyzések</td><td>
 <tt>mode</tt> eleme <tt>{"normal", "time"}</tt>;<br/>
 <tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>;<br/>
@@ -641,14 +639,41 @@ a mátrixelem helyén játékmező van, hamis esetén semmi;<br/>
 <tr><th>Szolgáltatás</th><th>Játékos eredményének regisztálása</th></tr>
 <tr><td>URI</td><td><tt>/register-score/{mode}/{difficulty}</tt></td></tr>
 <tr><td>HTTP verb</td><td>POST</td></tr>
-<tr><td>request body</td><td><pre>
-{
-"achievement" : {
-  "player-alias" : &lt;string> ,
-  "score"        : &lt;string> }
-}
-</pre></td></tr>
+<tr><td>request body</td><td><pre>{
+"player-alias" : &lt;string> ,
+"score"        : &lt;number>
+}</pre></td></tr>
 <tr><td>response</td><td>egyszerű HTML response code</td></tr>
+<tr><td>Megjegyzések</td><td>
+<tt>mode</tt> eleme <tt>{"normal", "time"}</tt>;<br/>
+<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>
+</td></tr>
+</table>
+
+<table>
+<tr><th>Szolgáltatás</th><th>Új pályaelem generálása (endless módhoz)</th></tr>
+<tr><td>URI</td><td><tt>/new-tile</tt></td></tr>
+<tr><td>HTTP verb</td><td>GET</td></tr>
+<tr><td>response</td><td><pre>{
+"word"  : &lt;string> ,
+"image" : &lt;string>
+}</pre></td></tr>
+</table>
+
+<table>
+<tr><th>Szolgáltatás</th><th>Játékos regisztálása multiplayer játékhoz</th></tr>
+<tr><td>URI</td><td><tt>/check-in-for-multi/{mode}/{difficulty}</tt></td></tr>
+<tr><td>HTTP verb</td><td>POST</td></tr>
+<tr><td>request body</td><td><pre>{
+"player-alias" : &lt;string>
+}</pre></td></tr>
+<tr><td>response</td><td><pre>{
+"port" : &lt;string>
+}</pre></td></tr>
+<tr><td>Megjegyzések</td><td>
+<tt>mode</tt> eleme <tt>{"timer", "fight"}</tt>;<br/>
+<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>
+</td></tr>
 </table>
 
 ### 2.5 Dinamikus működés  
