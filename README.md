@@ -582,8 +582,13 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 
 ![Menü osztálymodell](/readme_resources/menuobjectmodell2.jpg?raw=true "Menü osztálymodell")
 
+#### 2.2.2 Szerver
+
+![Szerver osztálymodell](/readme_resources/server_class_model.png?raw=true "Szerver osztálymodell")
+
 ### 2.3 Adatbázis terv
-A program nem tartalmaz komplex adatbázist. A pontszámokat és képeket tároló adatstruktúrák a többi modellen vannak megjelenítve.
+
+![Adatbázis terv](/readme_resources/db_model_relational.png?raw=true "Adatbázis terv")
 
 ### 2.4 Dinamikus működés  
 #### 2.4.1 Menü  
