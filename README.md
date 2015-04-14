@@ -443,15 +443,26 @@ Csatári Albert:
 
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
-A program legfontosabb elemei:
-Modell – PCL-ben
-2 fő osztály, ami a két külön nézet tulajdonságait tartalmazza:
-* Jatek osztály
-* Menu osztály
-Nézet:
-* JatekAblak
-* BeállításokAblak
-A program architektúrája úgy lesz kialakítva, hogy a Xamarin keretrendszer által támogatott legyen, azaz minden platform külön projekt, illetve van egy közös kódot tartalmazó PCL.
+A szoftver egy háromrétegű webes alkalmazás, natív klienssel.
+
+Adatbázis szerver:
+* Relációs adatbázis-kezelő rendszer.
+
+Alkalmazás szerver:
+* A web2py keretrendszerre épülő Python nyelven fejlesztett szoftver.
+* Kapcsolódás a kliensekhez:
+  * RESTful web-szolgáltatások
+  * dedikált TCP/IP socket a többjátékos mód megvalósításához
+
+A kliens program legfontosabb elemei:
+* Modell – PCL-ben
+* 2 fő osztály, ami a két külön nézet tulajdonságait tartalmazza:
+  * Jatek osztály
+  * Menu osztály
+* Nézet:
+  * JatekAblak
+  * BeállításokAblak
+* A kliens program architektúrája úgy lesz kialakítva, hogy a Xamarin keretrendszer által támogatott legyen, azaz minden platform külön projekt, illetve van egy közös kódot tartalmazó PCL.
 
 ### 2.2 Osztálymodell
 
