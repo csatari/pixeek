@@ -599,21 +599,21 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 <tr><td>response</td><td><pre>
 {
 "layout" : {
-  "width"  : <number> ,
-  "height" : <number> ,
-  "fields" : [ <boolean> ] } ,
+  "width"  : &lt;number> ,
+  "height" : &lt;number> ,
+  "fields" : [ &lt;boolean> ] } ,
 "board" : [ {
-  "word"  : <string> ,
-  "image" : <string> } ] ,
-"clues" : [ <string> ]
+  "word"  : &lt;string> ,
+  "image" : &lt;string> } ] ,
+"clues" : [ &lt;string> ]
 }
 </pre></td></tr>
 <tr><td>Megjegyzések</td><td>
-<tt>mode</tt> eleme <tt>{"normal", "endless", "time"}</tt>;  
-<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>;  
+<tt>mode</tt> eleme <tt>{"normal", "endless", "time"}</tt>;<br/>
+<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>;<br/>
 <tt>fields</tt>: sorfolytonosan ábrázolt mátrix – igaz esetén
-a mátrixelem helyén játékmező van, hamis esetén semmi;  
-<tt>board</tt>: sorfolytonos, csak a layout-aktív elemek;  
+a mátrixelem helyén játékmező van, hamis esetén semmi;<br/>
+<tt>board</tt>: sorfolytonos, csak a layout-aktív elemek;<br/>
 <tt>image</tt>: base64 kódolt JPEG
 </td></tr>
 </table>
@@ -625,15 +625,30 @@ a mátrixelem helyén játékmező van, hamis esetén semmi;
 <tr><td>response</td><td><pre>
 {
 "scoreboard" : [ {
-  "player"    : <string> ,
-  "score"     : <number> ,
-  "timestamp" : <number> } ]
+  "player"    : &lt;string> ,
+  "score"     : &lt;number> ,
+  "timestamp" : &lt;number> } ]
 }
 </pre></td></tr>
 <tr><td>Megjegyzések</td><td>
-<tt>mode</tt> eleme <tt>{"normal", "time"}</tt>;  
+<tt>mode</tt> eleme <tt>{"normal", "time"}</tt>;<br/>
+<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>;<br/>
 <tt>timestamp</tt>: másodpercek 2015. jan. 1. 00:00:00 óta
 </td></tr>
+</table>
+
+<table>
+<tr><th>Szolgáltatás</th><th>Játékos eredményének regisztálása</th></tr>
+<tr><td>URI</td><td><tt>/register-score/{mode}/{difficulty}</tt></td></tr>
+<tr><td>HTTP verb</td><td>POST</td></tr>
+<tr><td>request body</td><td><pre>
+{
+"achievement" : {
+  "player-alias" : &lt;string> ,
+  "score"        : &lt;string> }
+}
+</pre></td></tr>
+<tr><td>response</td><td>egyszerű HTML response code</td></tr>
 </table>
 
 ### 2.5 Dinamikus működés  
