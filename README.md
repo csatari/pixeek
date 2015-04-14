@@ -590,20 +590,50 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 
 ![Adatbázis terv](/readme_resources/db_model_relational.png?raw=true "Adatbázis terv")
 
-### 2.4 Dinamikus működés  
-#### 2.4.1 Menü  
+### 2.4 RESTful web-szolgáltatások
++---------------------+-------------------------------------------+
+| Szolgáltatás        | Játék indítása - egy játékos              |
++=====================+===========================================+
+| URI                 | /start/{mode}/{difficulty}                |
++---------------------+-------------------------------------------+
+| HTTP verb           | GET                                       |
++---------------------+-------------------------------------------+
+| response            | ::                                        |
+|                     | > {                                       |
+|                     | > "layout" : {                            |
+|                     | >   "width"  : <number> ,                 |
+|                     | >   "height" : <number> ,                 |
+|                     | >   "fields" : [ <boolean> ] } ,          |
+|                     | > "board" : [ {                           | 
+|                     | >   "word"  : <string> ,                  |
+|                     | >   "image" : <string> } ] ,              |
+|                     | >   "clues" : [ <string> ]                |
+|                     | > }                                       |
++---------------------+-------------------------------------------+
+| megjegyzések        | mode in {"normal", "endless", "time"};    |
+|                     | difficulty in {"easy", "normal", "hard"}; |
+|                     | fields: sorfolytonosan ábrázolt mátrix –  |
+|                     | igaz esetén a mátrixelem helyén játékmező |
+|                     | van, hamis esetén semmi;                  |
+|                     | board: sorfolytonos, csak a layout-aktív  |
+|                     | elemek;                                   |
+|                     | image: base64 kódolt JPEG                 |
++---------------------+-------------------------------------------+
+
+### 2.5 Dinamikus működés  
+#### 2.5.1 Menü  
 ![Menü szekvenciadiagram](/readme_resources/menusequencemodell1.jpg?raw=true "Menü szekvenciadiagram")
 
-#### 2.4.2 Scoreboard
+#### 2.5.2 Scoreboard
 ![Scoreboard szekvenciadiagram](/readme_resources/sequence.jpg?raw=true "Scoreboard szekvenciadiagram")
 
-#### 2.4.3 Multiplayer játék indítása
+#### 2.5.3 Multiplayer játék indítása
 ![Multiplayer szekvenciadiagram](/readme_resources/multisequence.jpg?raw=true "Multiplayer szekvenciadiagram")
 
-#### 2.4.4 Sakk alapú időkorlátos játékmód
+#### 2.5.4 Sakk alapú időkorlátos játékmód
 ![Időkorlátos játékmód szekvenciadiagram](/readme_resources/chessMethodSequence.jpg?raw=true "Időkorlátos játékmód szekvenciadiagram")
 
-### 2.5 Felhasználói felület modell  
+### 2.6 Felhasználói felület modell  
 A játék alapvetően mobil platformokra van tervezve, érintéssel működik. Minden ablak teljes képernyős, mindig a legutoljára felnyitott ablak aktív. A menükben vissza lehet menni bármelyik előző ablakra. Játék közben a pause menüt lehet megnyitni, a főmenübe visszajutni csak az aktuális játék megszakításával lehet.
 
 ![Főmenü](/readme_resources/mainmenu.jpg?raw=true "Főmenü")  
@@ -611,7 +641,7 @@ A játék alapvetően mobil platformokra van tervezve, érintéssel működik. M
 ![Játékmenet](/readme_resources/gamemode.jpg?raw=true "Játékmenet")  
 ![Játékmenet, pálya template](/readme_resources/gamemode2.jpg?raw=true "Játékmenet, pálya template")  
 
-### 2.6 Részletes programterv
+### 2.7 Részletes programterv
 
 **Tábla**  
 *mezőHozzáadás* – hozzáad egy mezőt a Tábla osztály összesMező nevű listájához.  
