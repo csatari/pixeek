@@ -594,7 +594,7 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 
 <table>
 <tr><th>Szolgáltatás</th><th>Játék indítása - egy játékos</th></tr>
-<tr><td>URI</td><td><pre>/start/{mode}/{difficulty}</pre></td></tr>
+<tr><td>URI</td><td><tt>/start/{mode}/{difficulty}</tt></td></tr>
 <tr><td>HTTP verb</td><td>GET</td></tr>
 <tr><td>response</td><td><pre>
 {
@@ -609,12 +609,30 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 }
 </pre></td></tr>
 <tr><td>Megjegyzések</td><td>
-<pre>mode</pre> eleme <pre>{"normal", "endless", "time"}</pre>;  
-<pre>difficulty</pre> eleme <pre>{"easy", "normal", "hard"}</pre>;  
-<pre>fields<pre>: sorfolytonosan ábrázolt mátrix – igaz esetén
+<tt>mode</tt> eleme <tt>{"normal", "endless", "time"}</tt>;  
+<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>;  
+<tt>fields</tt>: sorfolytonosan ábrázolt mátrix – igaz esetén
 a mátrixelem helyén játékmező van, hamis esetén semmi;  
-<pre>board</pre>: sorfolytonos, csak a layout-aktív elemek;  
-<pre>image</pre>: base64 kódolt JPEG
+<tt>board</tt>: sorfolytonos, csak a layout-aktív elemek;  
+<tt>image</tt>: base64 kódolt JPEG
+</td></tr>
+</table>
+
+<table>
+<tr><th>Szolgáltatás</th><th>Scoreboard lekérdezése</th></tr>
+<tr><td>URI</td><td><tt>/scoreboard/{mode}/{difficulty}</tt></td></tr>
+<tr><td>HTTP verb</td><td>GET</td></tr>
+<tr><td>response</td><td><pre>
+{
+"scoreboard" : [ {
+  "player"    : <string> ,
+  "score"     : <number> ,
+  "timestamp" : <number> } ]
+}
+</pre></td></tr>
+<tr><td>Megjegyzések</td><td>
+<tt>mode</tt> eleme <tt>{"normal", "time"}</tt>;  
+<tt>timestamp</tt>: másodpercek 2015. jan. 1. 00:00:00 óta
 </td></tr>
 </table>
 
