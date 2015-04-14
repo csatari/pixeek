@@ -54,6 +54,16 @@ A következő félévre vonatkozó szakterületi követelményeink:
 * A téma kiválasztható az új játék kezdésekor, a témához szükséges erőforrások a szerverről töltődnek le
 * Ranglista
 * Tutorial – első játékkor ajánlja fel, illetve a menüből is elérhető később kérésre. Egy példajátékon vezet végig.
+* A szerver szolgáltatásai:
+  * Scoreboard elküldése a kliensnek
+  * Egyjátékos-mód
+    * Indításkor pálya generálása
+    * Endless módhoz új pályaelem
+    * Scoreboard frissítése
+  * Többjátékos-mód
+    * Játékosok regisztrálása, párosítása
+      * indításkor pálya generálása, küldése
+      * állapot frissítése, szinkronizálása
 
 
 ### 1.5 Nem funkcionális követelmények
