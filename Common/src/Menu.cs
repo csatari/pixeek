@@ -19,7 +19,7 @@ namespace Pixeek
                 {
                     children = new List<MenuElement>();
                 }
-                
+
                 children.Add(child);
             }
 
@@ -93,7 +93,7 @@ namespace Pixeek
 
         public class MenuSpriteElement : MenuElement
         {
-            public MenuSpriteElement(string textureName, Rectangle area, String text = null, float scale=1.0f)
+            public MenuSpriteElement(string textureName, Rectangle area, String text = null, float scale = 1.0f)
             {
                 this.area = area;
                 if (!string.IsNullOrEmpty(textureName))
@@ -184,16 +184,16 @@ namespace Pixeek
                 return false;
 #endif
 #if ANDROID
-                if (area.Contains(pos))
+            if (area.Contains(pos))
+            {
+                if (clickHandler != null)
                 {
-                    if (clickHandler != null)
-                    {
-                        clickHandler();
-                    }
-                    Debug.WriteLine("megnyomva");
-                    return true;
+                    clickHandler();
                 }
-                return false;
+                Debug.WriteLine("megnyomva");
+                return true;
+            }
+            return false;
 #endif
             }
 
@@ -285,14 +285,14 @@ namespace Pixeek
             {
                 Rectangle exitRect = new Rectangle(1, 1, 151, 71);
                 MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()
-                    {
-                        GameManager.Instance.Exit();
-                    });
+                {
+                    GameManager.Instance.Exit();
+                });
                 exitButton.AddChild(new MenuSpriteElement("GUI/button_bg", exitRect, "EXIT"));
                 bg.AddChild(exitButton);
             }
             {
-                Rectangle playRect = new Rectangle(Convert.ToInt32(0.65 * GameManager.Width), Convert.ToInt32(0.35*GameManager.Height),
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.65 * GameManager.Width), Convert.ToInt32(0.35 * GameManager.Height),
                                                     Convert.ToInt32(0.265 * GameManager.Width), Convert.ToInt32(0.104 * GameManager.Height));
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
@@ -321,7 +321,7 @@ namespace Pixeek
                 {
                     root.AddChild(new MenuSpriteElement(null, new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
                                                                             Convert.ToInt32(0.28 * GameManager.Height),
-                                                                            Convert.ToInt32(0.3125 * GameManager.Width), 
+                                                                            Convert.ToInt32(0.3125 * GameManager.Width),
                                                                             Convert.ToInt32(0.097 * GameManager.Height)), "YOU WON!\nYou gained " + point
                         + " points. Remaining time: " + time));
                 }
@@ -345,9 +345,9 @@ namespace Pixeek
 
 
             Rectangle exitRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                                               Convert.ToInt32(0.4167 * GameManager.Height), 
-                                               Convert.ToInt32(0.3125 * GameManager.Width),
-                                               Convert.ToInt32(0.07 * GameManager.Height));
+                                                Convert.ToInt32(0.4167 * GameManager.Height),
+                                                Convert.ToInt32(0.3125 * GameManager.Width),
+                                                Convert.ToInt32(0.07 * GameManager.Height));
             MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()
             {
                 Menu.CreateMainMenu();
@@ -361,6 +361,7 @@ namespace Pixeek
         static Game.GameMode selectedGameMode = Game.GameMode.NORMAL;
         static Game.Difficulty selectedDifficulty = Game.Difficulty.NORMAL;
 
+        //TODO ezt kell átrakni másik osztályba generikusan
         class DifficultySelector : MenuElement
         {
             override public void Update(GameTime gameTime)
@@ -455,13 +456,13 @@ namespace Pixeek
                 {
                     music = false;
                     musicText = "MUSIC: OFF";
-                } 
+                }
                 musicSpriteElement.Text = musicText;
             });
             musicSpriteElement = new MenuSpriteElement("GUI/button_bg", musicRect, musicText);
             musicButton.AddChild(musicSpriteElement);
             bg.AddChild(musicButton);
-            
+
             Rectangle vibRect = new Rectangle(GameManager.Width - 345, 1, 190, 71);
             MenuButtonElement vibButton = new MenuButtonElement(vibRect, delegate()
             {
@@ -481,7 +482,7 @@ namespace Pixeek
             vibButton.AddChild(vibrationSpriteElement);
             bg.AddChild(vibButton);
 
-           
+
 
             {
                 DifficultySelector selector = new DifficultySelector();
@@ -491,15 +492,15 @@ namespace Pixeek
                 int baseY = Convert.ToInt32(0.359 * GameManager.Height);
                 int YDiff = Convert.ToInt32(0.085 * GameManager.Height);
                 {
-                    Rectangle easyRect = new Rectangle(baseX, 
-                                                       baseY + YDiff * 0,
-                                                       Convert.ToInt32(0.078 * GameManager.Width),
-                                                       Convert.ToInt32(0.077 * GameManager.Height));
+                    Rectangle easyRect = new Rectangle(baseX,
+                                                        baseY + YDiff * 0,
+                                                        Convert.ToInt32(0.078 * GameManager.Width),
+                                                        Convert.ToInt32(0.077 * GameManager.Height));
                     MenuButtonElement easyButton = new MenuButtonElement(easyRect, delegate()
                     {
                         selectedDifficulty = Game.Difficulty.EASY;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "EASY",1.5f));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "EASY", 1.5f));
                     selector.AddElementForDifficulty(Game.Difficulty.EASY, easyButton);
                 }
 
@@ -509,7 +510,7 @@ namespace Pixeek
                     {
                         selectedDifficulty = Game.Difficulty.NORMAL;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL",1.5f));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL", 1.5f));
                     selector.AddElementForDifficulty(Game.Difficulty.NORMAL, easyButton);
                 }
 
@@ -519,7 +520,7 @@ namespace Pixeek
                     {
                         selectedDifficulty = Game.Difficulty.HARD;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "HARD",1.5f));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "HARD", 1.5f));
                     selector.AddElementForDifficulty(Game.Difficulty.HARD, easyButton);
                 }
             }
@@ -537,7 +538,7 @@ namespace Pixeek
                     {
                         selectedGameMode = Game.GameMode.NORMAL;
                     });
-                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL",1.5f));
+                    easyButton.AddChild(new MenuSpriteElement(null, easyRect, "NORMAL", 1.5f));
                     selector.AddElementForDifficulty(Game.GameMode.NORMAL, easyButton);
                 }
 
@@ -603,7 +604,7 @@ namespace Pixeek
                         break;
                 }
             }
-            
+
             //egér lekezelése
             if (lastButtonState != Mouse.GetState().LeftButton)
             {

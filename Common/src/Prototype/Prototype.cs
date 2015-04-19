@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Pixeek.Menus;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -115,7 +115,9 @@ namespace Pixeek
 
             if (score > maxScore)
             {
-                Menu.CreateGameOverMenu(true,score,null);
+                GameOverMenu.Instance.Win = true;
+                GameOverMenu.Instance.Point = score;
+                Pixeek.Menus.Menu.GoToScene(GameOverMenu.Instance);
             }
         }
 

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek.BoardShapes;
 using Pixeek.GameDrawables;
 using Pixeek.ImageLoader;
+using Pixeek.Menus;
 using Pixeek.Saving;
 using Pixeek.SoundVibration;
 using System;
@@ -85,7 +86,9 @@ namespace Pixeek.Game
             };
             levelManager.TimeStoppedHandler = delegate()
             {
-                Menu.CreateGameOverMenu(false,scoring.Score,null);
+                GameOverMenu.Instance.Win = false;
+                GameOverMenu.Instance.Point = scoring.Score;
+                Menu.GoToScene(GameOverMenu.Instance);
                 levelManager.endGame();
             };
             UpperMenu.Instance.ExitHandler = delegate()
@@ -94,7 +97,7 @@ namespace Pixeek.Game
 #if WINDOWS
                 saveGame(timeToSave, levelManager.ImagesToFind.ToFind, scoring.Score, scoring.Combo);
 #endif
-                Menu.CreateMainMenu();
+                Menu.GoToScene(MainMenu.Instance);
             };
 
             //Létrehozunk egy alakzatot, és átadjuk a pályakészítõnek
@@ -115,7 +118,11 @@ namespace Pixeek.Game
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
-                Menu.CreateGameOverMenu(true, scoring.Score, UpperMenu.Instance.getTimerText());
+                GameOverMenu.Instance.Win = true;
+                GameOverMenu.Instance.Point = scoring.Score;
+                GameOverMenu.Instance.Time = UpperMenu.Instance.getTimerText();
+                Menu.GoToScene(GameOverMenu.Instance);
+
                 levelManager.endGame();
             };
 

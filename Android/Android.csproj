@@ -120,6 +120,33 @@
     <Compile Include="..\Common\src\GamePlay\ImageLoader\ImageDownloader.cs">
       <Link>src\GamePlay\ImageLoader\ImageDownloader.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MainMenuPlainSelector.cs">
+      <Link>src\GamePlay\Menus\Elements\MainMenuPlainSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuButtonElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuButtonElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuSelector.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuSpriteElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuSpriteElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\GameOverMenu.cs">
+      <Link>src\GamePlay\Menus\GameOverMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\MainMenu.cs">
+      <Link>src\GamePlay\Menus\MainMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Menu.cs">
+      <Link>src\GamePlay\Menus\Menu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\NewGameMenu.cs">
+      <Link>src\GamePlay\Menus\NewGameMenu.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\Saving\Save.cs">
       <Link>src\GamePlay\Saving\Save.cs</Link>
     </Compile>

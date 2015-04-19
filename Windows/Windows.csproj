@@ -123,6 +123,33 @@
     <Compile Include="..\Common\src\GamePlay\ImageLoader\ImageDownloader.cs">
       <Link>src\GamePlay\ImageLoader\ImageDownloader.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MainMenuPlainSelector.cs">
+      <Link>src\GamePlay\Menus\Elements\MainMenuPlainSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuButtonElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuButtonElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuSelector.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuSpriteElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuSpriteElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\GameOverMenu.cs">
+      <Link>src\GamePlay\Menus\GameOverMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\MainMenu.cs">
+      <Link>src\GamePlay\Menus\MainMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Menu.cs">
+      <Link>src\GamePlay\Menus\Menu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\NewGameMenu.cs">
+      <Link>src\GamePlay\Menus\NewGameMenu.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\Saving\Save.cs">
       <Link>src\GamePlay\Saving\Save.cs</Link>
     </Compile>
@@ -157,9 +184,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Common\src\GameManager.cs">
       <Link>src\GameManager</Link>
-    </Compile>
-    <Compile Include="..\Common\src\Menu.cs">
-      <Link>src\Menu</Link>
     </Compile>
     <Compile Include="..\Common\src\Prototype\Prototype.cs">
       <Link>src\Prototype\Prototype</Link>
@@ -208,6 +232,7 @@
   <ItemGroup>
     <None Include="Windows_1_TemporaryKey.pfx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

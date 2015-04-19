@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pixeek.Menus;
+using Pixeek.Menus.Elements;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -83,7 +85,9 @@ namespace Pixeek
            
             //SwitchScene(new Prototype());
             //SwitchScene(new Menu());
-            Menu.CreateMainMenu();
+
+            Menu.GoToScene(MainMenu.Instance);
+
             //Menu.CreateGameOverMenu();
 
             //Testing.RunAllTests();

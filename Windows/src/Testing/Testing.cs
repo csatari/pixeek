@@ -29,8 +29,8 @@ namespace Pixeek
             // build a 1x1 menu, see if button works
             System.TimeSpan simple = new System.TimeSpan(1000);
             bool ch = false;
-            Menu.MenuElement root = new Menu.MenuElement();
-            root.AddChild(new Menu.MenuButtonElement(new Rectangle(0, 0, 1, 1), delegate()
+            Menus.Elements.MenuElement root = new Menus.Elements.MenuElement();
+            root.AddChild(new Menus.Elements.MenuButtonElement(new Rectangle(0, 0, 1, 1), delegate()
             {
                 ch = true;
             }));
