@@ -27,7 +27,46 @@ namespace Pixeek.Menus
             }
         }
 
-        private MainMenu() : base() { }
+        private MainMenu() : base() {
+            
+            /*ServerCommunicator.ScoreboardCommunicator.Instance.sendScore(Game.GameMode.NORMAL, Game.Difficulty.EASY,
+                new ServerCommunicator.ScoreboardRequest() { player = "AAA", score = 1 });*/
+            ServerCommunicator.ScoreboardCommunicator.Instance.getTop10Scores(Game.GameMode.NORMAL, Game.Difficulty.EASY,
+                delegate(ServerCommunicator.Objects.ScoreboardResponse ts)
+                {
+                    Console.WriteLine(ts);
+                });
+            ServerCommunicator.SinglePlayerGameCommunicator.Instance.startSinglePlayer(Game.Difficulty.HARD, 20,
+                delegate(ServerCommunicator.Objects.NewBoardResponse nr)
+                {
+                    Console.WriteLine(nr.ToString());
+                });
+            ServerCommunicator.SinglePlayerGameCommunicator.Instance.getNewTile(Game.Difficulty.HARD,
+                delegate(ServerCommunicator.Objects.NewTileResponse nr)
+                {
+                    Console.WriteLine(nr.ToString());
+                });
+
+            ServerCommunicator.MultiPlayerGameCommunicator.Instance.checkInForMulti(Game.GameMode.FIGHT, Game.Difficulty.EASY,
+                new ServerCommunicator.Objects.CheckInForMultiRequest()
+                {
+                    player_alias = "Albert"
+                },
+                delegate(ServerCommunicator.Objects.CheckInForMultiResponse nr)
+                {
+                    Console.WriteLine(nr.ToString());
+                });
+
+            ServerCommunicator.MultiPlayerGameCommunicator.Instance.checkInForMulti(Game.GameMode.FIGHT, Game.Difficulty.EASY,
+                new ServerCommunicator.Objects.CheckInForMultiRequest()
+                {
+                    player_alias = "Géza"
+                },
+                delegate(ServerCommunicator.Objects.CheckInForMultiResponse nr)
+                {
+                    Console.WriteLine(nr.ToString());
+                });
+        }
 
         public override void Initialize()
         {

@@ -9,6 +9,8 @@ namespace Pixeek.Game
     {
         NORMAL, 
         TIME,
-        ENDLESS
+        ENDLESS,
+        TIMER,
+        FIGHT
     }
 }

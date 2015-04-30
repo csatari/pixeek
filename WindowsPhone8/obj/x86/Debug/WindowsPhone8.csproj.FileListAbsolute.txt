@@ -18,7 +18,6 @@ E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\bin\WindowsPhone\x86\Debug\SharpDX
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\bin\WindowsPhone\x86\Debug\SharpDX.Direct3D11.xml
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\bin\WindowsPhone\x86\Debug\SharpDX.XAudio2.xml
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\bin\WindowsPhone\x86\Debug\SharpDX.DXGI.xml
-E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\WindowsPhone8.csprojResolveAssemblyReference.cache
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\App.g.cs
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\GamePage.g.cs
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\WindowsPhone8.g.resources
@@ -27,3 +26,4 @@ E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\WindowsPhone8.csproj
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\WindowsPhone8.dll
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\WindowsPhone8.pdb
 E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\XapCacheFile.xml
+E:\ELTE\SZOFTVERFOLYAMAT\pixeek\WindowsPhone8\obj\x86\Debug\WindowsPhone8.csprojResolveAssemblyReference.cache
