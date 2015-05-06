@@ -9,6 +9,7 @@ namespace Pixeek.Game
     public class LevelManager
     {
         private GameMode gameMode;
+        private Difficulty difficulty;
         private Timer time;
         private TimeSpan elapsedTime;
         private Board board;
@@ -52,12 +53,13 @@ namespace Pixeek.Game
         /// <param name="imageList">képek listája</param>
         /// <param name="boardAnimal">a tábla alakzata, ha null, akkor szimpla négyzet lesz</param>
         /// <returns>A táblával tér vissza</returns>
-        public Board newGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
+        /*public Board newGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
         {
             this.gameMode = gameMode;
 
             board = new Board(imageList);
-            board.createBoard(difficulty,boardAnimal);
+            board.createBoard(difficulty, boardAnimal); //TODO az imageList-bõl válasszon képet
+            //board.createBoard_New(difficulty, boardAnimal);
             ImagesToFind = Game.ImagesToFind.createNewImagesToFind(gameMode, difficulty, board);
             
             if (gameMode == GameMode.TIME)
@@ -69,6 +71,36 @@ namespace Pixeek.Game
                 elapsedTime = TimeSpan.Zero;
             }
             if(TimeElapsedHandler!=null) TimeElapsedHandler(elapsedTime);
+            time.Start();
+
+            return board;
+        }*/
+
+        /// <summary>
+        /// Elindít egy új játékot a megadott paraméterekket
+        /// </summary>
+        /// <param name="gameMode">játékmód</param>
+        /// <param name="difficulty">nehézség</param>
+        /// <param name="imageList">képek listája</param>
+        /// <param name="boardAnimal">a tábla alakzata, ha null, akkor szimpla négyzet lesz</param>
+        /// <returns>A táblával tér vissza</returns>
+        public Board newGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
+        {
+            this.gameMode = gameMode;
+            this.difficulty = difficulty;
+            board = new Board(imageList);
+            board.createBoard(difficulty, boardAnimal);
+            ImagesToFind = Game.ImagesToFind.createNewImagesToFind(gameMode, difficulty, board);
+
+            if (gameMode == GameMode.TIME)
+            {
+                elapsedTime = new TimeSpan(0, 0, 30);
+            }
+            else
+            {
+                elapsedTime = TimeSpan.Zero;
+            }
+            if (TimeElapsedHandler != null) TimeElapsedHandler(elapsedTime);
             time.Start();
 
             return board;
@@ -91,7 +123,11 @@ namespace Pixeek.Game
                     }
                     else
                     {
-                        board.changeField(field);
+                        board.changeField(field, difficulty,
+                            delegate()
+                            {
+                                ImagesToFind.addNewImageToFind();
+                            });
                     }
                     return true;
                 }

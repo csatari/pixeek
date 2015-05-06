@@ -69,6 +69,9 @@
     <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardFish.cs">
       <Link>src\GamePlay\BoardShapes\BoardFish.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardRectangle.cs">
+      <Link>src\GamePlay\BoardShapes\BoardRectangle.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\BoardShapes\IBoardShapes.cs">
       <Link>src\GamePlay\BoardShapes\IBoardShapes.cs</Link>
     </Compile>
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuSpriteElement.cs">
       <Link>src\GamePlay\Menus\Elements\MenuSpriteElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuTextElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuTextElement.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Menus\GameOverMenu.cs">
       <Link>src\GamePlay\Menus\GameOverMenu.cs</Link>
@@ -261,6 +267,9 @@
     <Content Include="..\Common\**\*" Exclude="..\Common\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Common\Content\GUI\text_bg.png">
+      <Link>Content\GUI\text_bg.png</Link>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>

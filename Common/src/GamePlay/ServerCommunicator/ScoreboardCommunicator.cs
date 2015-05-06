@@ -32,6 +32,7 @@ namespace Pixeek.ServerCommunicator
         }
 
         public delegate void Top10Score(ScoreboardResponse scr);
+        public delegate void ScoreSent();
 
         public void getTop10Scores(GameMode gameMode, Difficulty difficulty, Top10Score ts)
         {
@@ -49,7 +50,7 @@ namespace Pixeek.ServerCommunicator
                 });
         }
 
-        public void sendScore(GameMode gameMode, Difficulty difficulty, ScoreboardRequest scoreboard)
+        public void sendScore(GameMode gameMode, Difficulty difficulty, ScoreboardRequest scoreboard, ScoreSent scoreSent)
         {
             if (gameMode == GameMode.ENDLESS || gameMode == GameMode.FIGHT || gameMode == GameMode.TIMER)
             {
@@ -60,7 +61,7 @@ namespace Pixeek.ServerCommunicator
             sendPutCommand("/register-score/" + gmStr + "/" + diffStr,scoreboard,
                 delegate(String s)
                 {
-                    Console.WriteLine(s);
+                    scoreSent();
                 });
 
         }

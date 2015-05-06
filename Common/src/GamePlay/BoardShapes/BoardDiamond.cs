@@ -59,5 +59,16 @@ namespace Pixeek.BoardShapes
             }
             return board;
         }
+
+        public int getFieldCount(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.EASY: return 25;
+                case Difficulty.NORMAL: return 41;
+                case Difficulty.HARD: return 113;
+                default: return 0;
+            }
+        }
     }
 }

@@ -117,7 +117,11 @@ namespace Pixeek
             //checks if changeField function works properly
             Field oldField = testBoard.getField(3, 0);
             string oldstr = oldField.ImageProperty.Name;
-            testBoard.changeField(oldField);
+            testBoard.changeField(oldField, Difficulty.EASY,
+                delegate()
+                {
+                    levelManager.ImagesToFind.addNewImageToFind();
+                });
             //can cause exception in odd cases if the random new image is the same as it was
             assert(oldstr != testBoard.getField(3, 0).ImageProperty.Name);
 

@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using Pixeek.Transformation;
 using Pixeek.BoardShapes;
+using Pixeek.ServerCommunicator;
+using Pixeek.ServerCommunicator.Objects;
+using System.Threading;
 
 namespace Pixeek.Game
 {
@@ -62,7 +65,7 @@ namespace Pixeek.Game
         /// Feltölti a Field-ek listáját a megadott nehézségen koordinátákkal együtt.
         /// </summary>
         /// <param name="difficulty"></param>
-        public void createBoard(Difficulty difficulty, IBoardShapes boardAnimal)
+        /*public void createBoard_old(Difficulty difficulty, IBoardShapes boardAnimal)
         {
             if (boardAnimal != null)
             {
@@ -80,34 +83,32 @@ namespace Pixeek.Game
                     }
                 }
             }
-            else
-            {
-                X = 0;
-                Y = 0;
-                if (difficulty == Difficulty.EASY)
-                {
-                    X = 5;
-                    Y = 5;
-                }
-                else if (difficulty == Difficulty.NORMAL)
-                {
-                    X = 9;
-                    Y = 9;
-                }
-                else if (difficulty == Difficulty.HARD)
-                {
-                    X = 16;
-                    Y = 16;
-                }
+        }*/
 
-                for (int i = 0; i < X; i++)
+        /// <summary>
+        /// Feltölti a Field-ek listáját a megadott nehézségen koordinátákkal együtt.
+        /// </summary>
+        /// <param name="difficulty"></param>
+        public void createBoard(Difficulty difficulty, IBoardShapes boardAnimal)
+        {
+            int[][] boardMap = boardAnimal.getField(difficulty);
+            int imageCounter = 0;
+            Y = boardMap.GetLength(0);
+            X = boardMap[0].GetLength(0);
+            for (int y = 0; y < boardMap.GetLength(0); y++)
+            {
+                for (int x = 0; x < boardMap[y].GetLength(0); x++)
                 {
-                    for (int j = 0; j < Y; j++)
+                    if (boardMap[y][x] == 1)
                     {
-                        addRandomFieldToAllFields(difficulty, i, j);
+                        //addRandomFieldToAllFields(difficulty, y, x);
+                        Field field = new Field(imageList[imageCounter], imageCounter, y, x, true, null);
+                        AllFields.Add(field);
+                        imageCounter++;
                     }
                 }
             }
+            
         }
 
         /// <summary>
@@ -133,15 +134,26 @@ namespace Pixeek.Game
             AllFields.Add(field);
         }
 
+        public delegate void FieldChangedHandler();
         /// <summary>
         /// Kicseréli a megadott mezõt egy random másikra
         /// </summary>
         /// <param name="field"></param>
-        public void changeField(Field field)
+        public void changeField(Field field, Difficulty difficulty, FieldChangedHandler handler)
         {
-            int randomImage = random.Next(imageList.Count);
+            /*int randomImage = random.Next(imageList.Count);
             field.ImageProperty = imageList[randomImage];
-            field.ImageNumber = randomImage;
+            field.ImageNumber = randomImage;*/
+            field.Available = false;
+            SinglePlayerGameCommunicator.Instance.getNewTile(difficulty,
+                delegate(NewTileResponse response)
+                {
+                    Thread.Sleep(500);
+                    field.ImageProperty = NewTileResponse.getImagesFromResponse(GameManager.Instance.GraphicsDevice, response);
+                    field.Available = true;
+                    handler();
+                }
+            );
         }
 
 

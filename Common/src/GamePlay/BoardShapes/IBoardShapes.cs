@@ -15,5 +15,12 @@ namespace Pixeek.BoardShapes
         /// <param name="difficulty"></param>
         /// <returns></returns>
         int[][] getField(Difficulty difficulty);
+
+        /// <summary>
+        /// Visszaadja, hogy egy alakzat hány képet tartalmaz nehézség szerint
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <returns></returns>
+        int getFieldCount(Difficulty difficulty);
     }
 }

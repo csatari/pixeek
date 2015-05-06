@@ -26,5 +26,10 @@ namespace Pixeek.BoardShapes
 
             return board;
         }
+
+        public int getFieldCount(Difficulty difficulty)
+        {
+            return 79;
+        }
     }
 }

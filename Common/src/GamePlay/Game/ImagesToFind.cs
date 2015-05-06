@@ -38,16 +38,12 @@ namespace Pixeek.Game
                 if (clickedField.ImageProperty.Name.Equals(image.Name))
                 {
                     foundImage = image;
+                    break;
                 }
             }
             if (foundImage != null)
             {
                 ToFind.Remove(foundImage);
-
-                if (GameMode == Game.GameMode.ENDLESS)
-                {
-                    addNewImageToFind();
-                }
 
                 if (ToFind.Count == 0) outOfImages();
 

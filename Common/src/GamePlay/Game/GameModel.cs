@@ -6,6 +6,7 @@ using Pixeek.BoardShapes;
 using Pixeek.GameDrawables;
 using Pixeek.ImageLoader;
 using Pixeek.Menus;
+using Pixeek.Menus.Elements;
 using Pixeek.Saving;
 using Pixeek.SoundVibration;
 using System;
@@ -32,13 +33,16 @@ namespace Pixeek.Game
         public bool vib;
         Double timeToSave;
        
-        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedMusic, bool selectedVib)
+        public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedMusic, bool selectedVib, LevelManager lm, Board board)
         {
             this.imageDatabase = imageDatabase;
             gameMode = mode;
             difficulty = diff;
             music = selectedMusic;
             vib = selectedVib;
+            levelManager = lm;
+            this.board = board;
+            Loading = true;
            
 #if WINDOWS
             soundAndVibration = new SoundAndVibrationWindows();
@@ -56,7 +60,7 @@ namespace Pixeek.Game
                 {
                     ImageDatabase imageDatabase = new ImageDatabase();
                     imageDatabase.LoadContent();
-                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY, false, false); 
+                    jatekModell = new GameModel(imageDatabase, GameMode.NORMAL, Difficulty.EASY, false, false, new LevelManager(), null); 
                 }
                 return jatekModell;
             }
@@ -65,6 +69,8 @@ namespace Pixeek.Game
                 jatekModell = value;
             }
         }
+
+        public static bool Loading { get; set; }
 
         public void Initialize()
         {
@@ -75,10 +81,10 @@ namespace Pixeek.Game
             CreateUpperMenu();
             toFindDrawable = new ToFindDrawable(GameManager.Instance);
             GameManager.Instance.Components.Add(toFindDrawable);
-            
-
-            //új játék indítása
-            levelManager = new LevelManager();
+        }
+        public void setLevelManager(LevelManager lm)
+        {
+            levelManager = lm;
             levelManager.TimeElapsedHandler = delegate(TimeSpan elapsedTime)
             {
                 UpperMenu.Instance.setTimerText(elapsedTime.ToString("mm\\:ss"));
@@ -88,6 +94,8 @@ namespace Pixeek.Game
             {
                 GameOverMenu.Instance.Win = false;
                 GameOverMenu.Instance.Point = scoring.Score;
+                GameOverMenu.Instance.Difficulty = difficulty;
+                GameOverMenu.Instance.GameMode = gameMode;
                 Menu.GoToScene(GameOverMenu.Instance);
                 levelManager.endGame();
             };
@@ -95,39 +103,31 @@ namespace Pixeek.Game
             {
                 levelManager.endGame();
 #if WINDOWS
-                saveGame(timeToSave, levelManager.ImagesToFind.ToFind, scoring.Score, scoring.Combo);
+                //saveGame(timeToSave, levelManager.ImagesToFind.ToFind, scoring.Score, scoring.Combo);
 #endif
                 Menu.GoToScene(MainMenu.Instance);
             };
-
-            //Létrehozunk egy alakzatot, és átadjuk a pályakészítõnek
-            IBoardShapes boardAnimal = new BoardFish();
-            Random random = new Random();
-            int r = random.Next(3);
-            switch (r)
-            {
-                case 0: { boardAnimal = new BoardDiamond(); break; }
-                case 1: { boardAnimal = new BoardFish(); break; }
-                default: { boardAnimal = null; break; }
-            }
-
-            board = levelManager.newGame(gameMode, difficulty, boardAnimal, imageDatabase.getAllPictures());
-
             toFindDrawable.ImagesToFind = levelManager.ImagesToFind;
-           
+
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
                 GameOverMenu.Instance.Win = true;
                 GameOverMenu.Instance.Point = scoring.Score;
                 GameOverMenu.Instance.Time = UpperMenu.Instance.getTimerText();
+                GameOverMenu.Instance.Difficulty = difficulty;
+                GameOverMenu.Instance.GameMode = gameMode;
                 Menu.GoToScene(GameOverMenu.Instance);
 
                 levelManager.endGame();
             };
-
+        }
+        public void setBoard(Board board)
+        {
+            this.board = board;
             BoardDrawable _boardDrawable = new BoardDrawable(board,
-                delegate(Field field) {
+                delegate(Field field)
+                {
                     bool success = levelManager.tryClickedField(field);
                     if (success)
                     {
@@ -174,6 +174,7 @@ namespace Pixeek.Game
 
         public void Update(GameTime gameTime)
         {
+            if (Loading) return;
             Point pos = new Point();
             //érintés lekezelése
             currentTouchState = TouchPanel.GetState();
@@ -210,6 +211,17 @@ namespace Pixeek.Game
 
         public void Draw(GameTime gameTime)
         {
+            if (Loading)
+            {
+                var Root = new MenuElement();
+                Root.AddChild(new MenuSpriteElement(null,
+                new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                              Convert.ToInt32(0.28 * GameManager.Height),
+                              Convert.ToInt32(0.3125 * GameManager.Width),
+                              Convert.ToInt32(0.097 * GameManager.Height)), "Loading..."));
+                Root.Draw(gameTime, Color.White);
+                return;
+            }
             foreach(DrawableGameComponent component in UpperMenu.Instance.getAllComponents())  
             {
                 component.Draw(gameTime);

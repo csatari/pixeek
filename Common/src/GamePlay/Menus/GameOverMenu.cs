@@ -4,8 +4,11 @@ using Pixeek;
 using Pixeek.Game;
 using Pixeek.ImageLoader;
 using Pixeek.Menus.Elements;
+using Pixeek.ServerCommunicator;
+using Pixeek.ServerCommunicator.Objects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -14,6 +17,10 @@ namespace Pixeek.Menus
     public class GameOverMenu : Menu, GameManager.Scene
     {
         private static GameOverMenu instance;
+        private static MenuSpriteElement infoElement;
+        private static bool scoresSent = false;
+        public GameMode GameMode { get; set; }
+        public Difficulty Difficulty { get; set; }
 
         //singleton Instance
         public static GameOverMenu Instance
@@ -57,7 +64,7 @@ namespace Pixeek.Menus
                 drawText("GAME OVER!\nYou gained " + Point + " points.");
             }
 
-
+            //Kilépés gomb
             Rectangle exitRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
                                                Convert.ToInt32(0.4167 * GameManager.Height),
                                                Convert.ToInt32(0.3125 * GameManager.Width),
@@ -68,6 +75,35 @@ namespace Pixeek.Menus
             });
             exitButton.AddChild(new MenuSpriteElement("GUI/button_bg", exitRect, "BACK TO MAIN MENU"));
             Root.AddChild(exitButton);
+
+            //Névbeírás
+            Rectangle nameRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                               Convert.ToInt32(0.5167 * GameManager.Height),
+                                               Convert.ToInt32(0.2125 * GameManager.Width),
+                                               Convert.ToInt32(0.07 * GameManager.Height));
+
+            MenuTextElement menuText = new MenuTextElement(nameRect);
+            Root.AddChild(menuText);
+
+            //Küldő gomb
+            Rectangle sendButtonArea = new Rectangle(   Convert.ToInt32(0.525 * GameManager.Width),
+                                                        Convert.ToInt32(0.5167 * GameManager.Height),
+                                                        Convert.ToInt32(0.1 * GameManager.Width),
+                                                        Convert.ToInt32(0.07 * GameManager.Height));
+            MenuButtonElement sendButton = new MenuButtonElement(sendButtonArea, delegate()
+            {
+                SendScores(Point, menuText.Text);
+            });
+            sendButton.AddChild(new MenuSpriteElement("GUI/button_bg", sendButtonArea, "Send"));
+            Root.AddChild(sendButton);
+
+            //Információs szöveg
+            Rectangle infoRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                               Convert.ToInt32(0.6167 * GameManager.Height),
+                                               Convert.ToInt32(0.3125 * GameManager.Width),
+                                               Convert.ToInt32(0.07 * GameManager.Height));
+            infoElement = new MenuSpriteElement(null, infoRect, "");
+            Root.AddChild(infoElement);
         }
 
         private void drawText(string text)
@@ -77,6 +113,26 @@ namespace Pixeek.Menus
                               Convert.ToInt32(0.28 * GameManager.Height),
                               Convert.ToInt32(0.3125 * GameManager.Width),
                               Convert.ToInt32(0.097 * GameManager.Height)), text));
+        }
+
+        private void SendScores(int score, string name)
+        {
+            if (name.Length == 0)
+            {
+                infoElement.Text = "Please fill in your name!";
+                return;
+            }
+            if (!scoresSent)
+            {
+                scoresSent = true;
+                infoElement.Text = "Sending...";
+                ScoreboardCommunicator.Instance.sendScore(GameMode, Difficulty,
+                    new ScoreboardRequest() { player = name, score = score },
+                    delegate()
+                    {
+                        infoElement.Text = "Your score has been registered!";
+                    });
+            }
         }
 
     }

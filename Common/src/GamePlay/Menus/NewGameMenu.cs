@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek;
+using Pixeek.BoardShapes;
 using Pixeek.Game;
 using Pixeek.ImageLoader;
 using Pixeek.Menus.Elements;
+using Pixeek.ServerCommunicator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +43,7 @@ namespace Pixeek.Menus
         static string vibText = "VIBRATION: OFF";
         static MenuSpriteElement musicSpriteElement;
         static MenuSpriteElement vibrationSpriteElement;
+        private Game.GameModel gameModel;
 
         static MainMenuPlaintSelector<GameMode> gamemodeSelector;
         static MainMenuPlaintSelector<Difficulty> difficultySelector;
@@ -113,7 +116,7 @@ namespace Pixeek.Menus
                 difficultySelector.BaseX = Convert.ToInt32(0.279 * GameManager.Width);
                 difficultySelector.BaseY = Convert.ToInt32(0.359 * GameManager.Height);
                 difficultySelector.YDiff = Convert.ToInt32(0.085 * GameManager.Height);
-                difficultySelector.Width = Convert.ToInt32(0.078 * GameManager.Width);
+                difficultySelector.Width = Convert.ToInt32(0.12 * GameManager.Width);
                 difficultySelector.Height = Convert.ToInt32(0.077 * GameManager.Height);
 
 
@@ -127,10 +130,10 @@ namespace Pixeek.Menus
                 gamemodeSelector = new MainMenuPlaintSelector<GameMode>(GameMode.NORMAL);
                 bg.AddChild(gamemodeSelector);
 
-                gamemodeSelector.BaseX = Convert.ToInt32(0.1 * GameManager.Width);
-                gamemodeSelector.BaseY = Convert.ToInt32(0.388 * GameManager.Height);
+                gamemodeSelector.BaseX = Convert.ToInt32(0.077 * GameManager.Width);
+                gamemodeSelector.BaseY = Convert.ToInt32(0.359 * GameManager.Height);
                 gamemodeSelector.YDiff = Convert.ToInt32(0.085 * GameManager.Height);
-                gamemodeSelector.Width = Convert.ToInt32(0.078 * GameManager.Width);
+                gamemodeSelector.Width = Convert.ToInt32(0.15 * GameManager.Width);
                 gamemodeSelector.Height = Convert.ToInt32(0.077 * GameManager.Height);
 
                 gamemodeSelector.AddElement("NORMAL", GameMode.NORMAL);
@@ -144,12 +147,54 @@ namespace Pixeek.Menus
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
-                        GameManager.Instance.SwitchScene(new Game.GameModel(MainMenu.imageDatabase, gamemodeSelector.Selected, difficultySelector.Selected, music, vibration));
+                        gameModel = new Game.GameModel(MainMenu.imageDatabase, gamemodeSelector.Selected, difficultySelector.Selected, music, vibration, null, null);
+                        newGame(gamemodeSelector.Selected, difficultySelector.Selected, music, vibration);
+                        GameManager.Instance.SwitchScene(gameModel);
                     }
                 );
                 bg.AddChild(playButton);
                 playButton.AddChild(new MenuSpriteElement("GUI/button_play.png", playRect));
             }
+        }
+        public void newGame(GameMode gameMode, Difficulty difficulty, bool music, bool vibration )
+        {
+            if (gameMode == GameMode.ENDLESS || gameMode == GameMode.NORMAL || gameMode == GameMode.TIME)
+            {
+                IBoardShapes boardShape = createBoardShape();
+                int pictureCount = boardShape.getFieldCount(difficulty);
+
+                LevelManager levelManager = new LevelManager();
+
+                SinglePlayerGameCommunicator.Instance.startSinglePlayer(difficulty, pictureCount,
+                    delegate(ServerCommunicator.Objects.NewBoardResponse nr)
+                    {
+                        List<Image> imageList = ServerCommunicator.Objects.NewBoardResponse.getImagesFromResponse(GameManager.Instance.GraphicsDevice, nr);
+
+                        Board board = levelManager.newGame(gameMode, difficulty, boardShape, imageList);
+                        gameModel.setLevelManager(levelManager);
+                        gameModel.setBoard(board);
+
+                        GameModel.Loading = false;
+                    });
+            }
+        }
+
+        /// <summary>
+        /// Elkészít egy új tábla alakzatot - TODO szerverről kéne kérnie
+        /// </summary>
+        /// <returns></returns>
+        private IBoardShapes createBoardShape()
+        {
+            IBoardShapes boardAnimal = new BoardFish();
+            Random random = new Random();
+            int r = random.Next(3);
+            switch (r)
+            {
+                case 0: { boardAnimal = new BoardDiamond(); break; }
+                case 1: { boardAnimal = new BoardFish(); break; }
+                default: { boardAnimal = new BoardRectangle(); break; }
+            }
+            return boardAnimal;
         }
     }
 }

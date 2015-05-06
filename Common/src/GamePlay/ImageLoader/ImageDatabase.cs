@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pixeek.Game;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Pixeek.ImageLoader
 {
@@ -36,6 +37,13 @@ namespace Pixeek.ImageLoader
                 ImageTexture = GameManager.Instance.Content.Load<Texture2D>(fname)
             };
             images.Add(image);
+        }
+
+        public static Image LoadImageFromBase64String(GraphicsDevice gd, string name, string base64)
+        {
+            byte[] byteArray = System.Convert.FromBase64String(base64);
+            Texture2D image = Texture2D.FromStream(gd, new MemoryStream(byteArray));
+            return new Image() { ImageTexture = image, Name = name };
         }
     }
 }

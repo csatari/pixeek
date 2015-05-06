@@ -30,6 +30,8 @@ namespace Pixeek.Menus.Elements
             if (Text != null)
             {
                 Vector2 size = GameManager.Instance.font.MeasureString(Text);
+                size.X *= scale;
+                size.Y *= scale;
                 Vector2 pos = new Vector2(area.Center.X - size.X / 2, area.Center.Y - size.Y / 2);
                 /*GameManager.Instance.spriteBatch.DrawString(
                     GameManager.Instance.font, Text, pos, Color.Lerp(GetColor(), baseColor, 0.5f));*/

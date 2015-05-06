@@ -71,7 +71,7 @@ namespace Pixeek.Menus
         public override void Initialize()
         {
             base.Initialize();
-            preloadImages();
+            //preloadImages();
         }
 
         public override void LoadContent() { }
@@ -112,11 +112,11 @@ namespace Pixeek.Menus
         /// <summary>
         /// Előtölti a képeket, hogy ne a new game megnyomására akadjon be, hanem amikor belépünk a játékba
         /// </summary>
-        public static void preloadImages()
+        /*public static void preloadImages()
         {
             imageDatabase = new ImageDatabase();
             imageDatabase.LoadContent();
-        }
+        }*/
         #endregion
     }
 }

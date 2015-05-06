@@ -11,12 +11,13 @@ namespace Pixeek.Game
             ColumnIndex = column;
             RowIndex = row;
             Available = available;
-            ImageProperty = new Image
+            /*ImageProperty = new Image
             {
                 Name = image.Name,
                 ImageTexture = trf.transform(image.ImageTexture)
                 
-            };
+            };*/
+            ImageProperty = image;
         }
 
         public Image ImageProperty
