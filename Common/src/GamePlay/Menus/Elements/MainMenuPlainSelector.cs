@@ -33,6 +33,8 @@ namespace Pixeek.Menus.Elements
         /// </summary>
         private int Count { get; set; }
 
+        public event EventHandler SelectedChange;
+
         public MainMenuPlaintSelector(TEnum selector) : base(selector)
         {
             Count = 0;
@@ -47,6 +49,10 @@ namespace Pixeek.Menus.Elements
             MenuButtonElement button = new MenuButtonElement(easyRect, delegate()
             {
                 Selected = value;
+                if (SelectedChange != null)
+                {
+                    SelectedChange(this, EventArgs.Empty);
+                }
             });
             button.AddChild(new MenuSpriteElement(null, easyRect, text, 1.5f));
             AddElementToDictionary(value, button);

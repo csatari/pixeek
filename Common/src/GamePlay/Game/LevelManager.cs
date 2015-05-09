@@ -11,6 +11,9 @@ namespace Pixeek.Game
         private GameMode gameMode;
         private Difficulty difficulty;
         private Timer time;
+
+        private GameTime startTime;
+
         private TimeSpan elapsedTime;
         private Board board;
         public delegate void TimeElapsed(TimeSpan elapsedTime);
@@ -101,6 +104,7 @@ namespace Pixeek.Game
                 elapsedTime = TimeSpan.Zero;
             }
             if (TimeElapsedHandler != null) TimeElapsedHandler(elapsedTime);
+            startTime = GameManager.CurrentGameTime;
             time.Start();
 
             return board;

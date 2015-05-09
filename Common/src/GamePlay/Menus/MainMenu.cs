@@ -92,16 +92,54 @@ namespace Pixeek.Menus
                 bg.AddChild(exitButton);
             }
             {
-                Rectangle playRect = new Rectangle(Convert.ToInt32(0.65 * GameManager.Width), Convert.ToInt32(0.35 * GameManager.Height),
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.64 * GameManager.Width), Convert.ToInt32(0.14 * GameManager.Height),
                                                     Convert.ToInt32(0.265 * GameManager.Width), Convert.ToInt32(0.104 * GameManager.Height));
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
+                        NewGameMenu.SinglePlayer = true;
                         Menu.GoToScene(NewGameMenu.Instance);
                     }
                     );
                 bg.AddChild(playButton);
-                playButton.AddChild(new MenuSpriteElement("GUI/newgame_button.png", playRect));
+                playButton.AddChild(new MenuSpriteElement("GUI/singleplayer_button.png", playRect));
+            }
+            {
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.635 * GameManager.Width), Convert.ToInt32(0.31 * GameManager.Height),
+                                                    Convert.ToInt32(0.26 * GameManager.Width), Convert.ToInt32(0.09 * GameManager.Height));
+                MenuButtonElement playButton = new MenuButtonElement(playRect,
+                    delegate()
+                    {
+                        NewGameMenu.SinglePlayer = false;
+                        Menu.GoToScene(NewGameMenu.Instance);
+                    }
+                    );
+                bg.AddChild(playButton);
+                playButton.AddChild(new MenuSpriteElement("GUI/multiplayer_button.png", playRect));
+            }
+            {
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.63 * GameManager.Width), Convert.ToInt32(0.44 * GameManager.Height),
+                                                    Convert.ToInt32(0.25 * GameManager.Width), Convert.ToInt32(0.08 * GameManager.Height));
+                MenuButtonElement playButton = new MenuButtonElement(playRect,
+                    delegate()
+                    {
+                        Menu.GoToScene(ScoreboardMenu.Instance);
+                    }
+                    );
+                bg.AddChild(playButton);
+                playButton.AddChild(new MenuSpriteElement("GUI/scoreboard_button.png", playRect));
+            }
+            {
+                Rectangle playRect = new Rectangle(Convert.ToInt32(0.63 * GameManager.Width), Convert.ToInt32(0.59 * GameManager.Height),
+                                                    Convert.ToInt32(0.17 * GameManager.Width), Convert.ToInt32(0.08 * GameManager.Height));
+                MenuButtonElement playButton = new MenuButtonElement(playRect,
+                    delegate()
+                    {
+                        
+                    }
+                    );
+                bg.AddChild(playButton);
+                playButton.AddChild(new MenuSpriteElement("GUI/tutorial_button.png", playRect));
             }
         }
 

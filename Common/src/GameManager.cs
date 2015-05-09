@@ -22,6 +22,8 @@ namespace Pixeek
 
         static GameManager _instance = null;
 
+        public static GameTime CurrentGameTime { get; set; }
+
         public interface Scene
         {
             void Initialize();
@@ -97,6 +99,7 @@ namespace Pixeek
 
         protected override void Update(GameTime gameTime)
         {
+            CurrentGameTime = gameTime;
             currentScene.Update(gameTime);
         }
 

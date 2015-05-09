@@ -92,12 +92,7 @@ namespace Pixeek.Game
             };
             levelManager.TimeStoppedHandler = delegate()
             {
-                GameOverMenu.Instance.Win = false;
-                GameOverMenu.Instance.Point = scoring.Score;
-                GameOverMenu.Instance.Difficulty = difficulty;
-                GameOverMenu.Instance.GameMode = gameMode;
-                Menu.GoToScene(GameOverMenu.Instance);
-                levelManager.endGame();
+                EndGame(false, null);
             };
             UpperMenu.Instance.ExitHandler = delegate()
             {
@@ -112,14 +107,14 @@ namespace Pixeek.Game
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
-                GameOverMenu.Instance.Win = true;
-                GameOverMenu.Instance.Point = scoring.Score;
-                GameOverMenu.Instance.Time = UpperMenu.Instance.getTimerText();
-                GameOverMenu.Instance.Difficulty = difficulty;
-                GameOverMenu.Instance.GameMode = gameMode;
-                Menu.GoToScene(GameOverMenu.Instance);
-
-                levelManager.endGame();
+                scoring.addPoint(1); // az utolsó képre még adunk egy pontot
+                PlayMultimedia(true);
+                string timeText = null;
+                if (gameMode == GameMode.TIME)
+                {
+                    timeText = UpperMenu.Instance.getTimerText();
+                }
+                EndGame(true, timeText);
             };
         }
         public void setBoard(Board board)
@@ -128,30 +123,7 @@ namespace Pixeek.Game
             BoardDrawable _boardDrawable = new BoardDrawable(board,
                 delegate(Field field)
                 {
-                    bool success = levelManager.tryClickedField(field);
-                    if (success)
-                    {
-                        if (music)
-                        {
-                            soundAndVibration.playSound();
-                        }
-                        if (vib)
-                        {
-                            soundAndVibration.vibrate();
-                        }
-                        scoring.addPoint(1);
-                    }
-                    else
-                    {
-                        if (music)
-                        {
-                            soundAndVibration.playSoundBad();
-                        }
-                        if (vib)
-                        {
-                            soundAndVibration.vibrateBad();
-                        }
-                    }
+                    FieldClicked(field);
                 });
         }
 
@@ -165,9 +137,62 @@ namespace Pixeek.Game
             savingManager.save(BoardDrawable.Instance.board, timeToSave, imagesToFindSave, score, combo);
         }
 
+        private void FieldClicked(Field field)
+        {
+            bool success = levelManager.tryClickedField(field);
+            if (success)
+            {
+                scoring.addPoint(1);
+            }
+            PlayMultimedia(success);
+        }
+
+        private void EndGame(bool win, string time)
+        {
+            GameOverMenu.Instance.Win = win;
+            GameOverMenu.Instance.Point = scoring.Score;
+            GameOverMenu.Instance.Time = time;
+            GameOverMenu.Instance.Difficulty = difficulty;
+            GameOverMenu.Instance.GameMode = gameMode;
+            Menu.GoToScene(GameOverMenu.Instance);
+            levelManager.endGame();
+        }
+
+        /// <summary>
+        /// Lejátszik egy hangot, vagy rezegteti a készüléket a sikerességtõl és a beállításoktól függõen
+        /// </summary>
+        /// <param name="success"></param>
+        private void PlayMultimedia(bool success)
+        {
+            if (success)
+            {
+                if (music)
+                {
+                    soundAndVibration.playSound();
+                }
+                if (vib)
+                {
+                    soundAndVibration.vibrate();
+                }
+            }
+            else
+            {
+                if (music)
+                {
+                    soundAndVibration.playSoundBad();
+                }
+                if (vib)
+                {
+                    soundAndVibration.vibrateBad();
+                }
+            }
+        }
+
         public void LoadContent() 
         {
         }
+
+        #region Kattintás és érintés kezelése
 
         ButtonState lastButtonState = ButtonState.Released;
         TouchCollection currentTouchState;
@@ -209,6 +234,10 @@ namespace Pixeek.Game
             //BoardDrawable.Instance.Update(gameTime);
         }
 
+        #endregion
+
+        #region Kirajzolás
+
         public void Draw(GameTime gameTime)
         {
             if (Loading)
@@ -240,5 +269,7 @@ namespace Pixeek.Game
         {
             UpperMenu.Instance.Draw(scoring);
         }
+
+        #endregion
     }
 }

@@ -76,34 +76,37 @@ namespace Pixeek.Menus
             exitButton.AddChild(new MenuSpriteElement("GUI/button_bg", exitRect, "BACK TO MAIN MENU"));
             Root.AddChild(exitButton);
 
-            //Névbeírás
-            Rectangle nameRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                                               Convert.ToInt32(0.5167 * GameManager.Height),
-                                               Convert.ToInt32(0.2125 * GameManager.Width),
-                                               Convert.ToInt32(0.07 * GameManager.Height));
-
-            MenuTextElement menuText = new MenuTextElement(nameRect);
-            Root.AddChild(menuText);
-
-            //Küldő gomb
-            Rectangle sendButtonArea = new Rectangle(   Convert.ToInt32(0.525 * GameManager.Width),
-                                                        Convert.ToInt32(0.5167 * GameManager.Height),
-                                                        Convert.ToInt32(0.1 * GameManager.Width),
-                                                        Convert.ToInt32(0.07 * GameManager.Height));
-            MenuButtonElement sendButton = new MenuButtonElement(sendButtonArea, delegate()
+            if (Win)
             {
-                SendScores(Point, menuText.Text);
-            });
-            sendButton.AddChild(new MenuSpriteElement("GUI/button_bg", sendButtonArea, "Send"));
-            Root.AddChild(sendButton);
+                //Névbeírás
+                Rectangle nameRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                                   Convert.ToInt32(0.5167 * GameManager.Height),
+                                                   Convert.ToInt32(0.2125 * GameManager.Width),
+                                                   Convert.ToInt32(0.07 * GameManager.Height));
 
-            //Információs szöveg
-            Rectangle infoRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                                               Convert.ToInt32(0.6167 * GameManager.Height),
-                                               Convert.ToInt32(0.3125 * GameManager.Width),
-                                               Convert.ToInt32(0.07 * GameManager.Height));
-            infoElement = new MenuSpriteElement(null, infoRect, "");
-            Root.AddChild(infoElement);
+                MenuTextElement menuText = new MenuTextElement(nameRect);
+                Root.AddChild(menuText);
+
+                //Küldő gomb
+                Rectangle sendButtonArea = new Rectangle(Convert.ToInt32(0.525 * GameManager.Width),
+                                                            Convert.ToInt32(0.5167 * GameManager.Height),
+                                                            Convert.ToInt32(0.1 * GameManager.Width),
+                                                            Convert.ToInt32(0.07 * GameManager.Height));
+                MenuButtonElement sendButton = new MenuButtonElement(sendButtonArea, delegate()
+                {
+                    SendScores(Point, menuText.Text);
+                });
+                sendButton.AddChild(new MenuSpriteElement("GUI/button_bg", sendButtonArea, "Send"));
+                Root.AddChild(sendButton);
+
+                //Információs szöveg
+                Rectangle infoRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                                                   Convert.ToInt32(0.6167 * GameManager.Height),
+                                                   Convert.ToInt32(0.3125 * GameManager.Width),
+                                                   Convert.ToInt32(0.07 * GameManager.Height));
+                infoElement = new MenuSpriteElement(null, infoRect, "");
+                Root.AddChild(infoElement);
+            }
         }
 
         private void drawText(string text)
@@ -126,6 +129,11 @@ namespace Pixeek.Menus
             {
                 scoresSent = true;
                 infoElement.Text = "Sending...";
+                if (GameMode == Game.GameMode.TIME)
+                {
+                    int time = ((int)Time[3]) * 10 + ((int)Time[4]);
+                    score *= time;
+                }
                 ScoreboardCommunicator.Instance.sendScore(GameMode, Difficulty,
                     new ScoreboardRequest() { player = name, score = score },
                     delegate()

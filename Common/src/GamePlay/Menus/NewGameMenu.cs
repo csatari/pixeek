@@ -30,6 +30,8 @@ namespace Pixeek.Menus
             }
         }
 
+        public static bool SinglePlayer { get; set; }
+
         private NewGameMenu() : base() { }
 
         public override void LoadContent() 
@@ -136,9 +138,19 @@ namespace Pixeek.Menus
                 gamemodeSelector.Width = Convert.ToInt32(0.15 * GameManager.Width);
                 gamemodeSelector.Height = Convert.ToInt32(0.077 * GameManager.Height);
 
-                gamemodeSelector.AddElement("NORMAL", GameMode.NORMAL);
-                gamemodeSelector.AddElement("ENDLESS", GameMode.ENDLESS);
-                gamemodeSelector.AddElement("TIME", GameMode.TIME);
+                if (SinglePlayer)
+                {
+                    gamemodeSelector.AddElement("NORMAL", GameMode.NORMAL);
+                    gamemodeSelector.AddElement("ENDLESS", GameMode.ENDLESS);
+                    gamemodeSelector.AddElement("TIME", GameMode.TIME);
+                    gamemodeSelector.Selected = GameMode.NORMAL;
+                }
+                else
+                {
+                    gamemodeSelector.AddElement("FIGHT", GameMode.FIGHT);
+                    gamemodeSelector.AddElement("TIMER", GameMode.TIMER);
+                    gamemodeSelector.Selected = GameMode.FIGHT;
+                }
             }
 
             //play button
@@ -169,13 +181,16 @@ namespace Pixeek.Menus
                     delegate(ServerCommunicator.Objects.NewBoardResponse nr)
                     {
                         List<Image> imageList = ServerCommunicator.Objects.NewBoardResponse.getImagesFromResponse(GameManager.Instance.GraphicsDevice, nr);
-
                         Board board = levelManager.newGame(gameMode, difficulty, boardShape, imageList);
                         gameModel.setLevelManager(levelManager);
                         gameModel.setBoard(board);
 
                         GameModel.Loading = false;
                     });
+            }
+            else
+            {
+                //TODO multiplayer módok
             }
         }
 

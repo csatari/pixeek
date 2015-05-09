@@ -144,6 +144,9 @@
     <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuTextElement.cs">
       <Link>src\GamePlay\Menus\Elements\MenuTextElement.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\ScoreboardElements.cs">
+      <Link>src\GamePlay\Menus\Elements\ScoreboardElements.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\Menus\GameOverMenu.cs">
       <Link>src\GamePlay\Menus\GameOverMenu.cs</Link>
     </Compile>
@@ -155,6 +158,9 @@
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Menus\NewGameMenu.cs">
       <Link>src\GamePlay\Menus\NewGameMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\ScoreboardMenu.cs">
+      <Link>src\GamePlay\Menus\ScoreboardMenu.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Saving\Save.cs">
       <Link>src\GamePlay\Saving\Save.cs</Link>
@@ -268,8 +274,26 @@
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Common\Content\GUI\multiplayer_button.png">
+      <Link>Content\GUI\multiplayer_button.png</Link>
+    </Content>
+    <Content Include="..\Common\Content\GUI\plainmenu_bg.jpg">
+      <Link>Content\GUI\plainmenu_bg.jpg</Link>
+    </Content>
+    <Content Include="..\Common\Content\GUI\scoreboard_bg.jpg">
+      <Link>Content\GUI\scoreboard_bg.jpg</Link>
+    </Content>
+    <Content Include="..\Common\Content\GUI\scoreboard_button.png">
+      <Link>Content\GUI\scoreboard_button.png</Link>
+    </Content>
+    <Content Include="..\Common\Content\GUI\singleplayer_button.png">
+      <Link>Content\GUI\singleplayer_button.png</Link>
+    </Content>
     <Content Include="..\Common\Content\GUI\text_bg.png">
       <Link>Content\GUI\text_bg.png</Link>
+    </Content>
+    <Content Include="..\Common\Content\GUI\tutorial_button.png">
+      <Link>Content\GUI\tutorial_button.png</Link>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
