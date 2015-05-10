@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek;
 using Pixeek.BoardShapes;
 using Pixeek.Game;
+using Pixeek.GameDrawables;
 using Pixeek.ImageLoader;
 using Pixeek.Menus.Elements;
 using Pixeek.ServerCommunicator;
@@ -31,8 +32,12 @@ namespace Pixeek.Menus
         }
 
         public static bool SinglePlayer { get; set; }
+        public static bool Tutorial { get; set; }
 
-        private NewGameMenu() : base() { }
+        private NewGameMenu() : base() 
+        {
+            //Tutorial = false;
+        }
 
         public override void LoadContent() 
         {
@@ -44,9 +49,13 @@ namespace Pixeek.Menus
         static String musicText = "MUSIC: OFF";
         static string vibText = "VIBRATION: OFF";
         static MenuSpriteElement musicSpriteElement;
+        static Rectangle musicRect;
+        static Rectangle vibRect;
+        static Rectangle playRect;
         static MenuSpriteElement vibrationSpriteElement;
         private Game.GameModel gameModel;
-
+        static TutorialElement tutorial;
+        
         static MainMenuPlaintSelector<GameMode> gamemodeSelector;
         static MainMenuPlaintSelector<Difficulty> difficultySelector;
 
@@ -68,7 +77,7 @@ namespace Pixeek.Menus
 
             // music settings
             {
-                Rectangle musicRect = new Rectangle(GameManager.Width - 500, 1, 151, 71);
+                musicRect = new Rectangle(GameManager.Width - 500, 1, 151, 71);
                 MenuButtonElement musicButton = new MenuButtonElement(musicRect, delegate()
                 {
                     if (!music)
@@ -90,7 +99,7 @@ namespace Pixeek.Menus
 
             //vibration settings
             {
-                Rectangle vibRect = new Rectangle(GameManager.Width - 345, 1, 190, 71);
+                vibRect = new Rectangle(GameManager.Width - 345, 1, 190, 71);
                 MenuButtonElement vibButton = new MenuButtonElement(vibRect, delegate()
                 {
                     if (!vibration)
@@ -155,7 +164,7 @@ namespace Pixeek.Menus
 
             //play button
             {
-                Rectangle playRect = new Rectangle(Convert.ToInt32(0.78125 * GameManager.Width), Convert.ToInt32(0.444 * GameManager.Height), Convert.ToInt32(0.114 * GameManager.Width), Convert.ToInt32(0.0583 * GameManager.Height));
+                playRect = new Rectangle(Convert.ToInt32(0.78125 * GameManager.Width), Convert.ToInt32(0.444 * GameManager.Height), Convert.ToInt32(0.114 * GameManager.Width), Convert.ToInt32(0.0583 * GameManager.Height));
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
@@ -167,7 +176,50 @@ namespace Pixeek.Menus
                 bg.AddChild(playButton);
                 playButton.AddChild(new MenuSpriteElement("GUI/button_play.png", playRect));
             }
+
+            if (NewGameMenu.Tutorial)
+            {
+                //tutorial
+                tutorial = new TutorialElement();
+
+                bg.AddChild(tutorial);
+
+                tutorial.AddRectangle(new Point((GameManager.Width / 2) + 50, GameManager.Height / 3), new Point((GameManager.Width / 2) + 50, GameManager.Height / 3), 
+                    "This is the first place you see when you want to play.");
+                tutorial.AddRectangle(new Point(gamemodeSelector.BaseX, gamemodeSelector.BaseY), new Point(gamemodeSelector.BaseX+gamemodeSelector.Width, gamemodeSelector.BaseY+gamemodeSelector.GetHeight()), 
+                    "Here you can select the gamemode you want");
+                tutorial.AddRectangle(new Point(gamemodeSelector.BaseX, gamemodeSelector.BaseY), new Point(gamemodeSelector.BaseX + gamemodeSelector.Width, gamemodeSelector.BaseY + gamemodeSelector.GetHeightOfElement(1)),
+                    "In Normal mode you have a fixed number of images \nand you need to find them fast for higher scores");
+                tutorial.AddRectangle(new Point(gamemodeSelector.BaseX, gamemodeSelector.BaseY + gamemodeSelector.GetHeightOfElement(1)), new Point(gamemodeSelector.BaseX + gamemodeSelector.Width, gamemodeSelector.BaseY + gamemodeSelector.GetHeightOfElement(2)),
+                    "In Endless mode you have infinite number of images for training");
+                tutorial.AddRectangle(new Point(gamemodeSelector.BaseX, gamemodeSelector.BaseY + gamemodeSelector.GetHeightOfElement(2)), new Point(gamemodeSelector.BaseX + gamemodeSelector.Width, gamemodeSelector.BaseY + gamemodeSelector.GetHeightOfElement(3)),
+                    "In Time mode you have a fixed number of images \nbut only half minutes. Your score will be multiplied\nwith the seconds remaining");
+                tutorial.AddRectangle(new Point(gamemodeSelector.BaseX, gamemodeSelector.BaseY), new Point(gamemodeSelector.BaseX + gamemodeSelector.Width, gamemodeSelector.BaseY + gamemodeSelector.GetHeight()),
+                    "Please select a gamemode!");
+
+                tutorial.AddRectangle(new Point(difficultySelector.BaseX, difficultySelector.BaseY), new Point(difficultySelector.BaseX + difficultySelector.Width, difficultySelector.BaseY + difficultySelector.GetHeight()),
+                    "You can choose from difficulties, we have three here");
+                tutorial.AddRectangle(new Point(difficultySelector.BaseX, difficultySelector.BaseY), new Point(difficultySelector.BaseX + difficultySelector.Width, difficultySelector.BaseY + gamemodeSelector.GetHeightOfElement(1)),
+                    "In easy mode you get less tasks and pure images");
+                tutorial.AddRectangle(new Point(difficultySelector.BaseX, difficultySelector.BaseY + difficultySelector.GetHeightOfElement(1)), new Point(difficultySelector.BaseX + difficultySelector.Width, difficultySelector.BaseY + difficultySelector.GetHeightOfElement(2)),
+                    "In normal mode you get average tasks and \nsome of the images are rotated, blurred or colored");
+                tutorial.AddRectangle(new Point(difficultySelector.BaseX, difficultySelector.BaseY + difficultySelector.GetHeightOfElement(2)), new Point(difficultySelector.BaseX + difficultySelector.Width, difficultySelector.BaseY + difficultySelector.GetHeightOfElement(3)),
+                    "In hard mode you get a lot of tasks and \nall of the images are rotated, blurred or colored");
+                tutorial.AddRectangle(new Point(difficultySelector.BaseX, difficultySelector.BaseY), new Point(difficultySelector.BaseX + difficultySelector.Width, difficultySelector.BaseY + difficultySelector.GetHeight()),
+                    "Please choose a mode if the selected is not good for you");
+
+                tutorial.AddRectangle(new Point(musicRect.Left, musicRect.Top), new Point(musicRect.Right, musicRect.Bottom),
+                    "You can set the music here, if you want");
+                tutorial.AddRectangle(new Point(vibRect.Left, vibRect.Top), new Point(vibRect.Right, vibRect.Bottom),
+                    "And the vibration too");
+
+                tutorial.AddRectangle(new Point(playRect.Left-10, playRect.Top-10), new Point(playRect.Right+10, playRect.Bottom+10),
+                    "If all set, please click on the Play button now");
+                tutorial.ShowNextTutorial();
+            }
+
         }
+
         public void newGame(GameMode gameMode, Difficulty difficulty, bool music, bool vibration )
         {
             if (gameMode == GameMode.ENDLESS || gameMode == GameMode.NORMAL || gameMode == GameMode.TIME)

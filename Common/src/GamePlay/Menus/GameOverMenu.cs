@@ -66,7 +66,7 @@ namespace Pixeek.Menus
 
             //Kilépés gomb
             Rectangle exitRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                                               Convert.ToInt32(0.4167 * GameManager.Height),
+                                               Convert.ToInt32(0.2167 * GameManager.Height),
                                                Convert.ToInt32(0.3125 * GameManager.Width),
                                                Convert.ToInt32(0.07 * GameManager.Height));
             MenuButtonElement exitButton = new MenuButtonElement(exitRect, delegate()
@@ -80,7 +80,7 @@ namespace Pixeek.Menus
             {
                 //Névbeírás
                 Rectangle nameRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                                                   Convert.ToInt32(0.5167 * GameManager.Height),
+                                                   Convert.ToInt32(0.3167 * GameManager.Height),
                                                    Convert.ToInt32(0.2125 * GameManager.Width),
                                                    Convert.ToInt32(0.07 * GameManager.Height));
 
@@ -89,7 +89,7 @@ namespace Pixeek.Menus
 
                 //Küldő gomb
                 Rectangle sendButtonArea = new Rectangle(Convert.ToInt32(0.525 * GameManager.Width),
-                                                            Convert.ToInt32(0.5167 * GameManager.Height),
+                                                            Convert.ToInt32(0.3167 * GameManager.Height),
                                                             Convert.ToInt32(0.1 * GameManager.Width),
                                                             Convert.ToInt32(0.07 * GameManager.Height));
                 MenuButtonElement sendButton = new MenuButtonElement(sendButtonArea, delegate()
@@ -101,7 +101,7 @@ namespace Pixeek.Menus
 
                 //Információs szöveg
                 Rectangle infoRect = new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                                                   Convert.ToInt32(0.6167 * GameManager.Height),
+                                                   Convert.ToInt32(0.4167 * GameManager.Height),
                                                    Convert.ToInt32(0.3125 * GameManager.Width),
                                                    Convert.ToInt32(0.07 * GameManager.Height));
                 infoElement = new MenuSpriteElement(null, infoRect, "");
@@ -113,7 +113,7 @@ namespace Pixeek.Menus
         {
             Root.AddChild(new MenuSpriteElement(null, 
                 new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                              Convert.ToInt32(0.28 * GameManager.Height),
+                              Convert.ToInt32(0.08 * GameManager.Height),
                               Convert.ToInt32(0.3125 * GameManager.Width),
                               Convert.ToInt32(0.097 * GameManager.Height)), text));
         }

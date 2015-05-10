@@ -47,7 +47,7 @@ namespace Pixeek.Menus
                     Console.WriteLine(nr.ToString());
                 });
 
-            ServerCommunicator.MultiPlayerGameCommunicator.Instance.checkInForMulti(Game.GameMode.FIGHT, Game.Difficulty.EASY,
+            /*ServerCommunicator.MultiPlayerGameCommunicator.Instance.checkInForMulti(Game.GameMode.FIGHT, Game.Difficulty.EASY,
                 new ServerCommunicator.Objects.CheckInForMultiRequest()
                 {
                     player_alias = "Albert"
@@ -65,7 +65,7 @@ namespace Pixeek.Menus
                 delegate(ServerCommunicator.Objects.CheckInForMultiResponse nr)
                 {
                     Console.WriteLine(nr.ToString());
-                });
+                });*/
         }
 
         public override void Initialize()
@@ -135,7 +135,9 @@ namespace Pixeek.Menus
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
-                        
+                        NewGameMenu.Tutorial = true;
+                        NewGameMenu.SinglePlayer = true;
+                        Menu.GoToScene(NewGameMenu.Instance);
                     }
                     );
                 bg.AddChild(playButton);

@@ -32,6 +32,11 @@ namespace Pixeek.Game
         public bool music;
         public bool vib;
         Double timeToSave;
+
+        private MenuElement loadingElement = new MenuElement();
+        private MenuElement tutorialRoot = new MenuElement();
+        private TutorialElement tutorial;
+
        
         public GameModel(ImageDatabase imageDatabase, GameMode mode, Difficulty diff, bool selectedMusic, bool selectedVib, LevelManager lm, Board board)
         {
@@ -85,6 +90,7 @@ namespace Pixeek.Game
         public void setLevelManager(LevelManager lm)
         {
             levelManager = lm;
+            UpperMenu.Instance.setTimerText(levelManager.ElapsedTime.ToString("mm\\:ss"));
             levelManager.TimeElapsedHandler = delegate(TimeSpan elapsedTime)
             {
                 UpperMenu.Instance.setTimerText(elapsedTime.ToString("mm\\:ss"));
@@ -116,6 +122,13 @@ namespace Pixeek.Game
                 }
                 EndGame(true, timeText);
             };
+
+            if (NewGameMenu.Tutorial)
+            {
+                LoadTutorial();
+                levelManager.PauseGame();
+                tutorial.ShowNextTutorial();
+            }
         }
         public void setBoard(Board board)
         {
@@ -139,10 +152,16 @@ namespace Pixeek.Game
 
         private void FieldClicked(Field field)
         {
+            string wasFirst = levelManager.ImagesToFind.ToFind[0].Name;
             bool success = levelManager.tryClickedField(field);
             if (success)
             {
                 scoring.addPoint(1);
+                if (NewGameMenu.Tutorial && field.ImageProperty.Name.Equals(wasFirst))
+                {
+                    levelManager.PauseGame();
+                    tutorial.ShowNextTutorial();
+                }
             }
             PlayMultimedia(success);
         }
@@ -188,8 +207,48 @@ namespace Pixeek.Game
             }
         }
 
+        private void LoadTutorial()
+        {
+            tutorial = new TutorialElement();
+
+            tutorialRoot.AddChild(tutorial);
+
+            tutorial.AddRectangle(new Point(0, GameManager.Height / 8),
+                                    new Point(GameManager.Width, 7 * GameManager.Height / 8),
+                "The main board with the pictures is shown here");
+            Rectangle time = UpperMenu.Instance.timerBackground.backgroundArea;
+            tutorial.AddRectangle(new Point(time.Left, time.Top), new Point(time.Right, time.Bottom),
+                "The timer is set here. In Time mode, it is counting down, otherwise it is counting up");
+
+            tutorial.AddRectangle(new Point(6 * GameManager.Width / 7, 0), new Point(GameManager.Width, GameManager.Height / 8),
+                "You can finish your game with the button here");
+
+            tutorial.AddRectangle(new Point(0, 7 * GameManager.Height / 8), new Point(GameManager.Width, GameManager.Height),
+                "The images to find can be found in the footer", delegate()
+                {
+                    levelManager.ContinueGame();
+                });
+
+            tutorial.AddRectangle(new Point(0, GameManager.Height / 8),
+                                    new Point(GameManager.Width, 7 * GameManager.Height / 8),
+                "Try to find " + levelManager.ImagesToFind.ToFind[0].Name);
+
+
+            tutorial.AddRectangle(new Point(0, GameManager.Height / 8),
+                                    new Point(GameManager.Width, 7 * GameManager.Height / 8),
+                "That's it, have fun!", delegate()
+                {
+                    levelManager.ContinueGame();
+                    NewGameMenu.Tutorial = false;
+                });
+        }
         public void LoadContent() 
         {
+            loadingElement.AddChild(new MenuSpriteElement(null,
+                new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
+                              Convert.ToInt32(0.28 * GameManager.Height),
+                              Convert.ToInt32(0.3125 * GameManager.Width),
+                              Convert.ToInt32(0.097 * GameManager.Height)), "Loading..."));
         }
 
         #region Kattintás és érintés kezelése
@@ -213,6 +272,7 @@ namespace Pixeek.Game
                         break;
                     case GestureType.Tap:
                         UpperMenu.Instance.root.OnPress(new Point((int)gesture.Position.X, (int)gesture.Position.Y), false);
+                        tutorialRoot.OnPress(new Point((int)gesture.Position.X, (int)gesture.Position.Y), false);
                         pos = new Point((int)gesture.Position.X, (int)gesture.Position.Y);
                         break;
                 }
@@ -222,6 +282,7 @@ namespace Pixeek.Game
             if (lastButtonState != Mouse.GetState().LeftButton)
             {
                 UpperMenu.Instance.root.OnPress(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Pressed);
+                tutorialRoot.OnPress(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Pressed);
                 pos = Mouse.GetState().Position;
                 lastButtonState = Mouse.GetState().LeftButton;
             }
@@ -230,6 +291,7 @@ namespace Pixeek.Game
                 UpperMenu.Instance.root.OnHover(Mouse.GetState().Position, Mouse.GetState().LeftButton == ButtonState.Released);
             }
             BoardDrawable.Instance.PositionClicked(pos);
+
 
             //BoardDrawable.Instance.Update(gameTime);
         }
@@ -242,15 +304,10 @@ namespace Pixeek.Game
         {
             if (Loading)
             {
-                var Root = new MenuElement();
-                Root.AddChild(new MenuSpriteElement(null,
-                new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
-                              Convert.ToInt32(0.28 * GameManager.Height),
-                              Convert.ToInt32(0.3125 * GameManager.Width),
-                              Convert.ToInt32(0.097 * GameManager.Height)), "Loading..."));
-                Root.Draw(gameTime, Color.White);
+                loadingElement.Draw(gameTime, Color.White);
                 return;
             }
+            
             foreach(DrawableGameComponent component in UpperMenu.Instance.getAllComponents())  
             {
                 component.Draw(gameTime);
@@ -260,6 +317,9 @@ namespace Pixeek.Game
             toFindDrawable.Draw(gameTime);
 
             BoardDrawable.Instance.Draw();
+
+            tutorialRoot.Draw(gameTime, Color.White);
+
         }
 
         /// <summary>

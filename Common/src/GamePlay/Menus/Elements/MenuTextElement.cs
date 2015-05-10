@@ -1,10 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Android;
+using Android.InputMethodServices;
+using Android.Views.InputMethods;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading;
 
@@ -18,13 +22,19 @@ namespace Pixeek.Menus.Elements
         {
             this.textboxArea = textboxArea;
             this.texture = GameManager.Instance.Content.Load<Texture2D>("GUI/text_bg.png");
+#if WINDOWS
             oldState = Keyboard.GetState();
+#endif
+#if ANDROID
+            Activity1.Pressed = new Activity1.KeyboardPressed(Pressed);
+#endif
         }
 
         KeyboardState oldState;
 
         override public void Update(GameTime gameTime)
         {
+#if WINDOWS
             if (keyboardOpened)
             {
                 KeyboardState newState = Keyboard.GetState();
@@ -44,6 +54,7 @@ namespace Pixeek.Menus.Elements
                 }
                 oldState = newState;
             }
+#endif
             base.Update(gameTime);
         }
 
@@ -57,29 +68,44 @@ namespace Pixeek.Menus.Elements
             {
                 return;
             }
-            if (Text.Length > 20) return;
+            
             if (key == Keys.Back)
             {
-                if (Text.Length >= 1)
-                {
-                    Text = Text.Substring(0, Text.Length - 1);
-                }
+                DeleteCharacter();
             }
             else if (key == Keys.Space)
             {
-                Text += " ";
+                if (Text.Length > 20) return;
+                AddSpace();
             }
             else
             {
+                if (Text.Length > 20) return;
                 if (IsKeyADigit(key))
                 {
-                    Text += KeyToDigit(key);
+                    AddCharacter(KeyToDigit(key));
                 }
                 else
                 {
-                    Text += key.ToString();
+                    AddCharacter(key.ToString());
                 }
             }
+        }
+
+        private void DeleteCharacter()
+        {
+            if (Text.Length >= 1)
+            {
+                Text = Text.Substring(0, Text.Length - 1);
+            }
+        }
+        private void AddSpace()
+        {
+            Text += " ";
+        }
+        private void AddCharacter(string s)
+        {
+            Text += s;
         }
 
         /// <summary>
@@ -156,18 +182,78 @@ namespace Pixeek.Menus.Elements
             return false;
 #endif
 #if ANDROID
-                if (area.Contains(pos))
-                {
-                    if (clickHandler != null)
-                    {
-                        clickHandler();
-                    }
-                    Debug.WriteLine("megnyomva");
-                    return true;
-                }
-                return false;
+            if (textboxArea.Contains(pos))
+            {
+                InputMethodManager imm = (InputMethodManager)GameManager.Activity.GetSystemService(InputMethodService.InputMethodService);
+                imm.ToggleSoftInput(ShowFlags.Forced, HideSoftInputFlags.None);
+                keyboardOpened = true;
+                buttonDown = false;
+                return true;
+            }
+            else
+            {
+                keyboardOpened = false;
+                buttonDown = false;
+            }
+            return false;
 #endif
         }
+
+#if ANDROID
+
+        private void Pressed(Android.Views.Keycode keycode)
+        {
+            if (keyboardOpened)
+            {
+                if (keycode == Android.Views.Keycode.Del)
+                {
+                    DeleteCharacter();
+                }
+                else
+                {
+                    if (Text.Length > 20) return;
+
+                    char c = GetKey(keycode);
+                    AddCharacter(c.ToString());
+                }
+            }
+        }
+
+        private char GetKey(Android.Views.Keycode keycode ) 
+        {
+            switch(keycode) {
+                case Android.Views.Keycode.A : return 'A';
+                case Android.Views.Keycode.B : return 'B';
+                case Android.Views.Keycode.C : return 'C';
+                case Android.Views.Keycode.D : return 'D';
+                case Android.Views.Keycode.E : return 'E';
+                case Android.Views.Keycode.F : return 'F';
+                case Android.Views.Keycode.G : return 'G';
+                case Android.Views.Keycode.H : return 'H';
+                case Android.Views.Keycode.I : return 'I';
+                case Android.Views.Keycode.J : return 'J';
+                case Android.Views.Keycode.K : return 'K';
+                case Android.Views.Keycode.L : return 'L';
+                case Android.Views.Keycode.M : return 'M';
+                case Android.Views.Keycode.N : return 'N';
+                case Android.Views.Keycode.O : return 'O';
+                case Android.Views.Keycode.P : return 'P';
+                case Android.Views.Keycode.Q : return 'Q';
+                case Android.Views.Keycode.R : return 'R';
+                case Android.Views.Keycode.S : return 'S';
+                case Android.Views.Keycode.T : return 'T';
+                case Android.Views.Keycode.U : return 'U';
+                case Android.Views.Keycode.V : return 'V';
+                case Android.Views.Keycode.W : return 'W';
+                case Android.Views.Keycode.X : return 'X';
+                case Android.Views.Keycode.Y : return 'Y';
+                case Android.Views.Keycode.Z : return 'Z';
+                case Android.Views.Keycode.Space : return ' ';
+                default : return ' ';
+            }
+        }
+
+#endif
 
         override public bool OnHover(Point pos, bool hover)
         {

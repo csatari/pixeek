@@ -9,7 +9,7 @@ namespace Pixeek.GameDrawables
     public class TimeDrawable : DrawableGameComponent
     {
         SpriteBatch spriteBatch;
-        Rectangle backgroundArea;
+        public Rectangle backgroundArea;
         Color Colori;
         RectangleOverlay background;
         Timer timer;

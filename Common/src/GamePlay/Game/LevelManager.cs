@@ -14,7 +14,8 @@ namespace Pixeek.Game
 
         private GameTime startTime;
 
-        private TimeSpan elapsedTime;
+        public TimeSpan ElapsedTime { get; set; }
+        public bool Paused { get; set; }
         private Board board;
         public delegate void TimeElapsed(TimeSpan elapsedTime);
         public delegate void TimeStopped();
@@ -97,14 +98,15 @@ namespace Pixeek.Game
 
             if (gameMode == GameMode.TIME)
             {
-                elapsedTime = new TimeSpan(0, 0, 30);
+                ElapsedTime = new TimeSpan(0, 0, 30);
             }
             else
             {
-                elapsedTime = TimeSpan.Zero;
+                ElapsedTime = TimeSpan.Zero;
             }
-            if (TimeElapsedHandler != null) TimeElapsedHandler(elapsedTime);
+            if (TimeElapsedHandler != null) TimeElapsedHandler(ElapsedTime);
             startTime = GameManager.CurrentGameTime;
+            Paused = false;
             time.Start();
 
             return board;
@@ -117,7 +119,7 @@ namespace Pixeek.Game
         /// <returns></returns>
         public bool tryClickedField(Field field)
         {
-            if (field.Available)
+            if (field.Available && !Paused)
             {
                 if (ImagesToFind.tryToFindField(field))
                 {
@@ -160,18 +162,18 @@ namespace Pixeek.Game
         {
             if (gameMode == GameMode.TIME)
             {
-                elapsedTime = elapsedTime.Subtract(TimeSpan.FromSeconds(1));
+                ElapsedTime = ElapsedTime.Subtract(TimeSpan.FromSeconds(1));
             }
             else
             {
-                elapsedTime = elapsedTime.Add(TimeSpan.FromSeconds(1));
+                ElapsedTime = ElapsedTime.Add(TimeSpan.FromSeconds(1));
             }
-            if (elapsedTime == TimeSpan.Zero)
+            if (ElapsedTime == TimeSpan.Zero)
             {
                 time.Stop();
                 time.Dispose();
             }
-            if(TimeElapsedHandler!=null) TimeElapsedHandler(elapsedTime);
+            if (TimeElapsedHandler != null) TimeElapsedHandler(ElapsedTime);
         }
 
         /// <summary>
@@ -182,6 +184,18 @@ namespace Pixeek.Game
         private void time_Disposed(object sender, EventArgs e)
         {
             if(TimeStoppedHandler!=null) TimeStoppedHandler();
+        }
+
+
+        public void PauseGame()
+        {
+            Paused = true;
+            time.Stop();
+        }
+        public void ContinueGame()
+        {
+            Paused = false;
+            time.Start();
         }
 
     }

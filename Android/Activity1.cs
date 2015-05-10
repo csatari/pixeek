@@ -1,6 +1,7 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 
 namespace Android
 {
@@ -20,7 +21,26 @@ namespace Android
             Pixeek.GameManager.Activity = this;
             var g = new Pixeek.GameManager();
             SetContentView(g.Window);
+            //SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
+        }
+
+        public delegate void KeyboardPressed(Keycode keycode);
+        public static KeyboardPressed Pressed;
+
+        public override bool DispatchKeyEvent(KeyEvent KEvent)
+        {
+            KeyEventActions keyaction = KEvent.Action;
+
+            if(keyaction == KeyEventActions.Down)
+            {
+                Keycode keycode = KEvent.KeyCode;
+                if (Pressed != null)
+                {
+                    Pressed(keycode);
+                }
+            }
+            return base.DispatchKeyEvent(KEvent);
         }
     }
 }

@@ -59,5 +59,20 @@ namespace Pixeek.Menus.Elements
             Count++;
         }
 
+        public int GetHeight()
+        {
+            return (YDiff * Count) + Height;
+        }
+
+        /// <summary>
+        /// Get the relative height to the top of the element set in the index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int GetHeightOfElement(int index)
+        {
+            return (YDiff * (index-1)) + Height;
+        }
+
     }
 }

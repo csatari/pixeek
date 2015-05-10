@@ -45,11 +45,22 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="fastJSON">
+      <HintPath>..\packages\fastJSON.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="MonoGame.Framework">
@@ -65,6 +76,9 @@
     </Compile>
     <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardFish.cs">
       <Link>src\GamePlay\BoardShapes\BoardFish.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\BoardShapes\BoardRectangle.cs">
+      <Link>src\GamePlay\BoardShapes\BoardRectangle.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\BoardShapes\IBoardShapes.cs">
       <Link>src\GamePlay\BoardShapes\IBoardShapes.cs</Link>
@@ -135,6 +149,18 @@
     <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuSpriteElement.cs">
       <Link>src\GamePlay\Menus\Elements\MenuSpriteElement.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\MenuTextElement.cs">
+      <Link>src\GamePlay\Menus\Elements\MenuTextElement.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\ScoreboardElements.cs">
+      <Link>src\GamePlay\Menus\Elements\ScoreboardElements.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\TutorialButton.cs">
+      <Link>src\GamePlay\Menus\Elements\TutorialButton.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\Elements\TutorialElement.cs">
+      <Link>src\GamePlay\Menus\Elements\TutorialElement.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\Menus\GameOverMenu.cs">
       <Link>src\GamePlay\Menus\GameOverMenu.cs</Link>
     </Compile>
@@ -147,8 +173,41 @@
     <Compile Include="..\Common\src\GamePlay\Menus\NewGameMenu.cs">
       <Link>src\GamePlay\Menus\NewGameMenu.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\Menus\ScoreboardMenu.cs">
+      <Link>src\GamePlay\Menus\ScoreboardMenu.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\Saving\Save.cs">
       <Link>src\GamePlay\Saving\Save.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\MultiPlayerGameCommunicator.cs">
+      <Link>src\GamePlay\ServerCommunicator\MultiPlayerGameCommunicator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\CheckInForMultiRequest.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\CheckInForMultiRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\CheckInForMultiResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\CheckInForMultiResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\NewBoardResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\NewBoardResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\NewTileResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\NewTileResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\ScoreboardRequest.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\ScoreboardRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\ScoreboardResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\ScoreboardResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\ScoreboardCommunicator.cs">
+      <Link>src\GamePlay\ServerCommunicator\ScoreboardCommunicator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\ServerCommunicator.cs">
+      <Link>src\GamePlay\ServerCommunicator\ServerCommunicator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\SinglePlayerGameCommunicator.cs">
+      <Link>src\GamePlay\ServerCommunicator\SinglePlayerGameCommunicator.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Settings\Settings.cs">
       <Link>src\GamePlay\Settings\Settings.cs</Link>
@@ -173,9 +232,6 @@
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Transformation\Transformator.cs">
       <Link>src\GamePlay\Transformation\Transformator.cs</Link>
-    </Compile>
-    <Compile Include="..\Common\src\Menu.cs">
-      <Link>src\Menu.cs</Link>
     </Compile>
     <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -399,7 +455,33 @@
     </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidAsset Include="..\Common\Content\GUI\multiplayer_button.png">
+      <Link>Assets\Content\GUI\multiplayer_button.png</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\plainmenu_bg.jpg">
+      <Link>Assets\Content\GUI\plainmenu_bg.jpg</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\scoreboard_bg.jpg">
+      <Link>Assets\Content\GUI\scoreboard_bg.jpg</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\scoreboard_button.png">
+      <Link>Assets\Content\GUI\scoreboard_button.png</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\singleplayer_button.png">
+      <Link>Assets\Content\GUI\singleplayer_button.png</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\text_bg.png">
+      <Link>Assets\Content\GUI\text_bg.png</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\tutorial_bg.png">
+      <Link>Assets\Content\GUI\tutorial_bg.png</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Common\Content\GUI\tutorial_button.png">
+      <Link>Assets\Content\GUI\tutorial_button.png</Link>
+    </AndroidAsset>
+    <Content Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

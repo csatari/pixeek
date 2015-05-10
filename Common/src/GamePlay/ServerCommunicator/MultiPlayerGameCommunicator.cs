@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
 using Pixeek.Game;
 using Pixeek.ServerCommunicator.Objects;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 
 namespace Pixeek.ServerCommunicator
@@ -45,7 +42,7 @@ namespace Pixeek.ServerCommunicator
             sendPostCommand("/check-in-for-multi/" + gmStr + "/" + diffStr,request,
                 delegate(String s)
                 {
-                    newBoardHandler(JsonConvert.DeserializeObject<CheckInForMultiResponse>(s));
+                    newBoardHandler(fastJSON.JSON.ToObject<CheckInForMultiResponse>(s));
                 });
         }
     }

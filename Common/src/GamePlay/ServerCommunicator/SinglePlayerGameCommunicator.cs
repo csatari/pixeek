@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
 using Pixeek.Game;
 using Pixeek.ServerCommunicator.Objects;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 
 namespace Pixeek.ServerCommunicator
@@ -41,7 +38,7 @@ namespace Pixeek.ServerCommunicator
             sendGetCommand("/new-board/" + diffStr + "/" + numberOfFields,
                 delegate(String s)
                 {
-                    newBoardHandler(JsonConvert.DeserializeObject<NewBoardResponse>(s));
+                    newBoardHandler(fastJSON.JSON.ToObject<NewBoardResponse>(s));
                 });
         }
 
@@ -52,7 +49,7 @@ namespace Pixeek.ServerCommunicator
             sendGetCommand("/new-tile/" + diffStr,
                 delegate(String s)
                 {
-                    newTileHandler(JsonConvert.DeserializeObject<NewTileResponse>(s));
+                    newTileHandler(fastJSON.JSON.ToObject<NewTileResponse>(s));
                 });
         }
     }
