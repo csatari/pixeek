@@ -756,10 +756,7 @@ A szerver legenerál egy új játékot, amit a következő formátumban küld a 
   "col_index" : &lt;number>,
   "image"     : &lt;string>,
   "word"      : &lt;string> } ],
-"to_find"  : [ {
-  "row_index" : &lt;number>,
-  "col_index" : &lt;number>,
-  "word"      : &lt;string> } ]
+"to_find"  : [ &lt;string> ]
 }</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
 </table>
 
@@ -780,10 +777,7 @@ A szerver legenerál egy új játékot, amit a következő formátumban küld a 
   "col_index" : &lt;number>,
   "image"     : &lt;string>,
   "word"      : &lt;string> } ],
-"to_find"   : [ {
-  "row_index" : &lt;number>,
-  "col_index" : &lt;number>,
-  "word"      : &lt;string> } ],
+"to_find"   : [ &lt;string> ],
 "your_turn" : true
 }</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
 </table>
@@ -805,10 +799,7 @@ A szerver legenerál egy új játékot, amit a következő formátumban küld a 
   "col_index" : &lt;number>,
   "image"     : &lt;string>,
   "word"      : &lt;string> } ],
-"to_find"   : [ {
-  "row_index" : &lt;number>,
-  "col_index" : &lt;number>,
-  "word"      : &lt;string> } ],
+"to_find"   : [ &lt;string> ],
 "your_turn" : false
 }</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
 </table>
