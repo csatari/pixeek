@@ -656,36 +656,289 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 </td></tr>
 </table>
 
+### 2.5 Multi-player protokoll
+A multi-player funkcionalitás modellje egy véges állapot-automata, aminek
+* állapotai a játékállapotok funkcionálisan egybe tartozó részhalmazai,
+* az állapot átmenetek a felhasználó tevékenysége vagy eltelt idő-intervallum által kiváltott TCP/IP üzenetváltások.
+
+#### 2.5.1 Állapotok
 <table>
-<tr><th>Szolgáltatás</th><th>Játékos regisztálása multiplayer játékhoz</th></tr>
-<tr><td>URI</td><td><tt>/check-in-for-multi/{mode}/{difficulty}</tt></td></tr>
-<tr><td>HTTP verb</td><td>POST</td></tr>
-<tr><td>request body</td><td><pre>{
-"player-alias" : &lt;string>
-}</pre></td></tr>
-<tr><td>response</td><td><pre>{
-"port" : &lt;string>
-}</pre></td></tr>
-<tr><td>Megjegyzések</td><td>
-<tt>mode</tt> eleme <tt>{"timer", "fight"}</tt>;<br/>
-<tt>difficulty</tt> eleme <tt>{"easy", "normal", "hard"}</tt>
-</td></tr>
+<tr><th>Állapot</th><th>Belépési pont</th></tr>
+<tr><td>Kliens jellemzők</td><td>A kliens a multi-player játékhoz való csatlakozás előtt áll.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver várja a csatlakozni kívánó klienseket.</td></tr>
+<tr><td>Állapot átmenetek</td><td><ul>
+<li>Regisztráció</li></ul></td></tr>
 </table>
 
-### 2.5 Dinamikus működés  
-#### 2.5.1 Menü  
+<table>
+<tr><th>Állapot</th><th>Várakozás párosításra</th></tr>
+<tr><td>Kliens jellemzők</td><td>A kliens várakozik a szerver válaszára.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver fogadja a további csatlakozási kérelmeket. A megküldött játék attribútumok szerint különböző sorokban várakoztatja a klienseket, amíg nem sikerül párosítani őket.</td></tr>
+<tr><td>Állapot átmenetek</td><td><ul>
+<li>Új "Harc a pontokért" játék</li>
+<li>Új "Időzítő" játék - a kliens kezd</li>
+<li>Új "Időzítő" játék - az ellenfél kezd</li></ul></td></tr>
+</table>
+
+<table>
+<tr><th>Állapot</th><th>Harc a pontokért</th></tr>
+<tr><td>Kliens jellemzők</td><td>A játékos sorban megoldja a feladatokat.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver minden megoldott feladatnál értesíti az ellenfelet a játékos pontállásáról.</td></tr>
+<tr><td>Állapot átmenetek</td><td><ul>
+<li>"Harc a pontokért" értesítő küldése</li>
+<li>"Harc a pontokért" értesítő fogadása</li>
+<li>Minden feladat megoldásra került küldése</li></ul></td></tr>
+</table>
+
+<table>
+<tr><th>Állapot</th><th>Időzítő - a játékos lép</th></tr>
+<tr><td>Kliens jellemzők</td><td>A játékoson van a sor, hogy megoldjon egy feladatot. Közben a rendelkezésére álló idő folyamatosan csökken.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver várakozik egy feladat megoldására vagy az idő letelésére.</td></tr>
+<tr><td>Állapot átmenetek</td><td><ul>
+<li>"Időzítő" értesítő küldése és új elem fogadása</li>
+<li>A rendelkezésre álló idő elfogyott</li></ul></td></tr>
+</table>
+
+<table>
+<tr><th>Állapot</th><th>Várakozás "Harc a pontokért" módban</th></tr>
+<tr><td>Kliens jellemzők</td><td>A kliens várakozik arra, hogy ellenfele is végezzen.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver várakozik a kliens ellenfelére.</td></tr>
+<tr><td>Állapot átmenetek</td><td><ul>
+<li>"Harc a pontokért" értesítő fogadása</li>
+<li>Minden feladat megoldásra került fogadása</li></ul></td></tr>
+</table>
+
+<table>
+<tr><th>Állapot</th><th>Várakozás "Időzítő" módban</th></tr>
+<tr><td>Kliens jellemzők</td><td>A kliens várakozik arra, hogy ellenfele megoldjon egy feladatot, vagy lejárjon az ideje.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver várakozik a kliens ellenfelére.</td></tr>
+<tr><td>Állapot átmenetek</td><td><ul>
+<li>"Időzítő" módban új elem fogadása</li>
+<li>Nyertél értesítő fogadása</li></ul></td></tr>
+</table>
+
+<table>
+<tr><th>Állapot</th><th>Kilépési pont</th></tr>
+<tr><td>Kliens jellemzők</td><td>A kliens megjeleníti a multi-player játék eredményét.</td></tr>
+<tr><td>Szerver jellemzők</td><td>A szerver bontja a kapcsolatot a kliensekkel.</td></tr>
+<tr><td>Állapot átmenetek</td><td>-</td></tr>
+</table>
+
+#### 2.5.2 Állapot átmenetek
+<table>
+<tr><th>Állapot átmenet</th><th>Regisztráció</th></tr>
+<tr><td>Kiinduló állapot</td><td>Belépési pont</td></tr>
+<tr><td>Következő állapot</td><td>Várakozás párosításra</td></tr>
+<tr><td>Kiváltó esemény</td><td>A felhasználó új multi-player játékhoz való csatlakozást választotta a menüben.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A kliens csatlakozik a <tt>http://nipglab09.inf.elte.hu:8001</tt> porthoz TCP/IPv4 módban, majd üzenetet küld a következő formátumban:<br/><pre>{
+"name"       : &lt;string>,
+"mode"       : &lt;"timer"|"fight">,
+"difficulty" : &lt;"easy"|"normal"|"hard">,
+"layout"     : &lt;"rectangle"|"diamond"|"fish">
+}</pre></td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>Új "Harc a pontokért" játék</th></tr>
+<tr><td>Kiinduló állapot</td><td>Várakozás párosításra</td></tr>
+<tr><td>Következő állapot</td><td>Harc a pontokért</td></tr>
+<tr><td>Kiváltó esemény</td><td>A szerver sikeresen párosít két "Harc a pontokért" módban regisztráló játékost, azonos nehézségi szinten és layouttal.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver legenerál egy új játékot, amit a következő formátumban küld a klienseknek:<br/><pre>{
+"opponent" : &lt;string>,
+"layout"   : {
+  "height" : &lt;number>,
+  "width"  : &lt;number>,
+  "active_fields" : [ &lt;true|false> ] },
+"board"    : [ {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "image"     : &lt;string>,
+  "word"      : &lt;string> } ],
+"to_find"  : [ {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "word"      : &lt;string> } ]
+}</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>Új "Időzítő" játék - a kliens kezd</th></tr>
+<tr><td>Kiinduló állapot</td><td>Várakozás párosításra</td></tr>
+<tr><td>Következő állapot</td><td>Időzítő - a játékos lép</td></tr>
+<tr><td>Kiváltó esemény</td><td>A szerver sikeresen párosít két "Időzítő" módban regisztráló játékost, azonos nehézségi szinten és layouttal. Kisorsolta, hogy ez a kliens kezd.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver legenerál egy új játékot, amit a következő formátumban küld a kliensnek:<br/><pre>{
+"opponent"  : &lt;string>,
+"layout"    : {
+  "height" : &lt;number>,
+  "width"  : &lt;number>,
+  "active_fields" : [ &lt;true|false> ] },
+"board"     : [ {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "image"     : &lt;string>,
+  "word"      : &lt;string> } ],
+"to_find"   : [ {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "word"      : &lt;string> } ],
+"your_turn" : true
+}</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>Új "Időzítő" játék - az ellenfél kezd</th></tr>
+<tr><td>Kiinduló állapot</td><td>Várakozás párosításra</td></tr>
+<tr><td>Következő állapot</td><td>Várakozás "Időzítő" módban</td></tr>
+<tr><td>Kiváltó esemény</td><td>A szerver sikeresen párosít két "Időzítő" módban regisztráló játékost, azonos nehézségi szinten és layouttal. Kisorsolta, hogy ennek a kliensnek az ellenfele kezd.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver legenerál egy új játékot, amit a következő formátumban küld a kliensnek:<br/><pre>{
+"opponent"  : &lt;string>,
+"layout"    : {
+  "height" : &lt;number>,
+  "width"  : &lt;number>,
+  "active_fields" : [ &lt;true|false> ] },
+"board"     : [ {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "image"     : &lt;string>,
+  "word"      : &lt;string> } ],
+"to_find"   : [ {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "word"      : &lt;string> } ],
+"your_turn" : false
+}</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>"Harc a pontokért" értesítő küldése</th></tr>
+<tr><td>Kiinduló állapot</td><td>Harc a pontokért</td></tr>
+<tr><td>Következő állapot</td><td>Harc a pontokért</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos megoldott egy feladatot, de nem az utolsót.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A kliens a feladat megoldásának megfelelően frissíti saját játékállapotát és a GUI-t, majd a következő üzenetet küldi a szervernek:<br/><pre>{
+"row_index" : &lt;number>,
+"col_index" : &lt;number>,
+"score"     : &lt;number>
+}</pre><br/>ahol <tt>*_index</tt> a megoldott feladat koordinátái, <tt>score</tt> az eddig megszerzett pontok.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>"Harc a pontokért" értesítő fogadása</th></tr>
+<tr><td>Kiinduló állapot 1</td><td>Harc a pontokért</td></tr>
+<tr><td>Következő állapot 1</td><td>Harc a pontokért</td></tr>
+<tr><td>Kiinduló állapot 2</td><td>Várakozás "Harc a pontokért" módban</td></tr>
+<tr><td>Következő állapot 2</td><td>Várakozás "Harc a pontokért" módban</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos ellenfele megoldott egy feladatot, de nem az utolsót.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver a következő üzenettel értesíti a klienst a játékállásról:<br/><pre>{
+"purpose"        : "update",
+"opponent_score" : &lt;number>
+}</pre><br/>A kliens frissíti a GUI-t.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>Minden feladat megoldásra került küldése</th></tr>
+<tr><td>Kiinduló állapot</td><td>Harc a pontokért</td></tr>
+<tr><td>Következő állapot</td><td>Várakozás "Harc a pontokért" módban</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos megoldotta az utolsó feladatot.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A kliens megjeleníti az elért eredményt, és a következő üzenetet küldi a szervernek:<br/><pre>{
+"row_index" : &lt;number>,
+"col_index" : &lt;number>,
+"score"     : &lt;number>
+}</pre><br/>ahol <tt>*_index</tt> a megoldott feladat koordinátái, <tt>score</tt> az eddig megszerzett pontok.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>Minden feladat megoldásra került fogadása</th></tr>
+<tr><td>Kiinduló állapot</td><td>Várakozás "Harc a pontokért" módban</td></tr>
+<tr><td>Következő állapot</td><td>Kilépési pont</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos ellenfele megoldotta az utolsó feladatot.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver a következő üzenettel értesíti a klienst a játékállásról:<br/><pre>{
+"purpose"        : "opponent_finished",
+"opponent_score" : &lt;number>
+}</pre><br/>A kliens frissíti a GUI-t.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>"Időzítő" értesítő küldése és új elem fogadása</th></tr>
+<tr><td>Kiinduló állapot</td><td>Időzítő - a játékos lép</td></tr>
+<tr><td>Következő állapot</td><td>Várakozás "Időzítő" módban</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos megoldott egy feladatot.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A kliens kiveszi a megoldott feladatot a feladatlistából, leállítja saját óráját, elindítja az ellenfélét, és értesíti a szervert a megoldott feladatról:<br/><pre>{
+"purpose" : "solved_task",
+"row_index" : &lt;number>,
+"col_index" : &lt;number>
+}</pre><br/>A szerver új képet generál a megoldott helyére, valamint küld egy új megoldandó feladatot:<br/><pre>{
+"purpose"  : "update",
+"new_tile" : {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "image"     : &lt;string>,
+  "word"      : &lt;string> },
+"new_task" : &lt;string>
+}</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>"Időzítő" módban új elem fogadása</th></tr>
+<tr><td>Kiinduló állapot</td><td>Várakozás "Időzítő" módban</td></tr>
+<tr><td>Következő állapot</td><td>Időzítő - a játékos lép</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos ellenfele megoldott egy feladatot.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver új képet generál az ellenfél által megoldott helyére, valamint küld egy új megoldandó feladatot:<br/><pre>{
+"purpose"  : "update",
+"new_tile" : {
+  "row_index" : &lt;number>,
+  "col_index" : &lt;number>,
+  "image"     : &lt;string>,
+  "word"      : &lt;string> },
+"new_task" : &lt;string>
+}</pre><br/>ahol <tt>image</tt> base64 kódolású JPEG kép. A kliens kiveszi a megoldott feladatot a feladatlistából, és beteszi az új feladatot. A megoldott képet helyettesíti az újjal. Leállítja az ellenfél óráját, és elindítja a sajátját.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>A rendelkezésre álló idő elfogyott</th></tr>
+<tr><td>Kiinduló állapot</td><td>Időzítő - a játékos lép</td></tr>
+<tr><td>Következő állapot</td><td>Kilépési pont</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos rendelkezésére álló idő elfogyott, ezzel elveszítette a játékot.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A kliens értesíti a szervert az idő lejártáról:<br/><pre>{
+"purpose"  : "time_out"
+}</pre>A kliens megjeleníti az elért eredményt.</td></tr>
+</table>
+
+<table>
+<tr><th>Állapot átmenet</th><th>Nyertél értesítő fogadása</th></tr>
+<tr><td>Kiinduló állapot</td><td>Várakozás "Időzítő" módban</td></tr>
+<tr><td>Következő állapot</td><td>Kilépési pont</td></tr>
+<tr><td>Kiváltó esemény</td><td>A játékos ellenfelének rendelkezésére álló idő elfogyott, ezzel a játékos nyert.</td></tr>
+<tr><td>Végrehajtandó lépések</td><td>
+A szerver értesíti a klienst az idő lejártáról:<br/><pre>{
+"purpose"  : "you_won"
+}</pre>A kliens megjeleníti az elért eredményt.</td></tr>
+</table>
+
+### 2.6 Dinamikus működés  
+#### 2.6.1 Menü  
 ![Menü szekvenciadiagram](/readme_resources/menusequencemodell1.jpg?raw=true "Menü szekvenciadiagram")
 
-#### 2.5.2 Scoreboard
+#### 2.6.2 Scoreboard
 ![Scoreboard szekvenciadiagram](/readme_resources/sequence.jpg?raw=true "Scoreboard szekvenciadiagram")
 
-#### 2.5.3 Multiplayer játék indítása
+#### 2.6.3 Multiplayer játék indítása
 ![Multiplayer szekvenciadiagram](/readme_resources/multisequence.jpg?raw=true "Multiplayer szekvenciadiagram")
 
-#### 2.5.4 Sakk alapú időkorlátos játékmód
+#### 2.6.4 Sakk alapú időkorlátos játékmód
 ![Időkorlátos játékmód szekvenciadiagram](/readme_resources/chessMethodSequence.jpg?raw=true "Időkorlátos játékmód szekvenciadiagram")
 
-### 2.6 Felhasználói felület modell  
+### 2.7 Felhasználói felület modell  
 A játék alapvetően mobil platformokra van tervezve, érintéssel működik. Minden ablak teljes képernyős, mindig a legutoljára felnyitott ablak aktív. A menükben vissza lehet menni bármelyik előző ablakra. Játék közben a pause menüt lehet megnyitni, a főmenübe visszajutni csak az aktuális játék megszakításával lehet.
 
 ![Főmenü](/readme_resources/mainmenu.jpg?raw=true "Főmenü")  
@@ -693,7 +946,7 @@ A játék alapvetően mobil platformokra van tervezve, érintéssel működik. M
 ![Játékmenet](/readme_resources/gamemode.jpg?raw=true "Játékmenet")  
 ![Játékmenet, pálya template](/readme_resources/gamemode2.jpg?raw=true "Játékmenet, pálya template")  
 
-### 2.7 Részletes programterv
+### 2.8 Részletes programterv
 
 **Tábla**  
 *mezőHozzáadás* – hozzáad egy mezőt a Tábla osztály összesMező nevű listájához.  
