@@ -69,5 +69,10 @@ namespace Pixeek.BoardShapes
                 default: return 0;
             }
         }
+
+        public string ToString()
+        {
+            return "rectangle";
+        }
     }
 }

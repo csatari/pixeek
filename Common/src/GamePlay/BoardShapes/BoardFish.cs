@@ -31,5 +31,10 @@ namespace Pixeek.BoardShapes
         {
             return 79;
         }
+
+        public string ToString()
+        {
+            return "fish";
+        }
     }
 }

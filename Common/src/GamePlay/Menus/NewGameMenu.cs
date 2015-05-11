@@ -168,6 +168,8 @@ namespace Pixeek.Menus
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
+                        if (gamemodeSelector.Selected == GameMode.FIGHT || gamemodeSelector.Selected == GameMode.TIMER) return; //nincs megvalósítva a multiplayer :(
+
                         gameModel = new Game.GameModel(MainMenu.imageDatabase, gamemodeSelector.Selected, difficultySelector.Selected, music, vibration, null, null);
                         newGame(gamemodeSelector.Selected, difficultySelector.Selected, music, vibration);
                         GameManager.Instance.SwitchScene(gameModel);

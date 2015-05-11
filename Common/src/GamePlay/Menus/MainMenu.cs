@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Pixeek;
 using Pixeek.ImageLoader;
 using Pixeek.Menus.Elements;
+using Pixeek.ServerCommunicator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,6 +125,8 @@ namespace Pixeek.Menus
                     delegate()
                     {
                         Menu.GoToScene(ScoreboardMenu.Instance);
+
+                       // MultiPlayerGameCommunicator.Instance.NewFightGameListener(dele);
                     }
                     );
                 bg.AddChild(playButton);
@@ -138,6 +141,9 @@ namespace Pixeek.Menus
                         NewGameMenu.Tutorial = true;
                         NewGameMenu.SinglePlayer = true;
                         Menu.GoToScene(NewGameMenu.Instance);
+
+                        //MultiPlayerGameCommunicator.Instance.Registration("Albert", Game.GameMode.FIGHT, Game.Difficulty.EASY, new BoardShapes.BoardRectangle());
+                        //MultiPlayerGameCommunicator.Instance.Registration("Geza", Game.GameMode.FIGHT, Game.Difficulty.EASY, new BoardShapes.BoardRectangle());
                     }
                     );
                 bg.AddChild(playButton);

@@ -1,6 +1,8 @@
-﻿using Android;
+﻿#if ANDROID
+using Android;
 using Android.InputMethodServices;
 using Android.Views.InputMethods;
+#endif
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

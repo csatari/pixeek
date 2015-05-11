@@ -15,12 +15,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Pixeek.ServerCommunicator
 {
     public abstract class ServerCommunicator
     {
         private const string URL = "http://nipglab09.inf.elte.hu:8000/pixeek";
+        private const string URL_MULTI = "nipglab09.inf.elte.hu";
+        private const int PORT_MULTI = 8001;
+        private bool connected = false;
+        SocketPermission permission;
+        IPHostEntry ipHost;
+        IPAddress ipAddr;
+        IPEndPoint ipEndPoint;
+        Socket socket;
 
         public delegate void CommandResult(string result);
 
@@ -221,6 +231,76 @@ namespace Pixeek.ServerCommunicator
             
 #endif
         }
+
+        private void Connect()
+        {
+            if (!connected)
+            {
+                permission = new SocketPermission(NetworkAccess.Connect,
+                           TransportType.Tcp, URL_MULTI, PORT_MULTI);
+                ipHost = Dns.GetHostEntry(URL_MULTI);
+                ipAddr = ipHost.AddressList[0];
+                ipEndPoint = new IPEndPoint(ipAddr, PORT_MULTI);
+                socket = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                socket.Connect(ipEndPoint);
+
+                connected = true;
+            }
+        }
+        protected void SendSocket(string text)
+        {
+            new Thread(() =>
+            {
+                Connect();
+
+                byte[] msg = Encoding.UTF8.GetBytes(text);
+                try
+                {
+                    socket.Send(msg);
+                }
+                catch (SocketException)
+                {
+                    connected = false;
+                    Connect();
+                    SendSocket(text);
+                }
+            }).Start();
+        }
+
+        protected void SocketListener(CommandResult commandResult)
+        {
+            new Thread(() =>
+            {
+                Connect();
+
+                String theMessageToReceive = "";
+                bool read = false;
+                while (true)
+                {
+                    while (socket.Available > 0)
+                    {
+                        byte[] bytes = new byte[1024];
+                        int bytesRec = socket.Receive(bytes);
+
+                        theMessageToReceive += Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                        read = true;
+                    }
+                    if (commandResult != null && read)
+                    {
+                        commandResult(theMessageToReceive);
+                        theMessageToReceive = "";
+                        read = false;
+                    }
+                }
+            }).Start();
+        }
+
+        public void StopListening()
+        {
+            socket.Close();
+        }
+
     }
     public class InvalidParameterException : System.Exception
     {

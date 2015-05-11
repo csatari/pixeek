@@ -171,6 +171,9 @@
     <Compile Include="..\Common\src\GamePlay\Saving\Save.cs">
       <Link>src\GamePlay\Saving\Save.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\FightGameCommunicator.cs">
+      <Link>src\GamePlay\ServerCommunicator\FightGameCommunicator.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\MultiPlayerGameCommunicator.cs">
       <Link>src\GamePlay\ServerCommunicator\MultiPlayerGameCommunicator.cs</Link>
     </Compile>
@@ -180,17 +183,41 @@
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\CheckInForMultiResponse.cs">
       <Link>src\GamePlay\ServerCommunicator\Objects\CheckInForMultiResponse.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\FightNotifyRequest.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\FightNotifyRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\FightNotifyResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\FightNotifyResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\GameOverResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\GameOverResponse.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\NewBoardResponse.cs">
       <Link>src\GamePlay\ServerCommunicator\Objects\NewBoardResponse.cs</Link>
     </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\NewFightGameResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\NewFightGameResponse.cs</Link>
+    </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\NewTileResponse.cs">
       <Link>src\GamePlay\ServerCommunicator\Objects\NewTileResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\NewTimeGameResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\NewTimeGameResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\RegistrationRequest.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\RegistrationRequest.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\ScoreboardRequest.cs">
       <Link>src\GamePlay\ServerCommunicator\Objects\ScoreboardRequest.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\ScoreboardResponse.cs">
       <Link>src\GamePlay\ServerCommunicator\Objects\ScoreboardResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\TimeNotifyRequest.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\TimeNotifyRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\Objects\TimeNotifyResponse.cs">
+      <Link>src\GamePlay\ServerCommunicator\Objects\TimeNotifyResponse.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\ScoreboardCommunicator.cs">
       <Link>src\GamePlay\ServerCommunicator\ScoreboardCommunicator.cs</Link>
@@ -200,6 +227,9 @@
     </Compile>
     <Compile Include="..\Common\src\GamePlay\ServerCommunicator\SinglePlayerGameCommunicator.cs">
       <Link>src\GamePlay\ServerCommunicator\SinglePlayerGameCommunicator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\src\GamePlay\ServerCommunicator\TimerGameCommunicator.cs">
+      <Link>src\GamePlay\ServerCommunicator\TimerGameCommunicator.cs</Link>
     </Compile>
     <Compile Include="..\Common\src\GamePlay\Settings\Settings.cs">
       <Link>src\GamePlay\Settings\Settings.cs</Link>
@@ -243,9 +273,6 @@
   <ItemGroup>
     <Reference Include="fastJSON">
       <HintPath>..\packages\fastJSON.dll</HintPath>
-    </Reference>
-    <Reference Include="Json">
-      <HintPath>..\packages\JSON.1.0.1\lib\net40\Json.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MonoGame.Framework">

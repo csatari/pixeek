@@ -22,5 +22,7 @@ namespace Pixeek.BoardShapes
         /// <param name="difficulty"></param>
         /// <returns></returns>
         int getFieldCount(Difficulty difficulty);
+
+        string ToString();
     }
 }
