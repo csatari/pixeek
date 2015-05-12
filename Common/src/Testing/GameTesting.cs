@@ -44,12 +44,12 @@ namespace Pixeek
             assert(scoring.Combo == 1 && scoring.Score == 0);
             for (int i = 0; i < 15; i++)
             {
-                scoring.addPoint(1);
+                scoring.AddPoint(1);
             }
             assert(scoring.Combo == 32 && scoring.Score == 351);
-            scoring.addPoint(0);
+            scoring.AddPoint(0);
             assert(scoring.Combo == 32 && scoring.Score == 351);
-            scoring.addPoint(-1);
+            scoring.AddPoint(-1);
             assert(scoring.Combo == 32 && scoring.Score == 351);
             Thread.Sleep(2600);
             assert(scoring.Combo == 16 && scoring.Score == 351);
@@ -64,7 +64,7 @@ namespace Pixeek
                 imageList.Add(new Image() { ImageTexture = t2d, Name = "random" + i });
             }
             //checking if a testboard after starting a new game, has a board, and the images to find can be found on the board
-            Board testBoard = levelManager.newGame(GameMode.NORMAL, Difficulty.EASY, null, imageList);
+            Board testBoard = levelManager.NewGame(GameMode.NORMAL, Difficulty.EASY, null, imageList);
             assert(testBoard.X == 5 && testBoard.Y == 5);
             assert(levelManager.ImagesToFind.ToFind.Count > 0);
             for (int i = 0; i < levelManager.ImagesToFind.ToFind.Count; i++)
@@ -72,7 +72,7 @@ namespace Pixeek
                 assert(levelManager.ImagesToFind.ToFind[i].ImageTexture == t2d);
                 assert(levelManager.ImagesToFind.ToFind[i].Name.Substring(0, 6).Equals("random"));
             }
-            testBoard = levelManager.newGame(GameMode.TIME, Difficulty.NORMAL, null, imageList);
+            testBoard = levelManager.NewGame(GameMode.TIME, Difficulty.NORMAL, null, imageList);
             assert(testBoard.X == 9 && testBoard.Y == 9);
             for (int i = 0; i < levelManager.ImagesToFind.ToFind.Count; i++)
             {
@@ -80,7 +80,7 @@ namespace Pixeek
             }
             assert(levelManager.ImagesToFind.ToFind.Count > 0);
 
-            testBoard = levelManager.newGame(GameMode.ENDLESS, Difficulty.HARD, null, imageList);
+            testBoard = levelManager.NewGame(GameMode.ENDLESS, Difficulty.HARD, null, imageList);
             assert(testBoard.X == 16 && testBoard.Y == 16);
             assert(levelManager.ImagesToFind.ToFind.Count > 0);
             for (int i = 0; i < levelManager.ImagesToFind.ToFind.Count; i++)
@@ -93,9 +93,9 @@ namespace Pixeek
                 new Image() { ImageTexture = t2d, Name = "nemtalalhato" } ,
                 0, 0, 0, false, new Transformator(Difficulty.HARD, 1));
             //the testfield cannot be clicked
-            assert(levelManager.tryClickedField(testField) == false);
+            assert(levelManager.TryClickedField(testField) == false);
             //try to click one random image, which is in the tofind list 
-            assert(levelManager.tryClickedField(
+            assert(levelManager.TryClickedField(
                 testBoard.AllFields.Find(field => field.ImageProperty.Name == levelManager.ImagesToFind.ToFind[0].Name)
                 ));
             //adding and removing fields from the board
@@ -109,30 +109,30 @@ namespace Pixeek
             assert(squareSide == 16);
 
             //creates a new diamond shaped board, and checks some fields if they are on the correct place
-            testBoard = levelManager.newGame(GameMode.NORMAL, Difficulty.EASY, new BoardDiamond(), imageList);
-            assert(testBoard.getField(0, 0) == null);
-            assert(testBoard.getField(3, 0) != null);
-            assert(testBoard.getField(3, 0).ColumnIndex == 3 && testBoard.getField(3, 0).RowIndex == 0);
+            testBoard = levelManager.NewGame(GameMode.NORMAL, Difficulty.EASY, new BoardDiamond(), imageList);
+            assert(testBoard.GetField(0, 0) == null);
+            assert(testBoard.GetField(3, 0) != null);
+            assert(testBoard.GetField(3, 0).ColumnIndex == 3 && testBoard.GetField(3, 0).RowIndex == 0);
 
             //checks if changeField function works properly
-            Field oldField = testBoard.getField(3, 0);
+            Field oldField = testBoard.GetField(3, 0);
             string oldstr = oldField.ImageProperty.Name;
-            testBoard.changeField(oldField, Difficulty.EASY,
+            testBoard.ChangeField(oldField, Difficulty.EASY,
                 delegate()
                 {
-                    levelManager.ImagesToFind.addNewImageToFind();
+                    levelManager.ImagesToFind.AddNewImageToFind();
                 });
             //can cause exception in odd cases if the random new image is the same as it was
-            assert(oldstr != testBoard.getField(3, 0).ImageProperty.Name);
+            assert(oldstr != testBoard.GetField(3, 0).ImageProperty.Name);
 
             //checks the ImagesToFind if it doesnt contain an image, which cannot be found on the board, and checkes one, which should be on it
             ImagesToFind imagesToFind = levelManager.ImagesToFind;
-            assert(imagesToFind.tryToFindField(testField) == false);
-            assert(imagesToFind.tryToFindField(testBoard.AllFields.Find(field => field.ImageProperty.Name == levelManager.ImagesToFind.ToFind[0].Name)));
+            assert(imagesToFind.TryToFindField(testField) == false);
+            assert(imagesToFind.TryToFindField(testBoard.AllFields.Find(field => field.ImageProperty.Name == levelManager.ImagesToFind.ToFind[0].Name)));
 
             //adds a new image to find, and checks if the images to find count has increased
             int oldCount = imagesToFind.ToFind.Count;
-            imagesToFind.addNewImageToFind();
+            imagesToFind.AddNewImageToFind();
             assert(oldCount + 1 == imagesToFind.ToFind.Count);
 
             assert(imagesToFind.ToString().Contains(imagesToFind.ToFind[0].Name));
@@ -141,14 +141,20 @@ namespace Pixeek
             imagesToFind = new ImagesToFind();
             assert(imagesToFind.ToString() == "");
 
-            imagesToFind = ImagesToFind.createNewImagesToFind(GameMode.NORMAL, Difficulty.EASY, testBoard);
+            imagesToFind = ImagesToFind.CreateNewImagesToFind(GameMode.NORMAL, Difficulty.EASY, testBoard);
 
             assert(imagesToFind.ToFind.Count > 0);
+
+            bool serverworks = false;
+            ServerCommunicator.ScoreboardCommunicator.Instance.GetTop10Scores(GameMode.NORMAL, Difficulty.EASY, delegate(ServerCommunicator.Objects.ScoreboardResponse response)
+            {
+                serverworks = true;
+            });
         }
 
         static void checkDiamondShape(Game.Difficulty diff) {
             IBoardShapes boardShape = new BoardDiamond();
-            int[][] fields = boardShape.getField(diff);
+            int[][] fields = boardShape.GetField(diff);
             int notnull = 0;
             for (int y = 0; y < fields.GetLength(0); y++)
             {
@@ -168,7 +174,7 @@ namespace Pixeek
         static void checkFishShape(Game.Difficulty diff)
         {
             IBoardShapes boardShape = new BoardFish();
-            int[][] fields = boardShape.getField(diff);
+            int[][] fields = boardShape.GetField(diff);
             assert(fields[0].Equals(fields[1]) == false);
         }
     }

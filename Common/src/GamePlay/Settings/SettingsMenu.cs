@@ -5,7 +5,7 @@ namespace Pixeek.Settings
         private Settings settings;
         private static SettingsMenu settingsMenu;
 
-        public SettingsMenu getInstance()
+        public SettingsMenu GetInstance()
         {
             if (settingsMenu == null)
             {

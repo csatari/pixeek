@@ -5,14 +5,14 @@ namespace Pixeek.SoundVibration
 
 
 
-        public void playSound()
+        public void PlaySound()
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(GameManager.Instance.Content.RootDirectory + "/buttonsound.wav");
 
             player.Play();
         }
 
-        public void playSoundBad()
+        public void PlaySoundBad()
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(GameManager.Instance.Content.RootDirectory + "/buttonsoundbad.wav");
             player.Play();
@@ -20,12 +20,12 @@ namespace Pixeek.SoundVibration
 
     
 
-        public void vibrate()
+        public void Vibrate()
         {
             // do nothing under windows
         }
 
-        public void vibrateBad()
+        public void VibrateBad()
         {
         }
     }

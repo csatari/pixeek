@@ -31,7 +31,7 @@ namespace Pixeek.ServerCommunicator
         public delegate void Top10Score(ScoreboardResponse scr);
         public delegate void ScoreSent();
 
-        public void getTop10Scores(GameMode gameMode, Difficulty difficulty, Top10Score ts)
+        public void GetTop10Scores(GameMode gameMode, Difficulty difficulty, Top10Score ts)
         {
             if (gameMode == GameMode.ENDLESS || gameMode == GameMode.FIGHT || gameMode == GameMode.TIMER)
             {
@@ -40,14 +40,14 @@ namespace Pixeek.ServerCommunicator
             string gmStr = gameMode.ToString().ToLower();
             string diffStr = difficulty.ToString().ToLower();
 
-            sendGetCommand("/scoreboard/" + gmStr + "/" + diffStr,
+            SendGetCommand("/scoreboard/" + gmStr + "/" + diffStr,
                 delegate(String s)
                 {
                     ts(fastJSON.JSON.ToObject<ScoreboardResponse>(s));
                 });
         }
 
-        public void sendScore(GameMode gameMode, Difficulty difficulty, ScoreboardRequest scoreboard, ScoreSent scoreSent)
+        public void SendScore(GameMode gameMode, Difficulty difficulty, ScoreboardRequest scoreboard, ScoreSent scoreSent)
         {
             if (gameMode == GameMode.ENDLESS || gameMode == GameMode.FIGHT || gameMode == GameMode.TIMER)
             {
@@ -55,7 +55,7 @@ namespace Pixeek.ServerCommunicator
             }
             string gmStr = gameMode.ToString().ToLower();
             string diffStr = difficulty.ToString().ToLower();
-            sendPutCommand("/register-score/" + gmStr + "/" + diffStr,scoreboard,
+            SendPutCommand("/register-score/" + gmStr + "/" + diffStr,scoreboard,
                 delegate(String s)
                 {
                     scoreSent();

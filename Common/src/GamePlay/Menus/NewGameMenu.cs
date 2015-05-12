@@ -171,7 +171,7 @@ namespace Pixeek.Menus
                         if (gamemodeSelector.Selected == GameMode.FIGHT || gamemodeSelector.Selected == GameMode.TIMER) return; //nincs megvalósítva a multiplayer :(
 
                         gameModel = new Game.GameModel(MainMenu.imageDatabase, gamemodeSelector.Selected, difficultySelector.Selected, music, vibration, null, null);
-                        newGame(gamemodeSelector.Selected, difficultySelector.Selected, music, vibration);
+                        NewGame(gamemodeSelector.Selected, difficultySelector.Selected, music, vibration);
                         GameManager.Instance.SwitchScene(gameModel);
                     }
                 );
@@ -222,22 +222,22 @@ namespace Pixeek.Menus
 
         }
 
-        public void newGame(GameMode gameMode, Difficulty difficulty, bool music, bool vibration )
+        public void NewGame(GameMode gameMode, Difficulty difficulty, bool music, bool vibration )
         {
             if (gameMode == GameMode.ENDLESS || gameMode == GameMode.NORMAL || gameMode == GameMode.TIME)
             {
-                IBoardShapes boardShape = createBoardShape();
-                int pictureCount = boardShape.getFieldCount(difficulty);
+                IBoardShapes boardShape = CreateBoardShape();
+                int pictureCount = boardShape.GetFieldCount(difficulty);
 
                 LevelManager levelManager = new LevelManager();
 
-                SinglePlayerGameCommunicator.Instance.startSinglePlayer(difficulty, pictureCount,
+                SinglePlayerGameCommunicator.Instance.StartSinglePlayer(difficulty, pictureCount,
                     delegate(ServerCommunicator.Objects.NewBoardResponse nr)
                     {
                         List<Image> imageList = ServerCommunicator.Objects.NewBoardResponse.getImagesFromResponse(GameManager.Instance.GraphicsDevice, nr);
-                        Board board = levelManager.newGame(gameMode, difficulty, boardShape, imageList);
-                        gameModel.setLevelManager(levelManager);
-                        gameModel.setBoard(board);
+                        Board board = levelManager.NewGame(gameMode, difficulty, boardShape, imageList);
+                        gameModel.SetLevelManager(levelManager);
+                        gameModel.SetBoard(board);
 
                         GameModel.Loading = false;
                     });
@@ -252,7 +252,7 @@ namespace Pixeek.Menus
         /// Elkészít egy új tábla alakzatot - TODO szerverről kéne kérnie
         /// </summary>
         /// <returns></returns>
-        private IBoardShapes createBoardShape()
+        private IBoardShapes CreateBoardShape()
         {
             IBoardShapes boardAnimal = new BoardFish();
             Random random = new Random();

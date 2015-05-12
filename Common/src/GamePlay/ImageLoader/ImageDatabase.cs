@@ -10,7 +10,7 @@ namespace Pixeek.ImageLoader
     {
         List<Image> images = new List<Image>();
 
-        public List<Image> getAllPictures()
+        public List<Image> GetAllPictures()
         {
             return images;
         }

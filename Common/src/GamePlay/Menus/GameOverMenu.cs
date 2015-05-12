@@ -52,16 +52,16 @@ namespace Pixeek.Menus
             {
                 if (Time != null)
                 {
-                    drawText("YOU WON!\nYou gained " + Point + " points. Remaining time: " + Time);
+                    DrawText("YOU WON!\nYou gained " + Point + " points. Remaining time: " + Time);
                 }
                 else
                 {
-                    drawText("YOU WON!\nYou gained " + Point + " points.");
+                    DrawText("YOU WON!\nYou gained " + Point + " points.");
                 }
             }
             else
             {
-                drawText("GAME OVER!\nYou gained " + Point + " points.");
+                DrawText("GAME OVER!\nYou gained " + Point + " points.");
             }
 
             //Kilépés gomb
@@ -109,7 +109,7 @@ namespace Pixeek.Menus
             }
         }
 
-        private void drawText(string text)
+        private void DrawText(string text)
         {
             Root.AddChild(new MenuSpriteElement(null, 
                 new Rectangle(Convert.ToInt32(0.3125 * GameManager.Width),
@@ -134,7 +134,7 @@ namespace Pixeek.Menus
                     int time = ((int)Time[3]) * 10 + ((int)Time[4]);
                     score *= time;
                 }
-                ScoreboardCommunicator.Instance.sendScore(GameMode, Difficulty,
+                ScoreboardCommunicator.Instance.SendScore(GameMode, Difficulty,
                     new ScoreboardRequest() { player = name, score = score },
                     delegate()
                     {

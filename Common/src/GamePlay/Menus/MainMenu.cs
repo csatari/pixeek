@@ -32,17 +32,17 @@ namespace Pixeek.Menus
             
             /*ServerCommunicator.ScoreboardCommunicator.Instance.sendScore(Game.GameMode.NORMAL, Game.Difficulty.EASY,
                 new ServerCommunicator.ScoreboardRequest() { player = "AAA", score = 1 });*/
-            ServerCommunicator.ScoreboardCommunicator.Instance.getTop10Scores(Game.GameMode.NORMAL, Game.Difficulty.EASY,
+            ServerCommunicator.ScoreboardCommunicator.Instance.GetTop10Scores(Game.GameMode.NORMAL, Game.Difficulty.EASY,
                 delegate(ServerCommunicator.Objects.ScoreboardResponse ts)
                 {
                     Console.WriteLine(ts);
                 });
-            ServerCommunicator.SinglePlayerGameCommunicator.Instance.startSinglePlayer(Game.Difficulty.HARD, 20,
+            ServerCommunicator.SinglePlayerGameCommunicator.Instance.StartSinglePlayer(Game.Difficulty.HARD, 20,
                 delegate(ServerCommunicator.Objects.NewBoardResponse nr)
                 {
                     Console.WriteLine(nr.ToString());
                 });
-            ServerCommunicator.SinglePlayerGameCommunicator.Instance.getNewTile(Game.Difficulty.HARD,
+            ServerCommunicator.SinglePlayerGameCommunicator.Instance.GetNewTile(Game.Difficulty.HARD,
                 delegate(ServerCommunicator.Objects.NewTileResponse nr)
                 {
                     Console.WriteLine(nr.ToString());

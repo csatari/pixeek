@@ -88,13 +88,13 @@ namespace Pixeek.Game
         /// <param name="imageList">képek listája</param>
         /// <param name="boardAnimal">a tábla alakzata, ha null, akkor szimpla négyzet lesz</param>
         /// <returns>A táblával tér vissza</returns>
-        public Board newGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
+        public Board NewGame(GameMode gameMode, Difficulty difficulty, IBoardShapes boardAnimal, List<Image> imageList)
         {
             this.gameMode = gameMode;
             this.difficulty = difficulty;
             board = new Board(imageList);
-            board.createBoard(difficulty, boardAnimal);
-            ImagesToFind = Game.ImagesToFind.createNewImagesToFind(gameMode, difficulty, board);
+            board.CreateBoard(difficulty, boardAnimal);
+            ImagesToFind = Game.ImagesToFind.CreateNewImagesToFind(gameMode, difficulty, board);
 
             if (gameMode == GameMode.TIME)
             {
@@ -117,11 +117,11 @@ namespace Pixeek.Game
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
-        public bool tryClickedField(Field field)
+        public bool TryClickedField(Field field)
         {
             if (field.Available && !Paused)
             {
-                if (ImagesToFind.tryToFindField(field))
+                if (ImagesToFind.TryToFindField(field))
                 {
                     if (gameMode != GameMode.ENDLESS)
                     {
@@ -129,10 +129,10 @@ namespace Pixeek.Game
                     }
                     else
                     {
-                        board.changeField(field, difficulty,
+                        board.ChangeField(field, difficulty,
                             delegate()
                             {
-                                ImagesToFind.addNewImageToFind();
+                                ImagesToFind.AddNewImageToFind();
                             });
                     }
                     return true;
@@ -145,7 +145,7 @@ namespace Pixeek.Game
         /// <summary>
         /// Befejezi a játékot, azaz a számlálót nullázza
         /// </summary>
-        public void endGame()
+        public void EndGame()
         {
             time.Disposed -= time_Disposed;
             time.Elapsed -= time_Elapsed;

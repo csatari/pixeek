@@ -31,22 +31,22 @@ namespace Pixeek.ServerCommunicator
         public delegate void NewBoardHandler(NewBoardResponse scr);
         public delegate void NewTileHandler(NewTileResponse scr);
 
-        public void startSinglePlayer(Difficulty difficulty, int numberOfFields, NewBoardHandler newBoardHandler)
+        public void StartSinglePlayer(Difficulty difficulty, int numberOfFields, NewBoardHandler newBoardHandler)
         {
             string diffStr = difficulty.ToString().ToLower();
 
-            sendGetCommand("/new-board/" + diffStr + "/" + numberOfFields,
+            SendGetCommand("/new-board/" + diffStr + "/" + numberOfFields,
                 delegate(String s)
                 {
                     newBoardHandler(fastJSON.JSON.ToObject<NewBoardResponse>(s));
                 });
         }
 
-        public void getNewTile(Difficulty difficulty, NewTileHandler newTileHandler)
+        public void GetNewTile(Difficulty difficulty, NewTileHandler newTileHandler)
         {
             string diffStr = difficulty.ToString().ToLower();
 
-            sendGetCommand("/new-tile/" + diffStr,
+            SendGetCommand("/new-tile/" + diffStr,
                 delegate(String s)
                 {
                     newTileHandler(fastJSON.JSON.ToObject<NewTileResponse>(s));

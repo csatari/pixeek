@@ -128,7 +128,7 @@ namespace Pixeek.Menus
         private void DifficultyGamemodeSelector_SelectedChange(object sender, EventArgs e)
         {
             SetLoading(true);
-            ScoreboardCommunicator.Instance.getTop10Scores(gamemodeSelector.Selected, difficultySelector.Selected, 
+            ScoreboardCommunicator.Instance.GetTop10Scores(gamemodeSelector.Selected, difficultySelector.Selected, 
                 delegate(ScoreboardResponse response)
                 {
                     AddScore(response);

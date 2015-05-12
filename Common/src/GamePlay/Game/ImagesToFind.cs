@@ -30,7 +30,7 @@ namespace Pixeek.Game
         /// </summary>
         /// <param name="clickedField">A kattintott mezõ</param>
         /// <returns>true - ha megtalálta a mezõt, false ha nem</returns>
-        public bool tryToFindField(Field clickedField)
+        public bool TryToFindField(Field clickedField)
         {
             Image foundImage = null;
             foreach (Image image in ToFind)
@@ -55,7 +55,7 @@ namespace Pixeek.Game
         /// <summary>
         /// Hozzáad egy új random képet
         /// </summary>
-        public void addNewImageToFind()
+        public void AddNewImageToFind()
         {
             Random random = new Random();
             //kiválaszt megadott számú random mezõt az elkészített táblából
@@ -121,7 +121,7 @@ namespace Pixeek.Game
         /// <param name="difficulty"></param>
         /// <param name="board"></param>
         /// <returns></returns>
-        public static ImagesToFind createNewImagesToFind(GameMode gameMode, Difficulty difficulty, Board board) {
+        public static ImagesToFind CreateNewImagesToFind(GameMode gameMode, Difficulty difficulty, Board board) {
 
             ImagesToFind imagesToFind = new ImagesToFind();
             imagesToFind.ToFind = new List<Image>();

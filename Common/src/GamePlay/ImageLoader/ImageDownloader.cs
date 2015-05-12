@@ -5,6 +5,6 @@ namespace Pixeek.ImageLoader
 {
     public interface ImageDownloader
     {
-        List<Image> downloadAll();
+        List<Image> DownloadAll();
     }
 }

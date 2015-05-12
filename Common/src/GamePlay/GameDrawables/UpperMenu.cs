@@ -42,7 +42,7 @@ namespace Pixeek.GameDrawables
         /// Lekérdezi az összes kirajzolt komponenst egy listában
         /// </summary>
         /// <returns></returns>
-        public List<DrawableGameComponent> getAllComponents()
+        public List<DrawableGameComponent> GetAllComponents()
         {
             List<DrawableGameComponent> list = new List<DrawableGameComponent>();
 
@@ -78,11 +78,11 @@ namespace Pixeek.GameDrawables
         }
 
         //Beállítja az idõzítõ szövegét
-        public void setTimerText(string txt)
+        public void SetTimerText(string txt)
         {
             timerBackground.TimerText = txt;
         }
-        public string getTimerText()
+        public string GetTimerText()
         {
             return timerBackground.TimerText;
         }

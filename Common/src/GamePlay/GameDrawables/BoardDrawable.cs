@@ -86,32 +86,32 @@ namespace Pixeek.GameDrawables
             {
                 for (int j = 0; j < board.X; j++)
                 {
-                    if (board.getField(i, j) != null)
+                    if (board.GetField(i, j) != null)
                     {
                         Rectangle rectangle = new Rectangle(pos.X, pos.Y, fieldWidth - gap, fieldHeight - gap);
 
-                        if (board.getField(i, j).Available)
+                        if (board.GetField(i, j).Available)
                         {
                             GameManager.Instance.spriteBatch.Draw(
-                        board.getField(i, j).ImageProperty.ImageTexture,
+                        board.GetField(i, j).ImageProperty.ImageTexture,
                         rectangle,
                         Color.White);
                         }
                         else
                         {
                             GameManager.Instance.spriteBatch.Draw(
-                        board.getField(i, j).ImageProperty.ImageTexture,
+                        board.GetField(i, j).ImageProperty.ImageTexture,
                         rectangle,
                         Color.Gray);
                         }
 
-                        if (fieldPositionDictionary.ContainsKey(board.getField(i, j)))
+                        if (fieldPositionDictionary.ContainsKey(board.GetField(i, j)))
                         {
-                            fieldPositionDictionary[board.getField(i, j)] = rectangle;
+                            fieldPositionDictionary[board.GetField(i, j)] = rectangle;
                         }
                         else
                         {
-                            fieldPositionDictionary.Add(board.getField(i, j), rectangle);
+                            fieldPositionDictionary.Add(board.GetField(i, j), rectangle);
                         }
                     }
 

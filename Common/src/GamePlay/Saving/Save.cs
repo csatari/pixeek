@@ -10,7 +10,7 @@ namespace Pixeek.Saving
     public class Save  //lehet absztrakt is
     {
 
-        public Tuple<Board, Double, List<Image>, int, int> load(List<Image> imageList)     //lehet absztrakt ha más platformon nem ilyen
+        public Tuple<Board, Double, List<Image>, int, int> Load(List<Image> imageList)     //lehet absztrakt ha más platformon nem ilyen
         {
             StreamReader sr = new StreamReader(GameManager.Instance.Content.RootDirectory + "/save.txt");
             
@@ -97,7 +97,7 @@ namespace Pixeek.Saving
 
             return result;
         }
-        public void save(Board board, Double timeToSave, List<Image> imagesToFindSave, int score, int combo)  //lehet absztrakt ha más platformon nem ilyen
+        public void SaveGame(Board board, Double timeToSave, List<Image> imagesToFindSave, int score, int combo)  //lehet absztrakt ha más platformon nem ilyen
         {
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(GameManager.Instance.Content.RootDirectory + "/save.txt"))
@@ -136,13 +136,13 @@ namespace Pixeek.Saving
                 {
                     for (int j = 0; j < y; j++)
                     {
-                        if (board.getField(j, i) == null)
+                        if (board.GetField(j, i) == null)
                         {
                             file.WriteLine(-1);
                         }
                         else
                         {
-                            file.WriteLine(board.getField(j, i).ImageNumber);
+                            file.WriteLine(board.GetField(j, i).ImageNumber);
                         }
                     }
                 }

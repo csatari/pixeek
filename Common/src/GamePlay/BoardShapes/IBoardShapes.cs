@@ -14,14 +14,14 @@ namespace Pixeek.BoardShapes
         /// </summary>
         /// <param name="difficulty"></param>
         /// <returns></returns>
-        int[][] getField(Difficulty difficulty);
+        int[][] GetField(Difficulty difficulty);
 
         /// <summary>
         /// Visszaadja, hogy egy alakzat hány képet tartalmaz nehézség szerint
         /// </summary>
         /// <param name="difficulty"></param>
         /// <returns></returns>
-        int getFieldCount(Difficulty difficulty);
+        int GetFieldCount(Difficulty difficulty);
 
         string ToString();
     }

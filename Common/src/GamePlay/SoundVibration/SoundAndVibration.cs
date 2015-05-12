@@ -2,14 +2,14 @@ namespace Pixeek.SoundVibration
 {
     public interface SoundAndVibration
     {
-        void playSound();
+        void PlaySound();
 
-        void playSoundBad();
+        void PlaySoundBad();
 
    
-        void vibrate();
+        void Vibrate();
 
-        void vibrateBad();
+        void VibrateBad();
    
     }
 }

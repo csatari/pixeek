@@ -8,7 +8,7 @@ namespace Pixeek.BoardShapes
 {
     public class BoardRectangle : IBoardShapes
     {
-        public int[][] getField(Difficulty difficulty)
+        public int[][] GetField(Difficulty difficulty)
         {
             int[][] board = null;
             if (difficulty == Difficulty.EASY)
@@ -59,7 +59,7 @@ namespace Pixeek.BoardShapes
             return board;
         }
 
-        public int getFieldCount(Difficulty difficulty)
+        public int GetFieldCount(Difficulty difficulty)
         {
             switch (difficulty)
             {

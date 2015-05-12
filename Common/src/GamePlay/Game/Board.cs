@@ -48,7 +48,7 @@ namespace Pixeek.Game
         /// <param name="columnIndex"></param>
         /// <param name="rowIndex"></param>
         /// <returns></returns>
-        public Field getField(int columnIndex, int rowIndex)
+        public Field GetField(int columnIndex, int rowIndex)
         {
             foreach (Field field in AllFields)
             {
@@ -89,9 +89,9 @@ namespace Pixeek.Game
         /// Feltölti a Field-ek listáját a megadott nehézségen koordinátákkal együtt.
         /// </summary>
         /// <param name="difficulty"></param>
-        public void createBoard(Difficulty difficulty, IBoardShapes boardAnimal)
+        public void CreateBoard(Difficulty difficulty, IBoardShapes boardAnimal)
         {
-            int[][] boardMap = boardAnimal.getField(difficulty);
+            int[][] boardMap = boardAnimal.GetField(difficulty);
             int imageCounter = 0;
             Y = boardMap.GetLength(0);
             X = boardMap[0].GetLength(0);
@@ -116,7 +116,7 @@ namespace Pixeek.Game
         /// </summary>
         /// <param name="column"></param>
         /// <param name="row"></param>
-        private void addRandomFieldToAllFields(Difficulty difficulty, int column, int row)
+        private void AddRandomFieldToAllFields(Difficulty difficulty, int column, int row)
         {
             int randomImage = random.Next(imageList.Count);
             Transformator trf;
@@ -139,13 +139,13 @@ namespace Pixeek.Game
         /// Kicseréli a megadott mezõt egy random másikra
         /// </summary>
         /// <param name="field"></param>
-        public void changeField(Field field, Difficulty difficulty, FieldChangedHandler handler)
+        public void ChangeField(Field field, Difficulty difficulty, FieldChangedHandler handler)
         {
             /*int randomImage = random.Next(imageList.Count);
             field.ImageProperty = imageList[randomImage];
             field.ImageNumber = randomImage;*/
             field.Available = false;
-            SinglePlayerGameCommunicator.Instance.getNewTile(difficulty,
+            SinglePlayerGameCommunicator.Instance.GetNewTile(difficulty,
                 delegate(NewTileResponse response)
                 {
                     Thread.Sleep(500);

@@ -13,7 +13,7 @@ A tárgy első féléves keretein belül a cél egy gameplay prototype elkészí
 
 A második félévben megvalósítandó funkciók:
 *	többjátékos mód
-*	új témák (játékon belül letölthető a szerverről)
+*	egy központi szerver, ami küldi a kliensnek a játékkal kapcsolatos adatokat
 *	online ranglisták
 *	tutorial
 
@@ -51,9 +51,9 @@ A következő félévre vonatkozó szakterületi követelményeink:
 * Többszereplős játékmódok:
   * Időzítő – két személy játszik egymás ellen, külön kapnak fix időt. A játékosok felváltva játszanak, a felváltás egy kép megtalálása után történik. Az veszít, akinek előbb letelik az ideje
   * Harc a pontokért – két személy játszik egymás ellen. A játékosok egyszerre játszanak, egy fix feladványt oldanak meg. Az nyer, akinek több pontja lesz a feladvány befejezésekor.
-* A téma kiválasztható az új játék kezdésekor, a témához szükséges erőforrások a szerverről töltődnek le
+* A transzformációk átkerülnek a szerverre
 * Ranglista
-* Tutorial – első játékkor ajánlja fel, illetve a menüből is elérhető később kérésre. Egy példajátékon vezet végig.
+* Tutorial – Egy példajátékon vezet végig.
 * A szerver szolgáltatásai:
   * Scoreboard elküldése a kliensnek
   * Egyjátékos-mód
@@ -216,11 +216,11 @@ Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az a
 | Kiváltó esemény                    | A játék elindítása |
 | Utófeltétel sikeres végrehajtáskor | A kiválasztott menüponthoz kapcsolódó felhasználói eset következik: Egyjátékos/Többjátékos mód beállítása, Toplista, Tutorial  |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe |
-| Határidő                           | 2014 |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Toplista       |
 | ---------------------------------- | -------------- |
-| Cél                                | A játékban elért pontszámok megtekintése, sorbarendezve játékmódok szerint. Az első helyen a legtöbb pontot elért játékos és a neve található. |
+| Cél                                | A játékban elért pontszámok megtekintése, választhatóan játékmód és nehézség szerint. Az első helyen a legtöbb pontot elért játékos és a neve található. |
 | Aktor                              | Felhasználó |
 | Kiváltó esemény                    | A Scoreboard gomb megnyomása |
 | Előfeltételek                      | A szerver elérhető |
@@ -234,19 +234,29 @@ Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az a
 | Aktor                              | Felhasználó |
 | Kiváltó esemény                    | A menüben a Tutorial elindítása került kiválasztásra. |
 | Előfeltételek                      | Az egyjátékos mód elindítható (szerver elérhető). |
-| Utófeltétel sikeres végrehajtáskor | Elindul egy játék, amiben a felhasználót minden cselekvése előtt szövegdobozok vagy animációk segítik a szoftver kezelésében és a játék végigjátszásában. |
+| Utófeltétel sikeres végrehajtáskor | Elindul egy játék, amiben a felhasználót minden cselekvése előtt szövegdobozok segítik a szoftver kezelésében és a játék végigjátszásában. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 | Határidő                           | 2015 |
 
 | Használati eset                    | Egyjátékos/Többjátékos mód beállítása       |
 | ---------------------------------- | -------------- |
-| Cél                                | A játék tulajdonságainak beállítása. A tulajdonságok közé a következők tartoznak: Név, Játékmód, Nehézség, Téma |
+| Cél                                | A játék tulajdonságainak beállítása. A tulajdonságok közé a következők tartoznak: Játékmód, Nehézség |
 | Aktor                              | Felhasználó |
 | Kiváltó esemény                    | A Single Player vagy a Multiplayer gomb megnyomása |
 | Előfeltételek                      | A menüből ki lett választva a megfelelő gomb |
-| Utófeltétel sikeres végrehajtáskor | Elindul a várakozás a képek leöltésére |
+| Utófeltétel sikeres végrehajtáskor | Elindul a várakozás a képek leöltésére. Többjátékos mód esetén Név megadása |
 | Utófeltétel hiba esetén            | Nem indul el a játék, maradunk a beállításoknál. |
 | Határidő                           | Egyjátékos mód: 2014, Többjátékos mód: 2015 |
+
+| Használati eset                    | Név megadása       |
+| ---------------------------------- | -------------- |
+| Cél                                | A játékos nevének megadása |
+| Aktor                              | Felhasználó |
+| Kiváltó esemény                    | Multiplayer beállítás után a Játék gomb megnyomása |
+| Előfeltételek                      | A többjátékos módban be lett állítva játékmód és nehézség |
+| Utófeltétel sikeres végrehajtáskor | Elindul a várakozás a képek leöltésére |
+| Utófeltétel hiba esetén            | Nem indul el a játék, maradunk a név megadásánál. |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Normál játék   |
 | ---------------------------------- | -------------- |
@@ -291,7 +301,7 @@ Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az a
 | Cél                                | A játék indítása után potenciálisan végtelen ideig lehet játszani: minden megtalált kép egy új feladatot eredményez, valamint a hozzá tartozó új képet a régi helyén. |
 | Aktor                              | Felhasználó |
 | Kiváltó esemény                    | A játék gomb megnyomása. |
-| Előfeltételek                      | Egyszemélyes játékmód választása. Név megadása. Nehézség kiválasztása. A Végtelenített játék opció kiválasztása. |
+| Előfeltételek                      | Egyszemélyes játékmód választása. Nehézség kiválasztása. A Végtelenített játék opció kiválasztása. |
 | Utófeltétel sikeres végrehajtáskor | Elindul a ’Végtelenített’ típusú játék. |
 | Utófeltétel hiba esetén            | Visszatérés a főmenübe. |
 | Határidő                           | 2014 |
@@ -303,7 +313,7 @@ Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az a
 | Kiváltó esemény                    | A felhasználó egy képre kattint. |
 | Előfeltételek                      | ’Végtelenített’ játék folyamatban van, a kép egy megtalálandó feladványt ábrázol. |
 | Utófeltétel sikeres végrehajtáskor | A felhasználó a kombó állása alapján pontokat kap. A kombó értéke duplázódik, ha nem több, mint 32. A kliens a kép helyére új, transzformált képet kér a szerverről, valamint generál egy új feladványt. |
-| Utófeltétel hiba esetén            | Ha a szerver nem elérhető, hibaüzenet megjelenítése után visszatérés a főmenübe. |
+| Utófeltétel hiba esetén            | Ha a szerver nem elérhető, visszatérés a főmenübe. |
 | Határidő                           | 2014 |
 
 | Használati eset                    | Kilépés játékból |
@@ -331,7 +341,7 @@ Minden használati eset tartalmaz egy Határidő sort, ez tartalmazza, hogy az a
 | Kiváltó esemény                    | Minden eltelt 2500 ms az előző feladvány megtalálása óta. |
 | Előfeltételek                      | Egyjátékos vagy ’Harc a pontokért’ játék folyamatban van, a felhasználó inaktív. |
 | Utófeltétel sikeres végrehajtáskor | A kombó feleződik, ha nagyobb, mint egy, és az előző feladvány megoldása, vagy az előző felezés óta eltelt 2500 ms. |
-| Határidő                           | 2014 |
+| Határidő                           | 2015 |
 
 | Használati eset                    | Egyjátékos módú eredmény megjelenítése |
 | ---------------------------------- | -------------------- |
@@ -430,16 +440,21 @@ A 2015-ös félévre a tervezett feladatok a következőképpen kerültek felosz
 Rabi Péter:
 * Szerver adatbázis
 * Szerverrel való kommunikáció REST API-n keresztül
+* Szerverrel való kommunikáció a multiplayerhez Socketeken keresztül
 * A szervertől való kérések megfelelő kiszolgálása
+* Képek transzformációja a szerveren
 
 Birkás Gábor:
 * Időzítő játékmód implementálása
 * Harc a pontokért játékmód implementálása
 
 Csatári Albert:
-* Tutorial, Scoreboard
-* Kommunikáció a szerverrel
+* Tutorial
+* Scoreboard
+* Kommunikáció a szerverrel REST API-n és Socketeken keresztül
+* Egyjátékos mód frissítése szerverrel való kommunikációhoz
 * Platformfüggetlen megjelenítés
+* Menürendszer továbbfejlesztése az új követelményekhez
 
 ## 2.	Tervezés
 ### 2.1 A program architektúrája
@@ -455,14 +470,23 @@ Alkalmazás szerver:
   * dedikált TCP/IP socket a többjátékos mód megvalósításához
 
 A kliens program legfontosabb elemei:
-* Modell – PCL-ben
-* 2 fő osztály, ami a két külön nézet tulajdonságait tartalmazza:
-  * Jatek osztály
-  * Menu osztály
-* Nézet:
-  * JatekAblak
-  * BeállításokAblak
-* A kliens program architektúrája úgy lesz kialakítva, hogy a Xamarin keretrendszer által támogatott legyen, azaz minden platform külön projekt, illetve van egy közös kódot tartalmazó PCL.
+* 2 fő mappa, ami a két különböző funkciójú tulajdonságait tartalmazza:
+  * Jatek mappa - A játékkal kapcsolatos logika és nézet
+  * Menu mappa - A menürendszerrel kapcsolatos logika és nézet
+* A menü nézetei:
+  * Menu absztrakt osztály, ami egy menü nézet alapvető feladatait látja el: Kirajzolás, Menü elemek kezelése, Kattintás vagy érintés kezelése
+  * MainMenu: A kezdő menü
+  * NewGameMenu: Az egyjátékos illetve a többjátékos mód beállításait tartalmazza
+  * ScoreboardMenu: A ranglista menüje
+  * GameOverMenu: A játék befejezése után megjelenített menü. A szerzett pontot mutatja és a pontot lehet elküldeni
+* A kliens architektúrája úgy lett kialakítva, hogy a MonoGame keretrendszer által támogatott legyen:
+Van egy Common nevű mappa, ahol találhatóak a forráskódok. Minden platform külön projektet kap, és ide a Common mappában lévő forráskódok csak linkelve vannak.
+A platformspecifikus kódok vagy teljesen a projektben találhatóak (nincsenek linkelve), vagy #if ANDROID (#if WINDOWS) direktívákkal vannak ellátva.
+A MonoGame egyetlen sajátossága, hogy az XNA-hoz hasonlóan négy eljárást kell megvalósítania egy nézetnek:
+  * Initialize
+  * LoadContent
+  * Update
+  * Draw
 
 ### 2.2 Osztálymodell
 
@@ -524,6 +548,7 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 * Tutorial, Scoreboard
 * Kommunikáció a szerverrel
 
+Terv:  
 ![Osztálymodell 2](/readme_resources/objectmodell2_albert.png?raw=true "Osztálymodell kiegészítés")
 
 ##### SzerverKommunikátor  
@@ -577,6 +602,50 @@ Az osztálymodell kiegészítése a következő követelményekkel:
 **Sztereotípia:** konténer   
 **Példány:** tábla  
 **Feladat:** A Tábla osztály kiegészítése többjátékos módhoz tartozó információkkal (játékosok, pontok, idők)
+
+
+Végleges osztálymodell névterekre lebontva:
+
+* Pixeek:
+
+![Pixeek](/readme_resources/classdiagrams/pixeek.png?raw=true "")
+
+* Pixeek.BoardShapes:
+
+![Pixeek.BoardShapes](/readme_resources/classdiagrams/pixeek-boardshapes.png?raw=true "")
+
+* Pixeek.Game:
+
+![Pixeek.Game](/readme_resources/classdiagrams/pixeek-game.png?raw=true "")
+
+* Pixeek.GameDrawables:
+
+![Pixeek.GameDrawables](/readme_resources/classdiagrams/pixeek-gamedrawables.png?raw=true "")
+
+* Pixeek.Menus:
+
+![Pixeek.Menus](/readme_resources/classdiagrams/pixeek-menus.png?raw=true "")
+
+* Pixeek.Menus.MenuElements:
+
+![Pixeek.Menus.MenuElements](/readme_resources/classdiagrams/pixeek-menus-elements.png?raw=true "")
+
+* Pixeek.ServerCommunicator:
+
+![Pixeek.ServerCommunicator](/readme_resources/classdiagrams/pixeek-servercommunicator.png?raw=true "")
+
+* Pixeek.ServerCommunicator.Objects:
+
+![Pixeek.ServerCommunicator.Objects](/readme_resources/classdiagrams/pixeek-servercommunicator-objects.png?raw=true "")
+
+* Pixeek.Settings:
+
+![Pixeek.Settings](/readme_resources/classdiagrams/pixeek-settings.png?raw=true "")
+
+* Pixeek.SoundVibration:
+
+![Pixeek.SoundVibration](/readme_resources/classdiagrams/pixeek-soundandvibration.png?raw=true "")
+
 
 #### 2.2.1 Menü  
 
@@ -937,6 +1006,15 @@ A játék alapvetően mobil platformokra van tervezve, érintéssel működik. M
 ![Játékmenet](/readme_resources/gamemode.jpg?raw=true "Játékmenet")  
 ![Játékmenet, pálya template](/readme_resources/gamemode2.jpg?raw=true "Játékmenet, pálya template")  
 
+Kész programról képernyőképek
+
+![Főmenü](/screens/mainmenu.png?raw=true "Főmenü")  
+![Egyjátékos mód](/screens/singleplayer.png?raw=true "Egyjátékos mód")  
+![Többjátékos mód](/screens/multiplayer.png?raw=true "Többjátékos mód")
+![Scoreboard](/screens/scoreboard.png?raw=true "Scoreboard")  
+![Tutorial](/screens/tutorial.png?raw=true "Tutorial")  
+![Játék](/screens/singleplay.png?raw=true "Játék")  
+![Játék vége](/screens/gameover.png?raw=true "Játék vége")  
 ### 2.8 Részletes programterv
 
 **Tábla**  
@@ -1046,8 +1124,41 @@ A forráskódban mindig angol, beszédes neveket használtunk.
 ## 4.	Tesztelés
 ### 4.1 Black box teszt
 
-* A programot elindítva kattinthatunk a New Game, vagy az Exit gombra. Exit esetén a program sikeresen terminál.
-* A New Game gombra kattintva megjelenik egy játékmód- illetve egy nehézségi szint választó képernyő. Itt állíthatjuk be a hangot és a vibrációt is, valamint indíthatjuk el a tényleges játékot.
+* A programot elindítva kattinthatunk a Single Player, Multi player, Scoreboard, Tutorial, vagy az Exit gombra. Exit esetén a program sikeresen terminál.
+
+Scoreboard:
+
+* A program sikeresen megjeleníti az elért eredményeket
+* Bármilyen játékmód, vagy nehézség beállításához megmutatja az eredményeket
+* Ha nincs eredmény nem mutat semmit
+* Betöltés alatt kiírja, hogy Loading...
+
+Tutorial:
+
+* Átlép sikeresen az egyjátékos mód képernyőjére
+* Megjelenik a tutorial leírása
+* Látszódik a menü összes eleme
+* Kattinható a menü összes eleme
+* Ha máshova kattintunk, jön a következő tutorial
+* Elindítható a Tutorial végigjátszása nélkül is a játék
+* A tutorial elemek helyesen mutatják be az adott elemeket
+* A tutorial elemek rendezett tematika szerint mennek végig az elemeken
+* Elindul a játék és a Tutorial továbbvisz
+* A játék nem áll, amíg a tutorial megy
+* A tutorial kéri, hogy találjunk meg egy az alsó részből található elemet
+* Elindul az óra
+* Ha mást találunk meg, nem megy tovább a tutorial
+* Ha eltaláljuk, amit kér, kiírja, hogy have fun
+* Véget ér a tutorial
+
+Multiplayer:
+
+* Megjelenik a két játékmód
+* Play gombra nem történik semmi //TODO legyen multiplayer
+
+Single player:
+
+* A Single player gombra kattintva megjelenik egy játékmód- illetve egy nehézségi szint választó képernyő. Itt állíthatjuk be a hangot és a vibrációt is, valamint indíthatjuk el a tényleges játékot.
 * A játékmódokat a Normal, Endless és Time gombokkal választhatjuk meg, amelyekhez társítunk egy nehézségi szintet is. A Play gombra kattintva elindul a játék.  
 
 Normal – Easy – Music: ON – Vibration: OFF  
@@ -1075,5 +1186,5 @@ Time – Normal – Music: OFF – Vibration: OFF
 
 ### 4.2 További tesztelések
 A további tesztelésekhez unit teszteseteket alkamaztunk, amik a program indításakor lefutnak. Ezek a tesztesetek megpróbálják lefedni az összes lehetőséget, amit egy adott fügvénnyel végezni lehet, és azt vizsgálják, hogy a függvény elvégzése után a megfelelő állapotot kapjuk-e vissza.
-Ezek a tesztesetek a következő útvonalon találhatóak: A főmappa, azaz az src mappán belül a Testing mappában a Testing a menü vizsgálatáért, a GameTesting a pályák létrehozásáért, kattintásáért, a keresendő képekért és a pontozási rendszerért, a TransformationTest pedig a 4 előforduló transzformáció (forgatás, tükrözés, színezés, homályosítás) helyes lefutásának ellenőrzéséért felelős.
+Ezek a tesztesetek a következő útvonalon találhatóak: A főmappa, azaz az src mappán belül a Testing mappában a Testing a menü vizsgálatáért, a GameTesting a pályák létrehozásáért, kattintásáért, a keresendő képekért és a pontozási rendszerért felelős.
 

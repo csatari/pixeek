@@ -39,7 +39,7 @@ namespace Pixeek.ServerCommunicator
         /// </summary>
         /// <param name="path"></param>
         /// <param name="commandResult"></param>
-        protected void sendGetCommand(string path, CommandResult commandResult)
+        protected void SendGetCommand(string path, CommandResult commandResult)
         {
 #if WINDOWS
             new Thread(() =>
@@ -93,7 +93,7 @@ namespace Pixeek.ServerCommunicator
         /// <param name="path"></param>
         /// <param name="parameter"></param>
         /// <param name="commandResult"></param>
-        protected void sendPutCommand(string path, System.Object parameter, CommandResult commandResult)
+        protected void SendPutCommand(string path, System.Object parameter, CommandResult commandResult)
         {
 #if WINDOWS
             new Thread(() =>
@@ -167,7 +167,7 @@ namespace Pixeek.ServerCommunicator
         /// <param name="path"></param>
         /// <param name="parameter"></param>
         /// <param name="commandResult"></param>
-        protected void sendPostCommand(string path, System.Object parameter, CommandResult commandResult)
+        protected void SendPostCommand(string path, System.Object parameter, CommandResult commandResult)
         {
 #if WINDOWS
             new Thread(() =>

@@ -18,23 +18,23 @@ namespace Pixeek.Game
         /// Hozzáad megadott pontot az osztályhoz kombó szorzójával együtt
         /// </summary>
         /// <param name="score"></param>
-        public void addPoint(int score)
+        public void AddPoint(int score)
         {
             if (score <= 0) return;
             Score += Combo * score;
-            setCombo();
+            SetCombo();
         }
 
         /// <summary>
         /// Hozzáad a kombóhoz egyet, ha még nem telt le az elõzõ kombó ideje.
         /// </summary>
-        private void setCombo()
+        private void SetCombo()
         {
             if (Combo < 32)
             {
                 Combo *= 2;
             }
-            stopTimer();
+            StopTimer();
             timer.Start();
         }
 
@@ -53,14 +53,14 @@ namespace Pixeek.Game
             {
                 Combo = 1;
             }
-            stopTimer();
+            StopTimer();
             timer.Start();
         }
 
         /// <summary>
         /// Megállítja az aktuálisan futó timert.
         /// </summary>
-        private void stopTimer()
+        private void StopTimer()
         {
             timer.Stop();
         }

@@ -87,13 +87,13 @@ namespace Pixeek.Game
             toFindDrawable = new ToFindDrawable(GameManager.Instance);
             GameManager.Instance.Components.Add(toFindDrawable);
         }
-        public void setLevelManager(LevelManager lm)
+        public void SetLevelManager(LevelManager lm)
         {
             levelManager = lm;
-            UpperMenu.Instance.setTimerText(levelManager.ElapsedTime.ToString("mm\\:ss"));
+            UpperMenu.Instance.SetTimerText(levelManager.ElapsedTime.ToString("mm\\:ss"));
             levelManager.TimeElapsedHandler = delegate(TimeSpan elapsedTime)
             {
-                UpperMenu.Instance.setTimerText(elapsedTime.ToString("mm\\:ss"));
+                UpperMenu.Instance.SetTimerText(elapsedTime.ToString("mm\\:ss"));
                 timeToSave = elapsedTime.TotalSeconds;
             };
             levelManager.TimeStoppedHandler = delegate()
@@ -102,7 +102,7 @@ namespace Pixeek.Game
             };
             UpperMenu.Instance.ExitHandler = delegate()
             {
-                levelManager.endGame();
+                levelManager.EndGame();
 #if WINDOWS
                 //saveGame(timeToSave, levelManager.ImagesToFind.ToFind, scoring.Score, scoring.Combo);
 #endif
@@ -113,12 +113,12 @@ namespace Pixeek.Game
 
             levelManager.ImagesToFind.outOfImages = delegate()
             {
-                scoring.addPoint(1); // az utolsó képre még adunk egy pontot
+                scoring.AddPoint(1); // az utolsó képre még adunk egy pontot
                 PlayMultimedia(true);
                 string timeText = null;
                 if (gameMode == GameMode.TIME)
                 {
-                    timeText = UpperMenu.Instance.getTimerText();
+                    timeText = UpperMenu.Instance.GetTimerText();
                 }
                 EndGame(true, timeText);
             };
@@ -130,7 +130,7 @@ namespace Pixeek.Game
                 tutorial.ShowNextTutorial();
             }
         }
-        public void setBoard(Board board)
+        public void SetBoard(Board board)
         {
             this.board = board;
             BoardDrawable _boardDrawable = new BoardDrawable(board,
@@ -140,23 +140,23 @@ namespace Pixeek.Game
                 });
         }
 
-        public void saveGame(Double timeToSave, List<Image> imagesToFindSave, int score, int combo)
+        public void SaveGame(Double timeToSave, List<Image> imagesToFindSave, int score, int combo)
         {
             List<Image> temp = new List<Image>();
-            temp = imageDatabase.getAllPictures();
+            temp = imageDatabase.GetAllPictures();
 
             
             savingManager = new Save();
-            savingManager.save(BoardDrawable.Instance.board, timeToSave, imagesToFindSave, score, combo);
+            savingManager.SaveGame(BoardDrawable.Instance.board, timeToSave, imagesToFindSave, score, combo);
         }
 
         private void FieldClicked(Field field)
         {
             string wasFirst = levelManager.ImagesToFind.ToFind[0].Name;
-            bool success = levelManager.tryClickedField(field);
+            bool success = levelManager.TryClickedField(field);
             if (success)
             {
-                scoring.addPoint(1);
+                scoring.AddPoint(1);
                 if (NewGameMenu.Tutorial && field.ImageProperty.Name.Equals(wasFirst))
                 {
                     levelManager.PauseGame();
@@ -174,7 +174,7 @@ namespace Pixeek.Game
             GameOverMenu.Instance.Difficulty = difficulty;
             GameOverMenu.Instance.GameMode = gameMode;
             Menu.GoToScene(GameOverMenu.Instance);
-            levelManager.endGame();
+            levelManager.EndGame();
         }
 
         /// <summary>
@@ -187,22 +187,22 @@ namespace Pixeek.Game
             {
                 if (music)
                 {
-                    soundAndVibration.playSound();
+                    soundAndVibration.PlaySound();
                 }
                 if (vib)
                 {
-                    soundAndVibration.vibrate();
+                    soundAndVibration.Vibrate();
                 }
             }
             else
             {
                 if (music)
                 {
-                    soundAndVibration.playSoundBad();
+                    soundAndVibration.PlaySoundBad();
                 }
                 if (vib)
                 {
-                    soundAndVibration.vibrateBad();
+                    soundAndVibration.VibrateBad();
                 }
             }
         }
@@ -308,7 +308,7 @@ namespace Pixeek.Game
                 return;
             }
             
-            foreach(DrawableGameComponent component in UpperMenu.Instance.getAllComponents())  
+            foreach(DrawableGameComponent component in UpperMenu.Instance.GetAllComponents())  
             {
                 component.Draw(gameTime);
             }
