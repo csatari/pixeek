@@ -610,42 +610,261 @@ Végleges osztálymodell névterekre lebontva:
 
 ![Pixeek](/readme_resources/classdiagrams/pixeek.png?raw=true "")
 
+##### Scene  
+**Sztereotípia:** interfész   
+**Példány:** currentScene  
+**Feladat:** Egy nézet megvalósításához szükséges  
+
+##### GameManager  
+**Sztereotípia:** egyed   
+**Példány:** Instance  
+**Feladat:** A játékot indítja el és állítja be az alapvető beállításokat  
+
 * Pixeek.BoardShapes:
 
 ![Pixeek.BoardShapes](/readme_resources/classdiagrams/pixeek-boardshapes.png?raw=true "")
+
+##### IBoardShapes  
+**Sztereotípia:** interfész   
+**Példány:** boardShape  
+**Feladat:** Egy alakzat leírását definiálja  
+
+##### BoardRectangle  
+**Sztereotípia:** egyed   
+**Példány:** -  
+**Feladat:** A négyzet alakú alakzatot reprezentálja  
+
+##### BoardDiamond  
+**Sztereotípia:** egyed   
+**Példány:** -  
+**Feladat:** A gyémánt alakú alakzatot reprezentálja  
+
+##### BoardFish  
+**Sztereotípia:** egyed   
+**Példány:** -  
+**Feladat:** A halacska alakú alakzatot reprezentálja  
 
 * Pixeek.Game:
 
 ![Pixeek.Game](/readme_resources/classdiagrams/pixeek-game.png?raw=true "")
 
+##### Difficulty  
+**Sztereotípia:** enum osztály   
+**Példány:** difficulty  
+**Feladat:** A játékban található nehézségek felsorolója  
+
+##### Image
+**Sztereotípia:** egyed  
+**Példány:** image  
+**Feladat:** Tárol egy képet egy szöveggel együtt.  
+
+##### Pályamenedzser
+**Sztereotípia:** egyed  
+**Példány:** level  
+**Feladat:** Kezeli az új játék kezdését, illetve az egyéb egy játékmóddal kapcsolatos tulajdonságokat  
+
+##### Board
+**Sztereotípia:** konténer  
+**Példány:** board  
+**Feladat:** Képes létrehozni egy több mezőből álló pályát, és azt tárolja is utána. Pontos meghatározás után (sor-oszlop indexelés) vissza is adja a mezőt.  
+
+##### Field
+**Sztereotípia:** egyed  
+**Példány:** allFields, listában  
+**Feladat:** meghatározza a játéktéren található mezőt. A tulajdonságai között szerepel a kép, az indexek
+
+##### ImagesToFind
+**Sztereotípia:** konténer  
+**Példány:** imagesToFind 
+**Feladat:** Tárolja a feladvánnyal kapcsolatos információkat: hány kép van még hátra, a képek listája  
+
+##### Scoring
+**Sztereotípia:** egyed  
+**Példány:** scoring  
+**Feladat:** Kezeli a pontok számolását a kombókkal együtt. Ha a ponthoz hozzáadás történik, a kombó a kétszeresére nő. A hozzáadott pont a kombóval szorzódik. A kombó 32-ig képes nőni, és ha nem történik ponthozzáadás 2,5 másodpercen belül, a kombó feleződik.   
+
+##### GameMode
+**Sztereotípia:** enum osztály  
+**Példány:** gameMode  
+**Feladat:** Tárolja a lehetséges játékmódokat  
+
+##### GameModel
+**Sztereotípia:** vegyes   
+**Példány:** gameModel  
+**Feladat:** A játékok logikájával és nézetével kapcsolatos információkat tartalmazza  
+
 * Pixeek.GameDrawables:
 
 ![Pixeek.GameDrawables](/readme_resources/classdiagrams/pixeek-gamedrawables.png?raw=true "")
+
+##### RectangleOverlay
+**Sztereotípia:** egyed  
+**Példány:** overlay  
+**Feladat:** Egy képpel ellátott négyzet kirajzolását valósítja meg  
+
+##### TimeDrawable
+**Sztereotípia:** egyed  
+**Példány:** timeDrawable  
+**Feladat:** A számláló kirajzolásához szükséges információkat tartalmazza. Ki is rajzolja az időzítőt.  
+
+##### ScoreDrawable
+**Sztereotípia:** egyed  
+**Példány:** scoreDrawable  
+**Feladat:** A pontok kirajzolásáért felelős (ehhez jár a kombók kirajzolása is  
+
+##### ToFindDrawable
+**Sztereotípia:** egyed  
+**Példány:** toFindDrawable  
+**Feladat:** A megkeresendő képek kirajzolásáért felelős  
+
+##### UpperMenu
+**Sztereotípia:** konténer  
+**Példány:** Instance  
+**Feladat:** A teljes felső menüt fogja össze és tárolja  
+
+##### BoardDrawable
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A tábla kirajzolásáért felelős, amin találhatóak a képek  
+
 
 * Pixeek.Menus:
 
 ![Pixeek.Menus](/readme_resources/classdiagrams/pixeek-menus.png?raw=true "")
 
+##### Menu
+**Sztereotípia:** absztrakt osztály    
+**Feladat:** Egy különálló menü megvalósításához szükséges függvényeket tartalmazza, mint a kirajzolás, a nézetváltás és az elemek kezelése  
+
+##### GameOverMenu
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A játék vége menüt valósítja meg  
+
+##### ScoreboardMenu
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A ranglistákat mutató menüt valósítja meg
+
+##### MainMenu
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A kezdőképernyőn megjelenő főmenüt valósítja meg    
+
+##### NewGameMenu
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** Az új játékot tartalmazó beállításokat tartalmazó menüt valósítja meg  
+
 * Pixeek.Menus.MenuElements:
 
 ![Pixeek.Menus.MenuElements](/readme_resources/classdiagrams/pixeek-menus-elements.png?raw=true "")
+
+##### MenuElement
+**Sztereotípia:** egyed  
+**Példány:**   
+**Feladat:** Egy menün található elemre vonatkozó információkat és függvényeket tartalmaz  
+
+##### MenuSpriteElement
+**Sztereotípia:** egyed  
+**Példány:** menuSpriteElement  
+**Feladat:** Egy képpel és szöveggel ellátott menüelem (legtöbbször egy kép vagy egy szöveg kirajzolására)  
+
+##### TutorialButton
+**Sztereotípia:** egyed  
+**Példány:** tutorialButton  
+**Feladat:** A TutorialElement kis négyzetén kívüli részek gombok, amik előidézik a tutorial folytatását. Ez valósítja meg ezeket a gombokat  
+
+##### MenuSelector
+**Sztereotípia:** egyed  
+**Példány:**   
+**Feladat:** Egy szótárban tartalmaz összetartozó menüelemeket, amik közül választani lehet  
+
+##### MainMenuPlainSelector
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** Egy menüben megjeleníthető selectort valósít meg, aminek beállíthatóak a méretei, illetve egy enum, amiből válogat  
+
+##### MenuTextElement
+**Sztereotípia:** egyed  
+**Példány:** menuTextElement  
+**Feladat:** Megvalósít egy olyan elemet, ami szöveg befogadására alkalmas Windowson és Androidon is  
+
+##### ScoreboardElements
+**Sztereotípia:** egyed  
+**Példány:** scoreboardElements  
+**Feladat:** A selectorhoz hasonlóan felsorolja a kapott pontszámokat, beállítható méretekkel  
+
+##### TutorialElement
+**Sztereotípia:** egyed  
+**Példány:** tutorialButton  
+**Feladat:** Egy olyan tutorial elemet tartalmaz, ami a játéktér egy kis négyzetére fokuszál és hozzá egy szöveget mutat  
 
 * Pixeek.ServerCommunicator:
 
 ![Pixeek.ServerCommunicator](/readme_resources/classdiagrams/pixeek-servercommunicator.png?raw=true "")
 
+##### ServerCommunicator
+**Sztereotípia:** absztrakt osztály    
+**Feladat:** A szerverrel való kommunikációhoz ad függvényeket. Így egy egyszerű send vagy listen függvénnyel lehet kommunikálni REST API-val vagy Socketekkel
+
+##### FightGameCommunicator
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A Harc a pontokért játékhoz tartozó socketes kommunikációt valósítja meg  
+
+##### TimerGameCommunicator
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** Az Időzítő játékhoz tartozó socketes kommunikációt valósítja meg  
+
+##### MultiPlayerGameCommunicator
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A multiplayer játékokhoz tartozó általánosabb hívásokat tartalmazza  
+
+##### ScoreboardCommunicator
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** A ranglistákhoz tartozó Rest API hívásokat tartalmazza  
+
+##### SinglePlayerGameCommunicator
+**Sztereotípia:** egyed  
+**Példány:** Instance  
+**Feladat:** Az egyjátékos játékokhoz tartozó REST API hívásokat tartalmazza  
+
 * Pixeek.ServerCommunicator.Objects:
 
 ![Pixeek.ServerCommunicator.Objects](/readme_resources/classdiagrams/pixeek-servercommunicator-objects.png?raw=true "")
+
+Az ebben a névtérben szereplő osztályok a szerverhez való kommunikációt segítik. Strukturális segítséget nyújtanak az üzenetek JSON formájáról való átalakításra.  
 
 * Pixeek.Settings:
 
 ![Pixeek.Settings](/readme_resources/classdiagrams/pixeek-settings.png?raw=true "")
 
+##### Settings
+**Sztereotípia:** egyed  
+**Példány:** settings  
+**Feladat:** Az aktuális beállításokat tartalmazza a vibrációra és a hangra vonatkozóan  
+
+##### SettingsMenu
+**Sztereotípia:** egyed  
+**Példány:** settingsMenu  
+**Feladat:** A beállításokat tartalmazó menü elem
+
 * Pixeek.SoundVibration:
 
 ![Pixeek.SoundVibration](/readme_resources/classdiagrams/pixeek-soundandvibration.png?raw=true "")
 
+##### SoundAndVibration
+**Sztereotípia:** interfész    
+**Feladat:** A hang és vibráció lejátszására ad egy keretet, így az az adott eszköztől független hívható. Ezt az interfészt eszközspecifikusan implementáljuk.   
+
+##### SoundAndVibrationWindows
+**Sztereotípia:** egyed  
+**Példány:** soundAndVibrationWindows  
+**Feladat:** Windows specifikus megvalósítása a SoundAndVibration interfésznek  
 
 #### 2.2.1 Menü  
 

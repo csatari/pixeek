@@ -31,8 +31,8 @@ namespace Pixeek.Menus
             }
         }
 
-        static MainMenuPlaintSelector<GameMode> gamemodeSelector;
-        static MainMenuPlaintSelector<Difficulty> difficultySelector;
+        static MainMenuPlainSelector<GameMode> gamemodeSelector;
+        static MainMenuPlainSelector<Difficulty> difficultySelector;
         private MenuSpriteElement infoElement;
         private ScoreboardElements scoreboardElements;
 
@@ -62,7 +62,7 @@ namespace Pixeek.Menus
             }
             // difficulty selector
             {
-                difficultySelector = new MainMenuPlaintSelector<Difficulty>(Difficulty.NORMAL);
+                difficultySelector = new MainMenuPlainSelector<Difficulty>(Difficulty.NORMAL);
                 bg.AddChild(difficultySelector);
 
                 difficultySelector.BaseX = Convert.ToInt32(0.279 * GameManager.Width);
@@ -80,7 +80,7 @@ namespace Pixeek.Menus
 
             //gamemode selector
             {
-                gamemodeSelector = new MainMenuPlaintSelector<GameMode>(GameMode.NORMAL);
+                gamemodeSelector = new MainMenuPlainSelector<GameMode>(GameMode.NORMAL);
                 bg.AddChild(gamemodeSelector);
 
                 gamemodeSelector.BaseX = Convert.ToInt32(0.077 * GameManager.Width);

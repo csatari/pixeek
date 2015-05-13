@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Pixeek.Menus.Elements
 {
-    public class MainMenuPlaintSelector<TEnum> : MenuSelector<TEnum>
+    public class MainMenuPlainSelector<TEnum> : MenuSelector<TEnum>
     {
         /// <summary>
         /// The most left position of the element
@@ -35,7 +35,7 @@ namespace Pixeek.Menus.Elements
 
         public event EventHandler SelectedChange;
 
-        public MainMenuPlaintSelector(TEnum selector) : base(selector)
+        public MainMenuPlainSelector(TEnum selector) : base(selector)
         {
             Count = 0;
         }
