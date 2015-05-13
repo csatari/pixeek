@@ -1,0 +1,1 @@
+db = DAL('sqlite://storage.db', migrate=False)
