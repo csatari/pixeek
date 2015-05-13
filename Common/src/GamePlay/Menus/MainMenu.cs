@@ -98,6 +98,7 @@ namespace Pixeek.Menus
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
+                        NewGameMenu.Tutorial = false;
                         NewGameMenu.SinglePlayer = true;
                         Menu.GoToScene(NewGameMenu.Instance);
                     }
@@ -111,6 +112,7 @@ namespace Pixeek.Menus
                 MenuButtonElement playButton = new MenuButtonElement(playRect,
                     delegate()
                     {
+                        NewGameMenu.Tutorial = false;
                         NewGameMenu.SinglePlayer = false;
                         Menu.GoToScene(NewGameMenu.Instance);
                     }
